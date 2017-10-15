@@ -5,9 +5,6 @@ import * as winston from 'winston';
 interface IVenzraError {
     name: string;
     message: string;
-    reason?: string;
-
-    loggerMessage(): string;
 }
 
 class VenzraError extends Error {
@@ -17,13 +14,9 @@ class VenzraError extends Error {
     }
 }
 
-export class NotFoundError extends VenzraError implements IVenzraError {
-    constructor() {
-        super('Page not found');
-    }
-
-    loggerMessage() {
-        return this.message;
+export class BadRequest extends VenzraError implements IVenzraError {
+    constructor(public message: string) {
+        super(message);
     }
 }
 
@@ -38,9 +31,6 @@ export const errorHandler = (err: IVenzraError, req: Request, res: Response, nex
     });
 
     switch (err.name) {
-        case 'NotFoundError':
-            res.status(404).send();
-            break;
         default:
             logger.info(err.message);
             res.status(400).send();

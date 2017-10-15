@@ -2,6 +2,8 @@ import { Request, Response, NextFunction, Router } from 'express';
 
 import { SubscriptionService } from '../services/subscription';
 
+import { BadRequest } from '../middleware/error-handler';
+
 class SubscriptionController extends SubscriptionService {
 
     constructor(
@@ -16,6 +18,9 @@ class SubscriptionController extends SubscriptionService {
     }
 
     retrieve(req: Request, res: Response, next: NextFunction) {
+        if(!this.subscription) {
+            return next(new BadRequest('No store available'))
+        }
         return res.status(200).send(this.subscription);
     }
 

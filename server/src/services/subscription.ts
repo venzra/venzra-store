@@ -11,6 +11,7 @@ export class SubscriptionService {
 
         SubscriptionModel
             .findOne({ domainName })
+            .select('domainName storeName strapline')
             .then((subscription) => this.subscription = subscription)
             .then(() => next());
     }

@@ -5,9 +5,14 @@ const { defineSupportCode } = require('cucumber');
 class World {
 
     constructor() {
+        this.headers = new Set();
         this.mocks = [];
         this.history = {};
         this.agent = supertest.agent(require(`../../../dist/server/main`));
+    }
+
+    setHeader(name, value) {
+        this.headers.add({ name, value });
     }
 
     addMock(mock) {
@@ -42,8 +47,12 @@ class World {
         let promise = new Promise((resolve) => {
             let request = this.agent.get(endpoint);
 
+            this.headers.forEach((header) => {
+                request.set(header.name, header.value);
+            });
+
             request.expect((res) => {
-                if(this.mocks.length > 0) {
+                if (this.mocks.length > 0) {
                     this.mocks.forEach((mock) => {
                         mock.done();
                     })
@@ -73,10 +82,14 @@ class World {
         let promise = new Promise((resolve) => {
             let request = this.agent.post(endpoint);
 
+            this.headers.forEach((header) => {
+                request.set(header.name, header.value);
+            });
+
             request.send(data);
 
             request.expect((res) => {
-                if(this.mocks.length > 0) {
+                if (this.mocks.length > 0) {
                     this.mocks.forEach((mock) => {
                         mock.done();
                     })
