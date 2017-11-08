@@ -9,6 +9,7 @@ import { json } from 'body-parser';
 
 import { errorHandler } from './middleware/error-handler';
 import { SubscriptionController } from './controllers/subscription';
+import { ProductsController } from './controllers/products';
 
 require('mongoose').Promise = global.Promise;
 
@@ -55,6 +56,7 @@ mongoose
  * Start controllers
  */
 const subscription = new SubscriptionController(router);
+const products = new ProductsController(router);
 
 app.use(errorHandler);
 

@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { ShopFrontComponent } from './components/shop-front/shop-front.component';
 import { SubscriptionRetrieveResolve } from './services/subscription.service';
+import { ProductPromotionsResolve } from './services/product.service';
 
 const routes: Routes = [
     {
@@ -11,7 +12,8 @@ const routes: Routes = [
         component: ShopFrontComponent,
         pathMatch: 'full',
         resolve: {
-            subscription: SubscriptionRetrieveResolve
+            subscription: SubscriptionRetrieveResolve,
+            products: ProductPromotionsResolve
         }
     },
     {

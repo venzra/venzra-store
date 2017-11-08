@@ -1,0 +1,13 @@
+<h2 class="mat-headline">Promotional products</h2>
+
+<div fxLayout="row" fxLayoutGap="20px">
+    <mat-card *ngFor="let product of products.list" fxFlex="25%">
+        <mat-card-header>
+            <mat-card-title>{{ product.displayName }}</mat-card-title>
+            <mat-card-subtitle>{{ product.storePrice | price }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-actions fxLayoutAlign="end end">
+            <button mat-button>Buy</button>
+        </mat-card-actions>
+    </mat-card>
+</div>
