@@ -14,7 +14,7 @@ defineSupportCode(({ Given, When, Then }) => {
         expectedKeys.map((key) => {
             let check;
             if(typeof expected[key] === 'string') {
-                check = expected[key].match(/\[(\d+)\]/) || expected[key];
+                check = expected[key].match(/\[([^\]]*)\]/) || expected[key];
                 if (check instanceof Array) {
                     expected[key] = expected[key].replace(check[0], '');
                 }
@@ -33,6 +33,7 @@ defineSupportCode(({ Given, When, Then }) => {
                     break;
                 case 'OBJECT':
                     expect(actual[key]).to.be.an('object');
+                    expect(actual[key]).to.have.keys(check[1].split(','));
                     break;
                 default:
                     expect(actual[key]).to.deep.equal(expected[key]);
@@ -50,7 +51,7 @@ defineSupportCode(({ Given, When, Then }) => {
             .then((history) => expect(history.status).to.equal(parseInt(statusCode)));
     });
 
-    Then(/^(?:there should be a (200|400|500) (?:response|error) from )?the "([^"]*)" request that(?: has a "([^"]*)" field and row (\d+))? contains:$/, function (statusCode, historyName, expectedField, expectedRecord, expectedData) {
+    Then(/^(?:there should be a (200|400|500) (?:response|error) from )?the "([^"]*)" request that(?: has (?:a|an) "([^"]*)" field and row (\d+))? contains:$/, function (statusCode, historyName, expectedField, expectedRecord, expectedData) {
         expectedData = this.getHashes(expectedData);
 
         return Promise.resolve(this.getHistory(historyName))

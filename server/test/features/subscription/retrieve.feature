@@ -21,3 +21,4 @@ Feature: Access a list of plans that a user will be able to subscribe to after r
     Then there should be a 200 response from the "subscription" request that contains:
       | _id       | domainName             | storeName              |
       | OBJECT_ID | registration-plans-one | Registration Plans One |
+    And there is a cookie called "vid" in the "subscription" response header

@@ -34,6 +34,7 @@
         "@angular/router": "4.4.5",
         "aws-sdk": "2.133.0",
         "body-parser": "1.18.2",
+        "cookie-parser": "1.4.3",
         "core-js": "2.5.1",
         "express": "4.16.2",
         "hammerjs": "2.0.8",

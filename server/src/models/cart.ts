@@ -1,0 +1,57 @@
+import { Schema, Document, Model, model } from 'mongoose';
+
+interface ICartItem {
+    product: string;
+    quantity?: number;
+}
+
+interface ICart extends Document {
+    subscription?: string;
+    items: [ICartItem];
+    displayName: string;
+    retailPrice: number;
+    storePrice: number;
+    status?: string;
+}
+
+const CartSchema: Schema = new Schema({
+    subscription: {
+        type: Schema.Types.ObjectId,
+        ref: 'subscriptions',
+        required: true
+    },
+    items: {
+        type: [{
+            product: {
+                type: Schema.Types.ObjectId,
+                ref: 'products',
+                required: true
+            },
+            quantity: {
+                type: Number,
+                required: true,
+                default: 1
+            }
+        }],
+        default: []
+    },
+    created: {
+        type: Date,
+        required: true,
+        default: Date.now
+    },
+    updated: {
+        type: Date,
+        required: true,
+        default: Date.now
+    }
+});
+
+CartSchema.pre('save', function (next) {
+    this.updated = Date.now();
+    next();
+});
+
+const CartModel: Model<ICart> = model('carts', CartSchema);
+
+export { CartModel, ICart };

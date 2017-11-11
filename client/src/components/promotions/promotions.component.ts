@@ -21,4 +21,12 @@ export class PromotionsComponent implements OnInit {
             this.products = data.products;
         });
     }
+
+    show(product) {
+        console.log('view');
+    }
+
+    purchase(product) {
+        console.log('purchase');
+    }
 }

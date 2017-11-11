@@ -1,21 +1,22 @@
 import { Request, Response, NextFunction, Router } from 'express';
 
+import { AuthenticationController } from './authentication';
 import { SubscriptionService } from '../services/subscription';
 
 import { NotFoundError } from '../middleware/error-handler';
 
 import { ProductModel } from '../models/products';
 
-class ProductsController extends SubscriptionService {
+class ProductsController extends AuthenticationController {
 
     constructor(private router: Router) {
-        super();
+        super(new SubscriptionService());
         this.registerRoutes();
     }
 
     registerRoutes() {
-        this.router.get('/products', this.validate.bind(this), this.findAll.bind(this));
-        this.router.get('/products/:productSlug', this.validate.bind(this), this.findOne.bind(this));
+        this.router.get('/products', this.checkSubscription.bind(this), this.findAll.bind(this));
+        this.router.get('/products/:productSlug', this.checkSubscription.bind(this), this.findOne.bind(this));
     }
 
     findOne(req: Request, res: Response, next: NextFunction) {

@@ -15,6 +15,11 @@ class World {
         this.agent = supertest.agent(require(`../../../dist/server/main`));
     }
 
+    setCookie(name, value) {
+        value = this.parseTemplateString(value);
+        this.agent.jar.setCookie(`${name}=${value}`);
+    }
+
     setHeader(name, value) {
         this.headers.add({ name, value });
     }
@@ -49,6 +54,11 @@ class World {
 
         for (let row of rows) {
             for (let hash in row) {
+                if (!row[hash] || row[hash] === '') {
+                    delete row[hash];
+                    break;
+                }
+
                 row[hash] = this.parseTemplateString(row[hash]);
 
                 const keywords = row[hash].match(/^(\S*)\((\S*)\)$/);

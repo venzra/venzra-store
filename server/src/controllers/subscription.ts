@@ -1,27 +1,25 @@
 import { Request, Response, NextFunction, Router } from 'express';
 
+import { AuthenticationController } from './authentication';
 import { SubscriptionService } from '../services/subscription';
 
-import { BadRequest } from '../middleware/error-handler';
-
-class SubscriptionController extends SubscriptionService {
+class SubscriptionController extends AuthenticationController {
 
     constructor(
         private router: Router
     ) {
-        super();
+        super(new SubscriptionService());
         this.registerRoutes();
     }
 
     registerRoutes() {
-        this.router.get('/subscription', this.validate.bind(this), this.retrieve.bind(this));
+        this.router.get('/subscription', this.checkSubscription.bind(this), this.retrieve.bind(this));
     }
 
     retrieve(req: Request, res: Response, next: NextFunction) {
-        if(!this.subscription) {
-            return next(new BadRequest('No store available'))
-        }
-        return res.status(200).send(this.subscription);
+        const { _id, domainName, storeName, strapline } = this.subscription;
+
+        return res.status(200).send({ _id, domainName, storeName, strapline });
     }
 
 }

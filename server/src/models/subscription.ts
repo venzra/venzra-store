@@ -2,6 +2,8 @@ import { Schema, Document, Model, model } from 'mongoose';
 
 interface ISubscriptionModel extends Document {
     storeName?: string;
+    strapline?: string;
+    domainName?: string;
     status?: string;
 }
 
@@ -9,6 +11,10 @@ const SubscriptionSchema: Schema = new Schema({
     storeName: {
         type: String,
         required: true,
+        trim: true
+    },
+    strapline: {
+        type: String,
         trim: true
     },
     domainName: {

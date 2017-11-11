@@ -6,8 +6,13 @@
             <mat-card-title>{{ product.displayName }}</mat-card-title>
             <mat-card-subtitle>{{ product.storePrice | price }}</mat-card-subtitle>
         </mat-card-header>
-        <mat-card-actions fxLayoutAlign="end end">
-            <button mat-button>Buy</button>
+        <mat-card-actions fxLayoutGap="10px" fxLayoutAlign="end end">
+            <button mat-icon-button (click)="show(product)">
+                <mat-icon>visibility</mat-icon>
+            </button>
+            <button mat-icon-button (click)="purchase(product)">
+                <mat-icon>add_shopping_cart</mat-icon>
+            </button>
         </mat-card-actions>
     </mat-card>
 </div>

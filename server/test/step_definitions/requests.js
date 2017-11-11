@@ -12,6 +12,10 @@ defineSupportCode(({ Given, When, Then }) => {
         return Promise.resolve(this.performPost('/api/v1/identity/login', { identity: userIdentity, password: 'VenzraTest$1' }));
     });
 
+    Given(/^I set the "([^"]*)" cookie to the value "([^"]*)"$/, function(cookieName, cookieValue) {
+        return this.setCookie(cookieName, cookieValue);
+    });
+
     When(/^I make a (GET) request to the API endpoint "([^"]*)" as "([^"]*)"$/, function (requestMethod, requestEndpoint, historyName) {
         return Promise.resolve(this.performGet(requestEndpoint, historyName));
     });

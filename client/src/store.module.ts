@@ -11,6 +11,7 @@ import { PricePipe } from './filters/price.pipe';
 
 import { StoreComponent } from './store.component';
 import { HeaderComponent } from './common/header/header.component';
+import { CartComponent } from './components/cart/cart.component';
 import { ShopFrontComponent } from './components/shop-front/shop-front.component';
 import { PromotionsComponent } from './components/promotions/promotions.component';
 import { FooterComponent } from './common/footer/footer.component';
@@ -23,6 +24,7 @@ import { ProductPromotionsResolve, ProductService } from './services/product.ser
     declarations: [
         PricePipe,
         HeaderComponent,
+        CartComponent,
         StoreComponent,
         ShopFrontComponent,
         PromotionsComponent,

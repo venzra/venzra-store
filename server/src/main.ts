@@ -1,3 +1,4 @@
+import * as cookieParser from 'cookie-parser';
 import * as express from 'express';
 import * as fs from 'fs';
 import * as http from 'http';
@@ -7,9 +8,12 @@ import * as path from 'path';
 
 import { json } from 'body-parser';
 
+import { venzraSession } from './middleware/venzra-session';
 import { errorHandler } from './middleware/error-handler';
+
 import { SubscriptionController } from './controllers/subscription';
 import { ProductsController } from './controllers/products';
+import { CartController } from './controllers/cart';
 
 require('mongoose').Promise = global.Promise;
 
@@ -20,6 +24,8 @@ const router: express.Router = express();
  * Configure security elements
  */
 app.disable('x-powered-by');
+app.use(cookieParser());
+app.use(venzraSession);
 
 /*
  * Register routing endpoints
@@ -57,6 +63,7 @@ mongoose
  */
 const subscription = new SubscriptionController(router);
 const products = new ProductsController(router);
+const cart = new CartController(router);
 
 app.use(errorHandler);
 
