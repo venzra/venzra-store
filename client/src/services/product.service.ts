@@ -8,9 +8,9 @@ import { ListModel } from './restful.service';
 
 export class Product {
     _id?: string;
-    code: string;
+    code?: string;
     displayName: string;
-    retailPrice: number;
+    retailPrice?: number;
     storePrice: number;
 }
 

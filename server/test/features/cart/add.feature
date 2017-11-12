@@ -1,5 +1,5 @@
 @Cart @CartAdd
-Feature: Creation of a new product entry
+Feature: Adding products into a cart
 
   @Seed
   Scenario: Setup test data seed for feature
@@ -15,18 +15,28 @@ Feature: Creation of a new product entry
       | {{ subscriptions[2]._id }} | ADD-02-001 | cart-add-a  | Cart Add A  | 999        | ACTIVE   |
       | {{ subscriptions[2]._id }} | ADD-02-002 | cart-add-b  | Cart Add B  | 999        | INACTIVE |
     And there are the following "carts" records in the database
-      | subscription               | items                                                                            |
-      | {{ subscriptions[1]._id }} | [{ "product": "{{ products[1]._id }}" }]                                         |
-      | {{ subscriptions[1]._id }} |                                                                                  |
-      | {{ subscriptions[2]._id }} | [{ "product": "{{ products[4]._id }}" }, { "product": "{{ products[5]._id }}" }] |
+      | subscription               | items                                    |
+      | {{ subscriptions[1]._id }} | [{ "product": "{{ products[1]._id }}" }] |
+      | {{ subscriptions[1]._id }} |                                          |
+      | {{ subscriptions[2]._id }} | [{ "product": "{{ products[4]._id }}" }] |
 
-  Scenario: Sending an empty patch request doe not alter the cart information
+  Scenario: Sending an empty patch request does not alter the cart information
     Given the request origin headers are set to "cart-add-one.venzra-test.io"
     And I set the "vid" cookie to the value "{{ carts[1]._id }}"
     When I make an empty PATCH request to the API endpoint "/api/v1/cart" as "cart"
     Then there should be a 200 response from the "cart" request that contains:
-      | _id       | items    | created   | updated   |
-      | OBJECT_ID | ARRAY[1] | DATE_TIME | DATE_TIME |
+      | _id       | items    | value |
+      | OBJECT_ID | ARRAY[1] | 9     |
+
+  Scenario: Adding a product that is inactive does not update the cart
+    Given the request origin headers are set to "cart-add-one.venzra-test.io"
+    And I set the "vid" cookie to the value "{{ carts[2]._id }}"
+    When I make a PATCH request to the API endpoint "/api/v1/cart" as "cart" using:
+      | op  | path    | value                 |
+      | add | product | {{ products[3]._id }} |
+    Then there should be a 200 response from the "cart" request that contains:
+      | _id       | items    | value |
+      | OBJECT_ID | ARRAY[0] | 0     |
 
   Scenario: Updating a cart to add a product
     Given the request origin headers are set to "cart-add-one.venzra-test.io"
@@ -35,8 +45,8 @@ Feature: Creation of a new product entry
       | op  | path    | value                 |
       | add | product | {{ products[1]._id }} |
     Then there should be a 200 response from the "cart" request that contains:
-      | _id       | items    | created   | updated   |
-      | OBJECT_ID | ARRAY[1] | DATE_TIME | DATE_TIME |
+      | _id       | items    | value |
+      | OBJECT_ID | ARRAY[1] | 9     |
     And the "cart" request that has an "items" field and row 1 contains:
       | _id       | product                            | quantity |
       | OBJECT_ID | OBJECT[_id,displayName,storePrice] | 1        |
@@ -48,8 +58,8 @@ Feature: Creation of a new product entry
       | op  | path    | value                 |
       | add | product | {{ products[2]._id }} |
     Then there should be a 200 response from the "cart" request that contains:
-      | _id       | items    | created   | updated   |
-      | OBJECT_ID | ARRAY[2] | DATE_TIME | DATE_TIME |
+      | _id       | items    | value |
+      | OBJECT_ID | ARRAY[2] | 108   |
     And the "cart" request that has an "items" field and row 1 contains:
       | _id       | product                            | quantity |
       | OBJECT_ID | OBJECT[_id,displayName,storePrice] | 1        |
@@ -64,8 +74,8 @@ Feature: Creation of a new product entry
       | op  | path    | value                 |
       | add | product | {{ products[1]._id }} |
     Then there should be a 200 response from the "cart" request that contains:
-      | _id       | items    | created   | updated   |
-      | OBJECT_ID | ARRAY[2] | DATE_TIME | DATE_TIME |
+      | _id       | items    | value |
+      | OBJECT_ID | ARRAY[2] | 117   |
     And the "cart" request that has an "items" field and row 1 contains:
       | _id       | product                            | quantity |
       | OBJECT_ID | OBJECT[_id,displayName,storePrice] | 2        |
@@ -80,8 +90,8 @@ Feature: Creation of a new product entry
       | op  | path    | value                 |
       | add | product | {{ products[4]._id }} |
     Then there should be a 200 response from the "cart" request that contains:
-      | _id       | items    | created   | updated   |
-      | OBJECT_ID | ARRAY[1] | DATE_TIME | DATE_TIME |
+      | _id       | items    | value |
+      | OBJECT_ID | ARRAY[1] | 999   |
     And the "cart" request that has an "items" field and row 1 contains:
       | _id       | product                            | quantity |
       | OBJECT_ID | OBJECT[_id,displayName,storePrice] | 1        |
@@ -93,11 +103,8 @@ Feature: Creation of a new product entry
       | op  | path    | value                 |
       | add | product | {{ products[1]._id }} |
     Then there should be a 200 response from the "cart" request that contains:
-      | _id       | items    | created   | updated   |
-      | OBJECT_ID | ARRAY[2] | DATE_TIME | DATE_TIME |
+      | _id       | items    | value |
+      | OBJECT_ID | ARRAY[1] | 999   |
     And the "cart" request that has an "items" field and row 1 contains:
-      | _id       | product                            | quantity |
-      | OBJECT_ID | OBJECT[_id,displayName,storePrice] | 1        |
-    And the "cart" request that has an "items" field and row 2 contains:
       | _id       | product                            | quantity |
       | OBJECT_ID | OBJECT[_id,displayName,storePrice] | 1        |

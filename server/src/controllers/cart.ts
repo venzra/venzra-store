@@ -4,9 +4,9 @@ import { AuthenticationController } from './authentication';
 
 import { SubscriptionService } from '../services/subscription';
 
-import { CartModel } from '../models/cart';
+import { CartModel, ICart } from '../models/cart';
 import { IRestOperation } from '../models/rest';
-import { ProductModel } from '../models/products';
+import { IProductModel, ProductModel } from '../models/products';
 
 class CartController extends AuthenticationController {
 
@@ -16,6 +16,7 @@ class CartController extends AuthenticationController {
     }
 
     registerRoutes() {
+        this.router.get('/cart', this.checkSubscription.bind(this), this.findOne.bind(this));
         this.router.patch('/cart', this.checkSubscription.bind(this), this.updateBasket.bind(this), this.findOne.bind(this));
     }
 
@@ -38,7 +39,7 @@ class CartController extends AuthenticationController {
                             switch (operation.path) {
                                 case 'product':
                                     promise = promise
-                                        .then(() => ProductModel.findOne({ _id: operation.value, subscription }))
+                                        .then(() => ProductModel.findOne({ _id: operation.value, subscription, status: 'ACTIVE' }))
                                         .then((product) => {
                                             if (!product) {
                                                 return;
@@ -68,10 +69,17 @@ class CartController extends AuthenticationController {
 
         CartModel
             .findOne({ _id, subscription })
-            .select('items created updated')
+            .select('items')
             .populate({
                 path: 'items.product',
-                select: 'displayName storePrice'
+                select: 'displayName storePrice',
+                match: { status: 'ACTIVE' }
+            })
+            .then((cart) => <ICart>cart.toObject())
+            .then((cart) => {
+                const items = cart.items.filter((item) => item.product);
+                const value = items.reduce((value, item) => value + (item.quantity * (<IProductModel>item.product).storePrice), 0);
+                return { ...cart, items, value };
             })
             .then((cart) => res.status(200).send(cart));
     }

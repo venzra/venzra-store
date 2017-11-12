@@ -19,6 +19,7 @@ import { FooterComponent } from './common/footer/footer.component';
 import { LayoutService } from './layout.service';
 import { SubscriptionRetrieveResolve, SubscriptionService } from './services/subscription.service';
 import { ProductPromotionsResolve, ProductService } from './services/product.service';
+import { CartService, CartEventEmitter, CartEventService } from './services/cart.service';
 
 @NgModule({
     declarations: [
@@ -39,10 +40,13 @@ import { ProductPromotionsResolve, ProductService } from './services/product.ser
     ],
     providers: [
         LayoutService,
-        ProductService,
         SubscriptionService,
+        SubscriptionRetrieveResolve,
+        ProductService,
         ProductPromotionsResolve,
-        SubscriptionRetrieveResolve
+        CartService,
+        CartEventEmitter,
+        CartEventService
     ],
     bootstrap: [StoreComponent]
 })

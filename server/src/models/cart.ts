@@ -1,17 +1,14 @@
 import { Schema, Document, Model, model } from 'mongoose';
 
 interface ICartItem {
-    product: string;
+    product: any;
     quantity?: number;
 }
 
 interface ICart extends Document {
     subscription?: string;
-    items: [ICartItem];
-    displayName: string;
-    retailPrice: number;
-    storePrice: number;
-    status?: string;
+    items: ICartItem[];
+    value?: number;
 }
 
 const CartSchema: Schema = new Schema({
@@ -54,4 +51,4 @@ CartSchema.pre('save', function (next) {
 
 const CartModel: Model<ICart> = model('carts', CartSchema);
 
-export { CartModel, ICart };
+export { CartModel, ICart, ICartItem };
