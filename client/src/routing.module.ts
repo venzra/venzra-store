@@ -2,19 +2,14 @@ import { NgModule } from '@angular/core';
 
 import { RouterModule, Routes } from '@angular/router';
 
-import { ShopFrontComponent } from './components/shop-front/shop-front.component';
-import { SubscriptionRetrieveResolve } from './services/subscription.service';
-import { ProductPromotionsResolve } from './services/product.service';
+import { PublicComponent } from './public.component';
 
 const routes: Routes = [
     {
         path: '',
-        component: ShopFrontComponent,
-        pathMatch: 'full',
-        resolve: {
-            subscription: SubscriptionRetrieveResolve,
-            products: ProductPromotionsResolve
-        }
+        component: PublicComponent,
+        loadChildren: './modules/shop-front/shop-front.module#ShopFrontModule',
+        pathMatch: 'full'
     },
     {
         path: '**',

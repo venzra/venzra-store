@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { Subscription } from '../../models/subscription';
+import { Subscription } from '../../../../services/subscription.service';
 
-import { LayoutService } from '../../layout.service';
+import { LayoutService } from '../../../../services/layout.service';
 
 @Component({
-    templateUrl: './shop-front.component.html',
-    styleUrls: ['./shop-front.component.css']
+    templateUrl: './landing.component.html',
+    styleUrls: ['./landing.component.css']
 })
-export class ShopFrontComponent implements OnInit {
+export class LandingComponent implements OnInit {
 
     subscription: Subscription;
 

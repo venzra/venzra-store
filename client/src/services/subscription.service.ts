@@ -3,8 +3,16 @@ import { HttpClient } from '@angular/common/http';
 
 import 'rxjs/add/operator/toPromise';
 
-import { Subscription } from '../models/subscription';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
+
+export class Subscription {
+    _id: string;
+    storeName: string;
+    strapline: string;
+    status: string;
+    created: Date;
+    updated: Date;
+}
 
 @Injectable()
 export class SubscriptionService {

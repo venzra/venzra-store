@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { ListModel } from '../../services/restful.service';
-import { Product } from '../../services/product.service';
-import { CartService, CartEventService } from '../../services/cart.service';
+import { ListModel } from '../../../services/restful.service';
+import { Product } from '../../../services/product.service';
+import { CartService, CartEventService } from '../../../services/cart.service';
 
 @Component({
     selector: 'product-promotions',

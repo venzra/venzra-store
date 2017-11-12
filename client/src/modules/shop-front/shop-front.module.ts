@@ -1,0 +1,26 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+import { VenzraCommonModule } from '../../common/common.module';
+import { ShopFrontRoutingModule } from './routing.module';
+
+import { LandingComponent } from './components/landing/landing.component';
+
+import { SubscriptionRetrieveResolve, SubscriptionService } from '../../services/subscription.service';
+
+@NgModule({
+    declarations: [
+        LandingComponent
+    ],
+    imports: [
+        CommonModule,
+        VenzraCommonModule,
+        ShopFrontRoutingModule
+    ],
+    providers: [
+        SubscriptionService,
+        SubscriptionRetrieveResolve
+    ]
+})
+export class ShopFrontModule {
+}
