@@ -1,0 +1,42 @@
+<div fxLayout="row" fxLayoutAlign="center center">
+    <div fxFlex="90" fxFlex.gt-md="70" fxFlex.xl="60">
+        <section>
+            <h1>Shopping basket</h1>
+
+            <div fxLayout="row" fxLayoutGap="20px">
+                <mat-card fxFlex="80%">
+                    <mat-list>
+                        <mat-list-item *ngFor="let item of cart.items">
+                            <h3 matLine>{{ item.product.displayName }}</h3>
+                            <p matLine>{{ item.quantity }} @ {{ item.product.storePrice | price }}</p>
+                            <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center center">
+                                <button mat-icon-button color="accent">
+                                    <mat-icon>remove_circle</mat-icon>
+                                </button>
+                                <span>{{ item.quantity }}</span>
+                                <button mat-icon-button color="accent" (click)="increment(item)">
+                                    <mat-icon>add_circle</mat-icon>
+                                </button>
+                            </div>
+                        </mat-list-item>
+                    </mat-list>
+                </mat-card>
+
+                <mat-card fxFlex="20%">
+                    <h2>Sub-total</h2>
+                    <p>{{ cart.value | price }}</p>
+
+                    <h2>Shipping</h2>
+                    <p>tbc...</p>
+
+                    <h2>Total</h2>
+                    <p>{{ cart.value | price }}</p>
+                </mat-card>
+            </div>
+        </section>
+
+        <section>
+            <product-promotions></product-promotions>
+        </section>
+    </div>
+</div>

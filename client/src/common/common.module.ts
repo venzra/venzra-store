@@ -58,6 +58,7 @@ import { ErrorInterceptorModule } from './http.interceptor';
         MatToolbarModule,
         MatTooltipModule,
         ErrorInterceptorModule,
+        PricePipe,
         CartComponent,
         PromotionsComponent
     ]

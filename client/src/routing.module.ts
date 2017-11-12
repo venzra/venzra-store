@@ -8,12 +8,21 @@ const routes: Routes = [
     {
         path: '',
         component: PublicComponent,
-        loadChildren: './modules/shop-front/shop-front.module#ShopFrontModule',
-        pathMatch: 'full'
-    },
-    {
-        path: '**',
-        redirectTo: '/errors/404'
+        children: [
+            {
+                path: '',
+                loadChildren: './modules/shop-front/shop-front.module#ShopFrontModule',
+                pathMatch: 'full'
+            },
+            {
+                path: 'checkout',
+                loadChildren: './modules/checkout/checkout.module#CheckoutModule'
+            },
+            {
+                path: '**',
+                redirectTo: '/errors/404'
+            }
+        ]
     }
 ];
 

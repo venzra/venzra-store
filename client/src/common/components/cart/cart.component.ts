@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { Cart, CartEventService } from '../../../services/cart.service';
 
@@ -11,6 +12,7 @@ export class CartComponent implements OnInit {
     public cart: Cart = { items: [], value: 0 };
 
     constructor(
+        private router: Router,
         private cartEvent: CartEventService
     ) { }
 
@@ -19,6 +21,6 @@ export class CartComponent implements OnInit {
     }
 
     openCart(): void {
-        console.log('View cart page');
+        this.router.navigate(['checkout']);
     }
 }
