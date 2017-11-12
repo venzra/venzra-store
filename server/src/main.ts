@@ -48,7 +48,7 @@ const mongo = {
     options: {
         useMongoClient: true,
         socketTimeoutMS: 0,
-        keepAlive: true,
+        keepAlive: 120,
         reconnectTries: 30,
         poolSize: 5
     }
