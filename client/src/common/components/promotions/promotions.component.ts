@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { ListModel } from '../../../services/restful.service';
 import { Product } from '../../../services/product.service';
-import { CartService, CartEventService } from '../../../services/cart.service';
+import { CartService } from '../../../services/cart.service';
 
 @Component({
     selector: 'product-promotions',
@@ -15,8 +15,7 @@ export class PromotionsComponent implements OnInit {
 
     constructor(
         private route: ActivatedRoute,
-        private cartService: CartService,
-        private cartEvent: CartEventService
+        private cartService: CartService
     ) { }
 
     ngOnInit(): void {
@@ -30,6 +29,6 @@ export class PromotionsComponent implements OnInit {
     }
 
     purchase(product) {
-        this.cartService.addProduct(product).then((cart) => this.cartEvent.events.emit(cart));
+        this.cartService.addProduct(product).then((cart) => this.cartService.getCart().next(cart));
     }
 }

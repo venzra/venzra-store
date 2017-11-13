@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { Cart, CartEventService } from '../../../services/cart.service';
+import { Cart, CartService } from '../../../services/cart.service';
 
 @Component({
     selector: 'shopping-cart',
@@ -13,11 +13,11 @@ export class CartComponent implements OnInit {
 
     constructor(
         private router: Router,
-        private cartEvent: CartEventService
+        private cartService: CartService
     ) { }
 
     ngOnInit(): void {
-        this.cartEvent.events.subscribe((cart) => this.cart = cart);
+        this.cartService.getCart().subscribe((cart) => this.cart = cart);
     }
 
     openCart(): void {

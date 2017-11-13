@@ -6,8 +6,6 @@ import { CheckoutRoutingModule } from './routing.module';
 
 import { BasketComponent } from './components/basket/basket.component';
 
-import { CartRetrieveResolve } from '../../services/cart.service';
-
 @NgModule({
     declarations: [
         BasketComponent
@@ -16,9 +14,6 @@ import { CartRetrieveResolve } from '../../services/cart.service';
         CommonModule,
         VenzraCommonModule,
         CheckoutRoutingModule
-    ],
-    providers: [
-        CartRetrieveResolve
     ]
 })
 export class CheckoutModule {

@@ -12,7 +12,7 @@ import { PublicComponent } from './public.component';
 
 import { LayoutService } from './services/layout.service';
 import { ProductPromotionsResolve, ProductService } from './services/product.service';
-import { CartService, CartEventEmitter, CartEventService } from './services/cart.service';
+import { CartService } from './services/cart.service';
 
 @NgModule({
     declarations: [
@@ -32,9 +32,7 @@ import { CartService, CartEventEmitter, CartEventService } from './services/cart
         LayoutService,
         ProductService,
         ProductPromotionsResolve,
-        CartService,
-        CartEventEmitter,
-        CartEventService
+        CartService
     ],
     bootstrap: [StoreComponent]
 })
