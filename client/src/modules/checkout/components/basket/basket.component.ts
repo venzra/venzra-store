@@ -5,7 +5,8 @@ import { LayoutService } from '../../../../services/layout.service';
 import { Cart, CartEventService, CartService } from '../../../../services/cart.service';
 
 @Component({
-    templateUrl: './basket.component.html'
+    templateUrl: './basket.component.html',
+    styleUrls: ['./basket.component.css']
 })
 export class BasketComponent implements OnInit {
 
@@ -30,6 +31,11 @@ export class BasketComponent implements OnInit {
 
     increment(item) {
         this.cartService.addProduct(item.product)
+            .then((cart) => this.cartEvent.events.emit(cart));
+    }
+
+    decrement(item) {
+        this.cartService.removeProduct(item.product)
             .then((cart) => this.cartEvent.events.emit(cart));
     }
 

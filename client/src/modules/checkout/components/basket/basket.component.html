@@ -8,9 +8,12 @@
                     <mat-list>
                         <mat-list-item *ngFor="let item of cart.items">
                             <h3 matLine>{{ item.product.displayName }}</h3>
-                            <p matLine>{{ item.quantity }} @ {{ item.product.storePrice | price }}</p>
-                            <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center center">
-                                <button mat-icon-button color="accent">
+                            <div fxLayout="row" matLine>
+                                <p fxFlex>{{ item.quantity }} @ {{ item.product.storePrice | price }}</p>
+                                <p fxFlex>{{ item.quantity * item.product.storePrice | price }}</p>
+                            </div>
+                            <div class="basket-quantity" fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="space-between center">
+                                <button mat-icon-button color="accent" (click)="decrement(item)">
                                     <mat-icon>remove_circle</mat-icon>
                                 </button>
                                 <span>{{ item.quantity }}</span>

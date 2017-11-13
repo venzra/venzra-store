@@ -43,6 +43,13 @@ export class CartService {
             .then((cart) => this.cleanValues(cart));
     }
 
+    removeProduct(product: Product): Promise<Cart> {
+        return this.http.patch('/api/v1/cart', [{ op: 'remove', path: 'product', value: product._id }])
+            .toPromise()
+            .then((response: any) => response as Cart)
+            .then((cart) => this.cleanValues(cart));
+    }
+
     getCart(): Promise<Cart> {
         return this.http.get('api/v1/cart')
             .toPromise()

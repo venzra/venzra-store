@@ -54,6 +54,25 @@ class CartController extends AuthenticationController {
                                             }
                                         });
                             }
+                            break;
+                        case 'remove':
+                            switch (operation.path) {
+                                case 'product':
+                                    promise = promise
+                                        .then(() => {
+                                            const item = cart.items.find((entry) => entry.product.toString() === operation.value);
+
+                                            if (!item) {
+                                                return;
+                                            }
+
+                                            item.quantity--;
+
+                                            if (item.quantity <= 0) {
+                                                cart.items = cart.items.filter((entry) => entry.product.toString() !== operation.value);
+                                            }
+                                        });
+                            }
                     }
                 });
 
