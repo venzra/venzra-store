@@ -8,12 +8,12 @@ Feature: Adding products into a cart
       | Cart Add One | ACTIVE |
       | Cart Add Two | ACTIVE |
     And there are the following "products" records in the database
-      | subscription               | code       | slug        | displayName | storePrice | status   |
-      | {{ subscriptions[1]._id }} | ADD-01-001 | cart-add-a  | Cart Add A  | 9          | ACTIVE   |
-      | {{ subscriptions[1]._id }} | ADD-01-002 | cart-add-aa | Cart Add AA | 99         | ACTIVE   |
-      | {{ subscriptions[1]._id }} | ADD-01-003 | cart-add-b  | Cart Add B  | 999        | INACTIVE |
-      | {{ subscriptions[2]._id }} | ADD-02-001 | cart-add-a  | Cart Add A  | 999        | ACTIVE   |
-      | {{ subscriptions[2]._id }} | ADD-02-002 | cart-add-b  | Cart Add B  | 999        | INACTIVE |
+      | subscription               | code       | slug        | displayName | currentPrice | status   |
+      | {{ subscriptions[1]._id }} | ADD-01-001 | cart-add-a  | Cart Add A  | 9            | ACTIVE   |
+      | {{ subscriptions[1]._id }} | ADD-01-002 | cart-add-aa | Cart Add AA | 99           | ACTIVE   |
+      | {{ subscriptions[1]._id }} | ADD-01-003 | cart-add-b  | Cart Add B  | 999          | INACTIVE |
+      | {{ subscriptions[2]._id }} | ADD-02-001 | cart-add-a  | Cart Add A  | 999          | ACTIVE   |
+      | {{ subscriptions[2]._id }} | ADD-02-002 | cart-add-b  | Cart Add B  | 999          | INACTIVE |
     And there are the following "carts" records in the database
       | subscription               | items                                    |
       | {{ subscriptions[1]._id }} | [{ "product": "{{ products[1]._id }}" }] |
@@ -48,8 +48,8 @@ Feature: Adding products into a cart
       | _id       | items    | value |
       | OBJECT_ID | ARRAY[1] | 9     |
     And the "cart" request that has an "items" field and row 1 contains:
-      | _id       | product                            | quantity |
-      | OBJECT_ID | OBJECT[_id,displayName,storePrice] | 1        |
+      | _id       | product                              | quantity |
+      | OBJECT_ID | OBJECT[_id,displayName,currentPrice] | 1        |
 
   Scenario: Updating a cart to add another product
     Given the request origin headers are set to "cart-add-one.venzra-test.io"
@@ -61,11 +61,11 @@ Feature: Adding products into a cart
       | _id       | items    | value |
       | OBJECT_ID | ARRAY[2] | 108   |
     And the "cart" request that has an "items" field and row 1 contains:
-      | _id       | product                            | quantity |
-      | OBJECT_ID | OBJECT[_id,displayName,storePrice] | 1        |
+      | _id       | product                              | quantity |
+      | OBJECT_ID | OBJECT[_id,displayName,currentPrice] | 1        |
     And the "cart" request that has an "items" field and row 2 contains:
-      | _id       | product                            | quantity |
-      | OBJECT_ID | OBJECT[_id,displayName,storePrice] | 1        |
+      | _id       | product                              | quantity |
+      | OBJECT_ID | OBJECT[_id,displayName,currentPrice] | 1        |
 
   Scenario: Adding a product that is already in the basket should increment the quantity only
     Given the request origin headers are set to "cart-add-one.venzra-test.io"
@@ -77,11 +77,11 @@ Feature: Adding products into a cart
       | _id       | items    | value |
       | OBJECT_ID | ARRAY[2] | 117   |
     And the "cart" request that has an "items" field and row 1 contains:
-      | _id       | product                            | quantity |
-      | OBJECT_ID | OBJECT[_id,displayName,storePrice] | 2        |
+      | _id       | product                              | quantity |
+      | OBJECT_ID | OBJECT[_id,displayName,currentPrice] | 2        |
     And the "cart" request that has an "items" field and row 2 contains:
-      | _id       | product                            | quantity |
-      | OBJECT_ID | OBJECT[_id,displayName,storePrice] | 1        |
+      | _id       | product                              | quantity |
+      | OBJECT_ID | OBJECT[_id,displayName,currentPrice] | 1        |
 
   Scenario: If the cart does not exist (for the subscription) a new cart is created automatically and the product added
     Given the request origin headers are set to "cart-add-two.venzra-test.io"
@@ -93,8 +93,8 @@ Feature: Adding products into a cart
       | _id       | items    | value |
       | OBJECT_ID | ARRAY[1] | 999   |
     And the "cart" request that has an "items" field and row 1 contains:
-      | _id       | product                            | quantity |
-      | OBJECT_ID | OBJECT[_id,displayName,storePrice] | 1        |
+      | _id       | product                              | quantity |
+      | OBJECT_ID | OBJECT[_id,displayName,currentPrice] | 1        |
 
   Scenario: Adding a product that does not belong to the subscription is ignored
     Given the request origin headers are set to "cart-add-two.venzra-test.io"
@@ -106,5 +106,5 @@ Feature: Adding products into a cart
       | _id       | items    | value |
       | OBJECT_ID | ARRAY[1] | 999   |
     And the "cart" request that has an "items" field and row 1 contains:
-      | _id       | product                            | quantity |
-      | OBJECT_ID | OBJECT[_id,displayName,storePrice] | 1        |
+      | _id       | product                              | quantity |
+      | OBJECT_ID | OBJECT[_id,displayName,currentPrice] | 1        |

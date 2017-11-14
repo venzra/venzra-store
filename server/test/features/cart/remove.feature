@@ -8,12 +8,12 @@ Feature: Removing products from a cart
       | Cart Remove One | ACTIVE |
       | Cart Remove Two | ACTIVE |
     And there are the following "products" records in the database
-      | subscription               | code          | slug           | displayName    | storePrice | status   |
-      | {{ subscriptions[1]._id }} | REMOVE-01-001 | cart-remove-a  | Cart Remove A  | 9          | ACTIVE   |
-      | {{ subscriptions[1]._id }} | REMOVE-01-002 | cart-remove-aa | Cart Remove AA | 99         | ACTIVE   |
-      | {{ subscriptions[1]._id }} | REMOVE-01-003 | cart-remove-b  | Cart Remove B  | 999        | INACTIVE |
-      | {{ subscriptions[2]._id }} | REMOVE-02-001 | cart-remove-a  | Cart Remove A  | 999        | ACTIVE   |
-      | {{ subscriptions[2]._id }} | REMOVE-02-002 | cart-remove-b  | Cart Remove B  | 999        | INACTIVE |
+      | subscription               | code          | slug           | displayName    | currentPrice | status   |
+      | {{ subscriptions[1]._id }} | REMOVE-01-001 | cart-remove-a  | Cart Remove A  | 9            | ACTIVE   |
+      | {{ subscriptions[1]._id }} | REMOVE-01-002 | cart-remove-aa | Cart Remove AA | 99           | ACTIVE   |
+      | {{ subscriptions[1]._id }} | REMOVE-01-003 | cart-remove-b  | Cart Remove B  | 999          | INACTIVE |
+      | {{ subscriptions[2]._id }} | REMOVE-02-001 | cart-remove-a  | Cart Remove A  | 999          | ACTIVE   |
+      | {{ subscriptions[2]._id }} | REMOVE-02-002 | cart-remove-b  | Cart Remove B  | 999          | INACTIVE |
     And there are the following "carts" records in the database
       | subscription               | items                                                                                                          |
       | {{ subscriptions[1]._id }} |                                                                                                                |
@@ -61,11 +61,11 @@ Feature: Removing products from a cart
       | _id       | items    | value |
       | OBJECT_ID | ARRAY[2] | 216   |
     And the "cart" request that has an "items" field and row 1 contains:
-      | _id       | product                            | quantity |
-      | OBJECT_ID | OBJECT[_id,displayName,storePrice] | 2        |
+      | _id       | product                              | quantity |
+      | OBJECT_ID | OBJECT[_id,displayName,currentPrice] | 2        |
     And the "cart" request that has an "items" field and row 2 contains:
-      | _id       | product                            | quantity |
-      | OBJECT_ID | OBJECT[_id,displayName,storePrice] | 2        |
+      | _id       | product                              | quantity |
+      | OBJECT_ID | OBJECT[_id,displayName,currentPrice] | 2        |
 
   Scenario: It is possible to run multiple operations in a single call to remove several quantity or when quantity would hit 0 remove the item
     Given the request origin headers are set to "cart-remove-one.venzra-test.io"
@@ -80,5 +80,5 @@ Feature: Removing products from a cart
       | _id       | items    | value |
       | OBJECT_ID | ARRAY[1] | 9     |
     And the "cart" request that has an "items" field and row 1 contains:
-      | _id       | product                            | quantity |
-      | OBJECT_ID | OBJECT[_id,displayName,storePrice] | 1        |
+      | _id       | product                              | quantity |
+      | OBJECT_ID | OBJECT[_id,displayName,currentPrice] | 1        |

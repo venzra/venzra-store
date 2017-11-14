@@ -4,7 +4,7 @@
     <mat-card *ngFor="let product of products.list" fxFlex="25%">
         <mat-card-header>
             <mat-card-title>{{ product.displayName }}</mat-card-title>
-            <mat-card-subtitle>{{ product.storePrice | price }}</mat-card-subtitle>
+            <mat-card-subtitle>{{ product.currentPrice | price }}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-actions fxLayoutGap="10px" fxLayoutAlign="end end">
             <button mat-icon-button (click)="show(product)">

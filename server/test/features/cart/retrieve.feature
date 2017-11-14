@@ -8,12 +8,12 @@ Feature: Access cart data available for a customer
       | Cart Retrieve One | ACTIVE |
       | Cart Retrieve Two | ACTIVE |
     And there are the following "products" records in the database
-      | subscription               | code            | slug             | displayName      | storePrice | status   |
-      | {{ subscriptions[1]._id }} | RETRIEVE-01-001 | cart-retrieve-a  | Cart Retrieve A  | 9          | ACTIVE   |
-      | {{ subscriptions[1]._id }} | RETRIEVE-01-002 | cart-retrieve-aa | Cart Retrieve AA | 99         | ACTIVE   |
-      | {{ subscriptions[1]._id }} | RETRIEVE-01-003 | cart-retrieve-b  | Cart Retrieve B  | 999        | INACTIVE |
-      | {{ subscriptions[2]._id }} | RETRIEVE-02-001 | cart-retrieve-a  | Cart Retrieve A  | 999        | ACTIVE   |
-      | {{ subscriptions[2]._id }} | RETRIEVE-02-002 | cart-retrieve-b  | Cart Retrieve B  | 999        | INACTIVE |
+      | subscription               | code            | slug             | displayName      | currentPrice | status   |
+      | {{ subscriptions[1]._id }} | RETRIEVE-01-001 | cart-retrieve-a  | Cart Retrieve A  | 9            | ACTIVE   |
+      | {{ subscriptions[1]._id }} | RETRIEVE-01-002 | cart-retrieve-aa | Cart Retrieve AA | 99           | ACTIVE   |
+      | {{ subscriptions[1]._id }} | RETRIEVE-01-003 | cart-retrieve-b  | Cart Retrieve B  | 999          | INACTIVE |
+      | {{ subscriptions[2]._id }} | RETRIEVE-02-001 | cart-retrieve-a  | Cart Retrieve A  | 999          | ACTIVE   |
+      | {{ subscriptions[2]._id }} | RETRIEVE-02-002 | cart-retrieve-b  | Cart Retrieve B  | 999          | INACTIVE |
     And there are the following "carts" records in the database
       | subscription               | items                                                                                                                                   |
       | {{ subscriptions[1]._id }} |                                                                                                                                         |
@@ -45,8 +45,8 @@ Feature: Access cart data available for a customer
       | _id       | items    | value |
       | OBJECT_ID | ARRAY[1] | 9     |
     And the "cart" request that has an "items" field and row 1 contains:
-      | _id       | product                            | quantity |
-      | OBJECT_ID | OBJECT[_id,displayName,storePrice] | 1        |
+      | _id       | product                              | quantity |
+      | OBJECT_ID | OBJECT[_id,displayName,currentPrice] | 1        |
 
   Scenario: Successful retrieval of a complex cart will give a result with quantity counts and any inactive products removed
     Given the request origin headers are set to "cart-retrieve-one.venzra-test.io"
@@ -56,8 +56,8 @@ Feature: Access cart data available for a customer
       | _id       | items    | value |
       | OBJECT_ID | ARRAY[2] | 117   |
     And the "cart" request that has an "items" field and row 1 contains:
-      | _id       | product                            | quantity |
-      | OBJECT_ID | OBJECT[_id,displayName,storePrice] | 2        |
+      | _id       | product                              | quantity |
+      | OBJECT_ID | OBJECT[_id,displayName,currentPrice] | 2        |
     And the "cart" request that has an "items" field and row 2 contains:
-      | _id       | product                            | quantity |
-      | OBJECT_ID | OBJECT[_id,displayName,storePrice] | 1        |
+      | _id       | product                              | quantity |
+      | OBJECT_ID | OBJECT[_id,displayName,currentPrice] | 1        |

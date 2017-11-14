@@ -10,8 +10,8 @@ export class Product {
     _id?: string;
     code?: string;
     displayName: string;
-    retailPrice?: number;
-    storePrice: number;
+    previousPrice?: number;
+    currentPrice: number;
 }
 
 @Injectable()
@@ -21,6 +21,17 @@ export class ProductService {
         private http: HttpClient
     ) { }
 
+    getProduct(productSlug: string): Promise<Product> {
+        return this.http.get(`api/v1/products/${productSlug}`)
+            .toPromise()
+            .then((response: any) => response as Product)
+            .then((product) => {
+                product.previousPrice /= 100;
+                product.currentPrice /= 100;
+                return product;
+            });
+    }
+
     getAllProducts(query): Promise<ListModel<Product>> {
         const params = Object.keys(query).reduce((httpParams, key) => httpParams.set(key, query[key]), new HttpParams());
 
@@ -29,12 +40,23 @@ export class ProductService {
             .then((response: any) => response as ListModel<Product>)
             .then((products) => {
                 products.list.forEach((product) => {
-                    product.retailPrice /= 100;
-                    product.storePrice /= 100;
+                    product.previousPrice /= 100;
+                    product.currentPrice /= 100;
                     return product;
                 });
                 return products;
             });
+    }
+}
+
+@Injectable()
+export class ProductRetrieveResolve implements Resolve<Product> {
+    constructor(
+        private productService: ProductService
+    ) { }
+
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<Product> {
+        return this.productService.getProduct(route.params.productSlug);
     }
 }
 

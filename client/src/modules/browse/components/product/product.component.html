@@ -1,0 +1,33 @@
+<div fxLayout="row" fxLayoutAlign="center center">
+    <div fxFlex="90" fxFlex.gt-md="70" fxFlex.xl="60">
+        <section>
+            <h1>{{ product.displayName }}</h1>
+
+            <mat-card>
+                <mat-card-content fxLayout="column">
+                    <div fxLayout="row">
+                        <div fxLayout="column" fxFlexOffset="50%" fxFlex="50%" fxLayoutGap="20px">
+                            <mat-list>
+                                <mat-list-item>
+                                    <h3 matLine>Price</h3>
+                                    <div class="pricing" matLine>{{ product.currentPrice | price }}</div>
+                                </mat-list-item>
+
+                                <mat-list-item *ngIf="product.previousPrice">
+                                    <h3 matLine>Savings</h3>
+                                    <div matLine><span>{{ 1 - product.currentPrice / product.previousPrice | percent }}</span> <span class="strike">(was {{ product.previousPrice | price }})</span></div>
+                                </mat-list-item>
+                            </mat-list>
+
+                            <div fxLayoutAlign="end end">
+                                <button mat-raised-button color="primary" (click)="purchase(product)">
+                                    <mat-icon>add_shopping_cart</mat-icon> Buy
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </section>
+    </div>
+</div>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { ListModel } from '../../../services/restful.service';
 import { Product } from '../../../services/product.service';
@@ -15,6 +15,7 @@ export class PromotionsComponent implements OnInit {
 
     constructor(
         private route: ActivatedRoute,
+        private router: Router,
         private cartService: CartService
     ) { }
 
@@ -25,10 +26,10 @@ export class PromotionsComponent implements OnInit {
     }
 
     show(product) {
-        console.log('view');
+        this.router.navigate([`browse/product/${product.slug}`])
     }
 
     purchase(product) {
-        this.cartService.addProduct(product).then((cart) => this.cartService.getCart().next(cart));
+        this.cartService.addProduct(product);
     }
 }

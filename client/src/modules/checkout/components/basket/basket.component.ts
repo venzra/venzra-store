@@ -22,13 +22,11 @@ export class BasketComponent implements OnInit {
     }
 
     increment(item) {
-        this.cartService.addProduct(item.product)
-            .then((cart) => this.cartService.getCart().next(cart));
+        this.cartService.addProduct(item.product);
     }
 
     decrement(item) {
-        this.cartService.removeProduct(item.product)
-            .then((cart) => this.cartService.getCart().next(cart));
+        this.cartService.removeProduct(item.product);
     }
 
 }

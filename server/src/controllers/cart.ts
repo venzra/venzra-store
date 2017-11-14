@@ -91,13 +91,13 @@ class CartController extends AuthenticationController {
             .select('items')
             .populate({
                 path: 'items.product',
-                select: 'displayName storePrice',
+                select: 'displayName currentPrice',
                 match: { status: 'ACTIVE' }
             })
             .then((cart) => <ICart>cart.toObject())
             .then((cart) => {
                 const items = cart.items.filter((item) => item.product);
-                const value = items.reduce((value, item) => value + (item.quantity * (<IProductModel>item.product).storePrice), 0);
+                const value = items.reduce((value, item) => value + (item.quantity * (<IProductModel>item.product).currentPrice), 0);
                 return { ...cart, items, value };
             })
             .then((cart) => res.status(200).send(cart));

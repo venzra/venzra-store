@@ -4,8 +4,8 @@ interface IProductModel extends Document {
     subscription?: string;
     code: string;
     displayName: string;
-    retailPrice: number;
-    storePrice: number;
+    previousPrice: number;
+    currentPrice: number;
     status?: string;
 }
 
@@ -29,12 +29,12 @@ const ProductSchema: Schema = new Schema({
         type: String,
         lowercase: true
     },
-    retailPrice: {
+    previousPrice: {
         type: Number,
         min: 0,
         default: 0
     },
-    storePrice: {
+    currentPrice: {
         type: Number,
         required: true,
         min: 0

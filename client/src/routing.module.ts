@@ -15,6 +15,10 @@ const routes: Routes = [
                 pathMatch: 'full'
             },
             {
+                path: 'browse',
+                loadChildren: './modules/browse/browse.module#BrowseModule'
+            },
+            {
                 path: 'checkout',
                 loadChildren: './modules/checkout/checkout.module#CheckoutModule'
             },

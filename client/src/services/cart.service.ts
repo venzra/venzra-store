@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
+import { MatSnackBar } from '@angular/material';
+
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import 'rxjs/add/operator/toPromise';
 
@@ -24,33 +26,36 @@ export class CartService {
     private cart: ReplaySubject<Cart> = new ReplaySubject();
 
     constructor(
-        private http: HttpClient
-    ) {
-        this.loadCart();
-    }
+        private http: HttpClient,
+        private snackbar: MatSnackBar
+    ) { }
 
     cleanValues(cart) {
         cart.items.forEach((item) => {
-            item.product.retailPrice /= 100;
-            item.product.storePrice /= 100;
+            item.product.previousPrice /= 100;
+            item.product.currentPrice /= 100;
             return item;
         });
         cart.value /= 100;
         return cart;
     }
 
-    addProduct(product: Product): Promise<Cart> {
+    addProduct(product: Product): any {
         return this.http.patch('/api/v1/cart', [{ op: 'add', path: 'product', value: product._id }])
             .toPromise()
             .then((response: any) => response as Cart)
-            .then((cart) => this.cleanValues(cart));
+            .then((cart) => this.cleanValues(cart))
+            .then((cart) => this.cart.next(cart))
+            .then(() => this.snackbar.open(`${product.displayName} added to cart`, null, { duration: 2000 }));
     }
 
-    removeProduct(product: Product): Promise<Cart> {
+    removeProduct(product: Product): any {
         return this.http.patch('/api/v1/cart', [{ op: 'remove', path: 'product', value: product._id }])
             .toPromise()
             .then((response: any) => response as Cart)
-            .then((cart) => this.cleanValues(cart));
+            .then((cart) => this.cleanValues(cart))
+            .then((cart) => this.cart.next(cart))
+            .then(() => this.snackbar.open(`${product.displayName} removed from cart`, null, { duration: 2000 }));
     }
 
     getCart(): ReplaySubject<Cart> {
