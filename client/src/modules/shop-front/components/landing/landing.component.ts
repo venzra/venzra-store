@@ -7,7 +7,7 @@ import { LayoutService } from '../../../../services/layout.service';
 
 @Component({
     templateUrl: './landing.component.html',
-    styleUrls: ['./landing.component.css']
+    styleUrls: ['./landing.component.sass']
 })
 export class LandingComponent implements OnInit {
 

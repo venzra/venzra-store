@@ -5,7 +5,7 @@ import { Cart, CartService } from '../../../../services/cart.service';
 
 @Component({
     templateUrl: './basket.component.html',
-    styleUrls: ['./basket.component.css']
+    styleUrls: ['./basket.component.sass']
 })
 export class BasketComponent implements OnInit {
 
