@@ -12,9 +12,9 @@ const EMAIL_REGEX = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9]
 })
 export class AuthenticationComponent implements OnInit {
 
-    private credentials: AccountCredentials;
+    public authenticationForm: FormGroup;
 
-    protected authenticationForm: FormGroup;
+    private credentials: AccountCredentials;
 
     constructor(
         private forms: FormBuilder,
