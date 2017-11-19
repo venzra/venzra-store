@@ -2,9 +2,11 @@ import { NgModule } from '@angular/core';
 
 import { RouterModule, Routes } from '@angular/router';
 
-import { BasketComponent } from './components/basket/basket.component';
-
+import { AuthGuard } from '../../services/guard.service';
 import { ProductPromotionsResolve } from '../../services/product.service';
+
+import { BasketComponent } from './components/basket/basket.component';
+import { PaymentComponent } from './components/payment/payment.component';
 
 const routes: Routes = [
     {
@@ -13,6 +15,11 @@ const routes: Routes = [
         resolve: {
             products: ProductPromotionsResolve
         }
+    },
+    {
+        path: 'payment',
+        component: PaymentComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: '',

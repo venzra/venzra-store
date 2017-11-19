@@ -12,6 +12,8 @@ import { venzraSession } from './middleware/venzra-session';
 import { errorHandler } from './middleware/error-handler';
 
 import { SubscriptionController } from './controllers/subscription';
+import { IdentityController } from './controllers/identity';
+import { CustomerController } from './controllers/customer';
 import { ProductsController } from './controllers/products';
 import { CartController } from './controllers/cart';
 
@@ -62,6 +64,8 @@ mongoose
  * Start controllers
  */
 const subscription = new SubscriptionController(router);
+const identity = new IdentityController(router);
+const customer = new CustomerController(router);
 const products = new ProductsController(router);
 const cart = new CartController(router);
 

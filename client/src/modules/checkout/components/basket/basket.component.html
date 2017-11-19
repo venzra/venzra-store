@@ -4,7 +4,8 @@
             <h1>Shopping basket</h1>
 
             <div fxLayout="row" fxLayoutGap="20px">
-                <mat-card fxFlex="80%">
+                <mat-card fxFlex>
+                    <h2>Your Products</h2>
                     <mat-list>
                         <mat-list-item *ngFor="let item of cart.items">
                             <h3 matLine>{{ item.product.displayName }}</h3>
@@ -25,16 +26,35 @@
                     </mat-list>
                 </mat-card>
 
-                <mat-card fxFlex="20%">
-                    <h2>Sub-total</h2>
-                    <p>{{ cart.value | price }}</p>
+                <div fxFlex="25%">
+                    <mat-card fxLayout="column" fxLayoutGap="20px">
+                        <div>
+                            <h2>Order details</h2>
+                            <mat-list>
+                                <mat-list-item>
+                                    <h3 matLine>Sub-total</h3>
+                                    <div matLine>{{ cart.value | price }}</div>
+                                </mat-list-item>
 
-                    <h2>Shipping</h2>
-                    <p>tbc...</p>
+                                <mat-list-item>
+                                    <h3 matLine>Shipping</h3>
+                                    <div matLine>tbc...</div>
+                                </mat-list-item>
 
-                    <h2>Total</h2>
-                    <p>{{ cart.value | price }}</p>
-                </mat-card>
+                                <mat-list-item>
+                                    <h3 matLine>Total</h3>
+                                    <div matLine>{{ cart.value | price }}</div>
+                                </mat-list-item>
+                            </mat-list>
+                        </div>
+
+                        <div fxLayoutAlign="center">
+                            <a mat-raised-button color="primary" (click)="nextStep()">
+                                Checkout <mat-icon>arrow_forward</mat-icon>
+                            </a>
+                        </div>
+                    </mat-card>
+                </div>
             </div>
         </section>
 

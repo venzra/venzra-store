@@ -27,10 +27,6 @@ class ProductsController extends AuthenticationController {
         ProductModel
             .findOne({ slug, subscription, status })
             .select('slug code displayName previousPrice currentPrice')
-            .populate({
-                path: 'history.account',
-                select: 'identity'
-            })
             .then((product) => product ? res.status(200).send(product) : next(new NotFoundError()));
     }
 

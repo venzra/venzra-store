@@ -1,0 +1,13 @@
+<div fxLayout="row" fxLayoutAlign="center center">
+    <div fxFlex="60" fxFlex.gt-md="40" fxFlex.xl="30">
+        <section>
+            <h1>Your account</h1>
+
+            <mat-card>
+                <p class="mat-caption">Account management for.... {{ account.identity }}</p>
+
+                <button mat-raised-button color="warn" (click)="logout()">LOGOUT</button>
+            </mat-card>
+        </section>
+    </div>
+</div>

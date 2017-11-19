@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Cart, CartService } from '../../../../services/cart.service';
 
 import { LayoutService } from '../../../../services/layout.service';
-import { Cart, CartService } from '../../../../services/cart.service';
 
 @Component({
     templateUrl: './basket.component.html',
@@ -12,6 +13,7 @@ export class BasketComponent implements OnInit {
     cart: Cart = new Cart();
 
     constructor(
+        private router: Router,
         private layout: LayoutService,
         private cartService: CartService
     ) { }
@@ -27,6 +29,10 @@ export class BasketComponent implements OnInit {
 
     decrement(item) {
         this.cartService.removeProduct(item.product);
+    }
+
+    nextStep(): void {
+        this.router.navigate(['checkout/payment']);
     }
 
 }

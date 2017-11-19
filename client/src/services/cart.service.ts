@@ -3,8 +3,9 @@ import { HttpClient } from '@angular/common/http';
 
 import { MatSnackBar } from '@angular/material';
 
-import { ReplaySubject } from 'rxjs/ReplaySubject';
 import 'rxjs/add/operator/toPromise';
+
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { Product } from './product.service';
 
@@ -23,7 +24,7 @@ export class Cart {
 @Injectable()
 export class CartService {
 
-    private cart: ReplaySubject<Cart> = new ReplaySubject();
+    private cart: BehaviorSubject<Cart> = new BehaviorSubject<Cart>({ items: [], value: 0 });
 
     constructor(
         private http: HttpClient,
@@ -58,7 +59,7 @@ export class CartService {
             .then(() => this.snackbar.open(`${product.displayName} removed from cart`, null, { duration: 2000 }));
     }
 
-    getCart(): ReplaySubject<Cart> {
+    getCart(): BehaviorSubject<Cart> {
         return this.cart;
     }
 

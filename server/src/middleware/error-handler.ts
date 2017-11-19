@@ -4,13 +4,34 @@ import * as winston from 'winston';
 
 interface IVenzraError {
     name: string;
+    account?: string;
     message: string;
+    reason?: string;
+    errors?: any;
 }
 
 class VenzraError extends Error {
     constructor(public message: string) {
         super();
         this.name = this.constructor.name;
+    }
+}
+
+export class AccountAccessError extends VenzraError implements IVenzraError {
+    constructor(public reason: string) {
+        super('Invalid account credentials');
+    }
+}
+
+export class AccessDeniedError extends VenzraError implements IVenzraError {
+    constructor(public reason: string) {
+        super('Access Denied');
+    }
+}
+
+export class AuthenticationError extends VenzraError implements IVenzraError {
+    constructor(public account: string, public reason: string) {
+        super('Invalid user credentials');
     }
 }
 
@@ -37,9 +58,31 @@ export const errorHandler = (err: IVenzraError, req: Request, res: Response, nex
     });
 
     switch (err.name) {
+        case 'AccountAccessError':
+            logger.info(err.reason);
+            res.status(400).send({ message: err.message });
+            break;
         case 'BadRequest':
             logger.info(err.message);
             res.status(400).send({ message: err.message });
+            break;
+        case 'ValidationError':
+            logger.info(err.message);
+            const detail = new Set();
+            for (let key of Object.keys(err.errors)) {
+                detail.add(`${err.errors[key].path} ${err.errors[key].kind}`.trim());
+            }
+            res.status(400).send({ message: 'Validation failed', detail: [...detail] });
+            break;
+        case 'AuthenticationError':
+            logger.info(`${err.reason} for ${err.account || 'unknown'}`);
+            res.clearCookie('jwt');
+            res.status(400).send({ message: err.message });
+            break;
+        case 'AccessDeniedError':
+            logger.info(err.reason);
+            res.clearCookie('jwt');
+            res.status(401).send({ message: err.message });
             break;
         case 'NotFoundError':
             res.status(404).send();

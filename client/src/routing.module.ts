@@ -19,6 +19,10 @@ const routes: Routes = [
                 loadChildren: './modules/browse/browse.module#BrowseModule'
             },
             {
+                path: 'account',
+                loadChildren: './modules/account/account.module#AccountModule'
+            },
+            {
                 path: 'checkout',
                 loadChildren: './modules/checkout/checkout.module#CheckoutModule'
             },

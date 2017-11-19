@@ -9,7 +9,7 @@ import { Cart, CartService } from '../../../services/cart.service';
 })
 export class CartComponent implements OnInit {
 
-    public cart: Cart = { items: [], value: 0 };
+    public cart: Cart;
 
     constructor(
         private router: Router,

@@ -1,0 +1,40 @@
+<div fxLayout="row" fxLayoutAlign="center center">
+    <div fxFlex="60" fxFlex.gt-md="40" fxFlex.xl="30">
+        <section>
+            <h1>Login / Register</h1>
+
+            <mat-card>
+                <p class="mat-caption">Please provide your account details to login, if you do not have an account we will create one using these credentials. If you are having issues please use the forgotten password option.</p>
+
+                <form fxLayout="column" fxLayoutGap="20px" (ngSubmit)="login()" [formGroup]="authenticationForm">
+
+                    <mat-form-field>
+                        <input matInput
+                               placeholder="Your email address"
+                               formControlName="emailAddress"
+                        />
+                        <mat-error *ngIf="authenticationForm.controls['emailAddress'].hasError('required')">This field is required.</mat-error>
+                        <mat-error *ngIf="authenticationForm.controls['emailAddress'].hasError('pattern')">A valid email address is required.</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <input matInput
+                               type="password"
+                               placeholder="Password"
+                               formControlName="password"
+                        />
+                        <mat-error *ngIf="authenticationForm.controls['password'].hasError('required')">This field is required.</mat-error>
+                    </mat-form-field>
+
+                    <div fxLayoutAlign="end">
+                        <div fxLayout="row" fxLayoutGap="10px">
+                            <a mat-button routerLink="/auth/recovery">Forgotten password?</a>
+                            <button mat-raised-button color="primary" type="submit" [disabled]="authenticationForm.pristine || authenticationForm.invalid">Login</button>
+                        </div>
+                    </div>
+
+                </form>
+            </mat-card>
+        </section>
+    </div>
+</div>
