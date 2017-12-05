@@ -16,6 +16,7 @@ import { IdentityController } from './controllers/identity';
 import { CustomerController } from './controllers/customer';
 import { ProductsController } from './controllers/products';
 import { CartController } from './controllers/cart';
+import { OrdersController } from './controllers/orders';
 
 require('mongoose').Promise = global.Promise;
 
@@ -68,6 +69,7 @@ const identity = new IdentityController(router);
 const customer = new CustomerController(router);
 const products = new ProductsController(router);
 const cart = new CartController(router);
+const orders = new OrdersController(router);
 
 app.use(errorHandler);
 

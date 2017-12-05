@@ -13,7 +13,7 @@ defineSupportCode(({ Given, When, Then }) => {
 
         expectedKeys.map((key) => {
             let check;
-            if(typeof expected[key] === 'string') {
+            if (typeof expected[key] === 'string') {
                 check = expected[key].match(/\[([^\]]*)\]/) || expected[key];
                 if (check instanceof Array) {
                     expected[key] = expected[key].replace(check[0], '');
@@ -34,6 +34,9 @@ defineSupportCode(({ Given, When, Then }) => {
                 case 'OBJECT':
                     expect(actual[key]).to.be.an('object');
                     expect(actual[key]).to.have.keys(check[1].split(','));
+                    break;
+                case 'REGEX':
+                    expect(actual[key]).to.match(new RegExp(check[1]));
                     break;
                 default:
                     expect(actual[key]).to.deep.equal(expected[key]);

@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AuthGuard } from '../../services/guard.service';
+import { SubscriptionRetrieveResolve } from '../../services/subscription.service';
 import { ProductPromotionsResolve } from '../../services/product.service';
 
 import { BasketComponent } from './components/basket/basket.component';
@@ -19,6 +20,9 @@ const routes: Routes = [
     {
         path: 'payment',
         component: PaymentComponent,
+        resolve: {
+            subscription: SubscriptionRetrieveResolve
+        },
         canActivate: [AuthGuard]
     },
     {

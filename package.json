@@ -43,6 +43,7 @@
         "mongoose": "4.13.1",
         "morgan": "1.9.0",
         "rxjs": "5.5.2",
+        "stripe": "5.3.0",
         "uuid": "3.1.0",
         "winston": "2.4.0",
         "zone.js": "0.8.18"
@@ -56,6 +57,7 @@
         "@types/moment": "2.13.0",
         "@types/mongoose": "4.7.26",
         "@types/node": "8.0.51",
+        "@types/stripe-node": "4.7.1",
         "@types/uuid": "3.4.3",
         "chai": "4.1.2",
         "codelyzer": "4.0.1",

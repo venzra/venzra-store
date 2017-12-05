@@ -4,7 +4,187 @@
             <h1>Payment details</h1>
 
             <mat-card>
-                Coming soon.... {{ cart.value | price }}
+                <mat-horizontal-stepper linear #stepper>
+                    <mat-step [editable]="!completed" label="Order details">
+                        <div class="step-spacer" fxLayout="row" fxLayoutAlign="center">
+                            <div fxFlex="90" fxFlex.gt-md="70" fxFlex.xl="60">
+                                <h2>Order details</h2>
+
+                                <mat-list>
+                                    <mat-list-item *ngFor="let item of cart.items">
+                                        <h3 matLine>{{ item.product.displayName }}</h3>
+                                        <div fxLayout="row" matLine>{{ item.quantity }} @ {{ item.product.currentPrice | price }}</div>
+                                        <div class="payment-price" fxLayout="row" fxLayoutAlign="end center">{{ item.quantity * item.product.currentPrice | price }}</div>
+                                    </mat-list-item>
+                                </mat-list>
+
+                                <div class="mat-headline" fxLayoutAlign="end end">Total: {{ cart.value | price }}</div>
+
+                                <div fxLayoutGap="20px" fxLayoutAlign="end center">
+                                    <button mat-raised-button color="primary" matStepperNext>Continue</button>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-step>
+
+                    <mat-step [editable]="!completed" [stepControl]="shippingForm" label="Shipping Address">
+                        <div class="step-spacer" fxLayout="row" fxLayoutAlign="center">
+                            <div fxFlex="90" fxFlex.gt-md="70" fxFlex.xl="60">
+                                <form fxLayout="column" fxLayoutGap="20px" [formGroup]="shippingForm">
+                                    <h2>Shipping address</h2>
+
+                                    <mat-form-field>
+                                        <input matInput required placeholder="Addressee" formControlName="addressee" />
+                                        <mat-error *ngIf="shippingForm.controls['addressee'].hasError('required')">This field is required.</mat-error>
+                                    </mat-form-field>
+
+                                    <mat-form-field>
+                                        <input matInput required placeholder="Address Line 1" formControlName="street" />
+                                        <mat-hint>Street address, P.O. box, etc</mat-hint>
+                                        <mat-error *ngIf="shippingForm.controls['street'].hasError('required')">This field is required.</mat-error>
+                                    </mat-form-field>
+
+                                    <mat-form-field>
+                                        <input matInput placeholder="Address Line 2" formControlName="building" />
+                                        <mat-hint>Building, Floor, Suite, Apartment, etc</mat-hint>
+                                    </mat-form-field>
+
+                                    <mat-form-field>
+                                        <input matInput placeholder="Town or City" formControlName="city" />
+                                    </mat-form-field>
+
+                                    <mat-form-field>
+                                        <input matInput required placeholder="County" formControlName="county" />
+                                        <mat-error *ngIf="shippingForm.controls['county'].hasError('required')">This field is required.</mat-error>
+                                    </mat-form-field>
+
+                                    <mat-form-field>
+                                        <input matInput required placeholder="Postal code" formControlName="postalCode" />
+                                        <mat-error *ngIf="shippingForm.controls['postalCode'].hasError('required')">This field is required.</mat-error>
+                                    </mat-form-field>
+
+                                    <div fxLayoutGap="20px" fxLayoutAlign="end center">
+                                        <button mat-button type="button" matStepperPrevious>Back</button>
+                                        <button mat-raised-button color="primary" matStepperNext [disabled]="shippingForm.pristine || shippingForm.invalid">Continue</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </mat-step>
+
+                    <mat-step [editable]="!completed" [stepControl]="billingForm" label="Billing Address">
+                        <div class="step-spacer" fxLayout="row" fxLayoutAlign="center">
+                            <div fxFlex="90" fxFlex.gt-md="70" fxFlex.xl="60">
+                                <form fxLayout="column" fxLayoutGap="20px" [formGroup]="billingForm">
+                                    <div fxLayout="row">
+                                        <h2 fxFlex>Billing address</h2>
+                                        <mat-slide-toggle labelPosition="before" (change)="toggleBilling($event)">Same as shipping</mat-slide-toggle>
+                                    </div>
+
+                                    <mat-form-field>
+                                        <input matInput required placeholder="Addressee" formControlName="addressee" />
+                                        <mat-error *ngIf="billingForm.controls['addressee'].hasError('required')">This field is required.</mat-error>
+                                    </mat-form-field>
+
+                                    <mat-form-field>
+                                        <input matInput required placeholder="Address Line 1" formControlName="street" />
+                                        <mat-hint>Street address, P.O. box, etc</mat-hint>
+                                        <mat-error *ngIf="billingForm.controls['street'].hasError('required')">This field is required.</mat-error>
+                                    </mat-form-field>
+
+                                    <mat-form-field>
+                                        <input matInput placeholder="Address Line 2" formControlName="building" />
+                                        <mat-hint>Building, Floor, Suite, Apartment, etc</mat-hint>
+                                    </mat-form-field>
+
+                                    <mat-form-field>
+                                        <input matInput placeholder="Town or City" formControlName="city" />
+                                    </mat-form-field>
+
+                                    <mat-form-field>
+                                        <input matInput required placeholder="County" formControlName="county" />
+                                        <mat-error *ngIf="billingForm.controls['county'].hasError('required')">This field is required.</mat-error>
+                                    </mat-form-field>
+
+                                    <mat-form-field>
+                                        <input matInput required placeholder="Postal code" formControlName="postalCode" />
+                                        <mat-error *ngIf="billingForm.controls['postalCode'].hasError('required')">This field is required.</mat-error>
+                                    </mat-form-field>
+
+                                    <div fxLayoutGap="20px" fxLayoutAlign="end center">
+                                        <button mat-button type="button" matStepperPrevious>Back</button>
+                                        <button mat-raised-button color="primary" matStepperNext [disabled]="billingForm.invalid">Continue</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </mat-step>
+
+                    <mat-step [editable]="!completed" [stepControl]="paymentForm" label="Payment">
+                        <div class="step-spacer" fxLayout="row" fxLayoutAlign="center">
+                            <div fxFlex="90" fxFlex.gt-md="70" fxFlex.xl="60">
+                                <form fxLayout="column" fxLayoutGap="20px" [formGroup]="paymentForm" (submit)="performCheckout(stepper)">
+                                    <h2>Card payment details</h2>
+
+                                    <mat-form-field>
+                                        <input matInput required placeholder="Card holders name" formControlName="holder" />
+                                        <mat-error *ngIf="paymentForm.controls['holder'].hasError('required')">This field is required.</mat-error>
+                                    </mat-form-field>
+
+                                    <mat-form-field>
+                                        <input matInput required placeholder="Card number" formControlName="number" />
+                                        <mat-error *ngIf="paymentForm.controls['number'].hasError('required')">This field is required.</mat-error>
+                                    </mat-form-field>
+
+                                    <div>
+                                        <h4>Card Expiry</h4>
+                                        <div fxLayout="row" fxLayoutGap="20px">
+                                            <mat-form-field fxFlex="25%">
+                                                <mat-select required placeholder="Month" formControlName="expiryMonth">
+                                                    <mat-option *ngFor="let month of months; let i = index" [value]="i + 1">{{ month.name }}</mat-option>
+                                                </mat-select>
+                                                <mat-error *ngIf="paymentForm.controls['expiryMonth'].hasError('required')">Required.</mat-error>
+                                            </mat-form-field>
+
+                                            <mat-form-field fxFlex="25%">
+                                                <mat-select required placeholder="Year" formControlName="expiryYear">
+                                                    <mat-option *ngFor="let year of years" [value]="year">{{ year }}</mat-option>
+                                                </mat-select>
+                                                <mat-error *ngIf="paymentForm.controls['expiryYear'].hasError('required')">Required.</mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <mat-form-field>
+                                        <input matInput required placeholder="Card verification code (CVC)" formControlName="verificationCheck" />
+                                        <mat-error *ngIf="paymentForm.controls['verificationCheck'].hasError('required')">This field is required.</mat-error>
+                                    </mat-form-field>
+
+                                    <div fxLayoutGap="20px" fxLayoutAlign="end center">
+                                        <button mat-button type="button" matStepperPrevious>Back</button>
+                                        <button mat-raised-button color="primary" [disabled]="paymentForm.pristine || paymentForm.invalid || saving">Place order</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </mat-step>
+
+                    <mat-step [editable]="!completed" label="Confirmation">
+                        <div class="step-spacer" fxLayout="row" fxLayoutAlign="center">
+                            <div fxFlex="90" fxFlex.gt-md="70" fxFlex.xl="60">
+                                <h2>Order confirmation</h2>
+
+                                <p>Your order has been placed successfully, a confirmation email will be sent shortly, please take note of your order confirmation number for future reference.</p>
+
+                                <div class="mat-headline">{{ order.reference }}</div>
+
+                                <p>You can also view all orders placed on this site via your account order history.</p>
+
+                                <p>Thank you for your order, we hope to see you again soon.</p>
+                            </div>
+                        </div>
+                    </mat-step>
+                </mat-horizontal-stepper>
             </mat-card>
         </section>
     </div>

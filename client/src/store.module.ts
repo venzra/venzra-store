@@ -2,17 +2,20 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { StoreRoutingModule } from './routing.module';
 import { VenzraCommonModule } from './common/common.module';
 
-import { PublicComponent } from './public.component';
-import { StoreRoutingModule } from './routing.module';
+import { SubscriptionRetrieveResolve, SubscriptionService } from './services/subscription.service';
 import { AccountService } from './services/account.service';
 import { CartService } from './services/cart.service';
+import { ProductPromotionsResolve, ProductService } from './services/product.service';
+import { PaymentService } from './services/payment.service';
+import { OrderService } from './services/order.service';
 
 import { AuthGuard } from './services/guard.service';
 import { LayoutService } from './services/layout.service';
-import { ProductPromotionsResolve, ProductService } from './services/product.service';
 
+import { PublicComponent } from './public.component';
 import { StoreComponent } from './store.component';
 
 @NgModule({
@@ -32,10 +35,14 @@ import { StoreComponent } from './store.component';
     providers: [
         AuthGuard,
         LayoutService,
+        SubscriptionService,
+        SubscriptionRetrieveResolve,
         AccountService,
         ProductService,
         ProductPromotionsResolve,
-        CartService
+        CartService,
+        PaymentService,
+        OrderService
     ],
     bootstrap: [StoreComponent]
 })

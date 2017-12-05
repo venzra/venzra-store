@@ -3,8 +3,6 @@ import { NgModule } from '@angular/core';
 
 import { VenzraCommonModule } from '../../common/common.module';
 
-import { SubscriptionRetrieveResolve, SubscriptionService } from '../../services/subscription.service';
-
 import { LandingComponent } from './components/landing/landing.component';
 import { ShopFrontRoutingModule } from './routing.module';
 
@@ -16,10 +14,6 @@ import { ShopFrontRoutingModule } from './routing.module';
         CommonModule,
         VenzraCommonModule,
         ShopFrontRoutingModule
-    ],
-    providers: [
-        SubscriptionService,
-        SubscriptionRetrieveResolve
     ]
 })
 export class ShopFrontModule {

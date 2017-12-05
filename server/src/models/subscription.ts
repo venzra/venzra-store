@@ -1,11 +1,34 @@
 import { Schema, Document, Model, model } from 'mongoose';
 
+interface IGatewayModel {
+    publicKey: string;
+    privateKey: string;
+}
+
+interface ITransactionModel {
+    base: number;
+    rate: number;
+}
+
 interface ISubscriptionModel extends Document {
     storeName?: string;
     strapline?: string;
     domainName?: string;
+    gateway?: IGatewayModel;
+    transactions?: ITransactionModel;
     status?: string;
 }
+
+const TransactionSchema: Schema = new Schema({
+    base: {
+        type: Number,
+        required: true
+    },
+    rate: {
+        type: Number,
+        required: true
+    }
+}, { _id: false });
 
 const SubscriptionSchema: Schema = new Schema({
     storeName: {
@@ -21,6 +44,21 @@ const SubscriptionSchema: Schema = new Schema({
         type: String,
         required: true,
         lowercase: true
+    },
+    gateway: {
+        type: {
+            publicKey: {
+                type: String,
+                required: true
+            },
+            privateKey: {
+                type: String,
+                required: true
+            }
+        }
+    },
+    transactions: {
+        type: TransactionSchema
     },
     status: {
         type: String,

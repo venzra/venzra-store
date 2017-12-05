@@ -1,8 +1,11 @@
+const fs = require('fs');
+const path = require('path');
 const { defineSupportCode } = require('cucumber');
 
 const crypto = require('crypto');
 const supertest = require('supertest');
 const uuid = require('uuid');
+const nock = require('nock');
 
 let history = {};
 
@@ -30,6 +33,11 @@ class World {
 
     clearMocks() {
         this.mocks = [];
+    }
+
+    readMock(file) {
+        const filePath = path.join(__dirname, '../mocks', file);
+        return JSON.parse(fs.readFileSync(filePath));
     }
 
     parseTemplateString(string) {
@@ -93,7 +101,7 @@ class World {
     }
 
     performGet(endpoint, storage) {
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
             let request = this.agent.get(this.parseTemplateString(endpoint));
 
             this.headers.forEach((header) => {
@@ -123,12 +131,17 @@ class World {
                 }
             });
 
-            request.end(resolve);
+            request.end((err, res) => {
+                if (err) {
+                    return reject(err);
+                }
+                resolve(res);
+            })
         });
     }
 
     performPost(endpoint, data, storage) {
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
             let request = this.agent.post(this.parseTemplateString(endpoint));
 
             this.headers.forEach((header) => {
@@ -160,12 +173,17 @@ class World {
                 }
             });
 
-            request.end(resolve);
+            request.end((err, res) => {
+                if (err) {
+                    return reject(err);
+                }
+                resolve(res);
+            })
         });
     }
 
     performPatch(endpoint, data, storage) {
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
             let request = this.agent.patch(this.parseTemplateString(endpoint));
 
             this.headers.forEach((header) => {
@@ -197,7 +215,12 @@ class World {
                 }
             });
 
-            request.end(resolve);
+            request.end((err, res) => {
+                if (err) {
+                    return reject(err);
+                }
+                resolve(res);
+            })
         });
     }
 

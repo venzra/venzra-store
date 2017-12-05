@@ -7,6 +7,8 @@ import { BasketComponent } from './components/basket/basket.component';
 import { PaymentComponent } from './components/payment/payment.component';
 import { CheckoutRoutingModule } from './routing.module';
 
+import { CalendarService } from '../../services/calendar.service';
+
 @NgModule({
     declarations: [
         BasketComponent,
@@ -16,6 +18,9 @@ import { CheckoutRoutingModule } from './routing.module';
         CommonModule,
         VenzraCommonModule,
         CheckoutRoutingModule
+    ],
+    providers: [
+        CalendarService
     ]
 })
 export class CheckoutModule {
