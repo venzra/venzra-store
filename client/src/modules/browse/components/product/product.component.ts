@@ -8,7 +8,7 @@ import { CartService } from '../../../../services/cart.service';
 @Component({
     selector: 'product-view',
     templateUrl: './product.component.html',
-    styleUrls: ['product.component.sass']
+    styleUrls: ['product.component.scss']
 })
 export class ProductComponent implements OnInit {
 

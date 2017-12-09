@@ -1,33 +1,40 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
-import 'rxjs/add/operator/toPromise';
-
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 
+import { Observable } from 'rxjs/Observable';
+import { ReplaySubject } from 'rxjs/ReplaySubject';
+
+import 'rxjs/add/operator/toPromise';
+import 'rxjs/add/operator/take';
+import 'rxjs/add/operator/do';
+
 export class Subscription {
-    _id: string;
+    _id?: string;
     storeName: string;
-    strapline: string;
-    gateway: string;
-    status: string;
-    created: Date;
-    updated: Date;
+    strapline?: string;
+    gateway?: string;
+    status?: string;
+    created?: Date;
+    updated?: Date;
 }
 
 @Injectable()
 export class SubscriptionService {
 
-    private subscriptionUri = 'api/v1/subscription';
+    private subscription: ReplaySubject<Subscription> = new ReplaySubject<Subscription>(1);
 
     constructor(
         private http: HttpClient
     ) { }
 
-    getSubscription(): Promise<Subscription> {
-        return this.http.get(this.subscriptionUri)
-            .toPromise()
-            .then((response) => response as Subscription);
+    loadSubscription(): Observable<Subscription> {
+        this.http.get<Subscription>('api/v1/subscription').subscribe((subscription) => this.subscription.next(subscription));
+        return this.subscription.asObservable();
+    }
+
+    getSubscription(): ReplaySubject<Subscription> {
+        return this.subscription;
     }
 }
 
@@ -37,7 +44,7 @@ export class SubscriptionRetrieveResolve implements Resolve<Subscription> {
         private subscriptionService: SubscriptionService
     ) { }
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<Subscription> {
-        return this.subscriptionService.getSubscription();
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Subscription> {
+        return this.subscriptionService.loadSubscription().first();
     }
 }

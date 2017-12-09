@@ -8,6 +8,7 @@ import { ListModel } from './restful.service';
 
 export class Product {
     _id?: string;
+    slug?: string;
     code?: string;
     displayName: string;
     previousPrice?: number;
@@ -24,12 +25,7 @@ export class ProductService {
     getProduct(productSlug: string): Promise<Product> {
         return this.http.get(`api/v1/products/${productSlug}`)
             .toPromise()
-            .then((response: any) => response as Product)
-            .then((product) => {
-                product.previousPrice /= 100;
-                product.currentPrice /= 100;
-                return product;
-            });
+            .then((response: any) => response as Product);
     }
 
     getAllProducts(query): Promise<ListModel<Product>> {
@@ -37,15 +33,7 @@ export class ProductService {
 
         return this.http.get('api/v1/products', { params })
             .toPromise()
-            .then((response: any) => response as ListModel<Product>)
-            .then((products) => {
-                products.list.forEach((product) => {
-                    product.previousPrice /= 100;
-                    product.currentPrice /= 100;
-                    return product;
-                });
-                return products;
-            });
+            .then((response: any) => response as ListModel<Product>);
     }
 }
 

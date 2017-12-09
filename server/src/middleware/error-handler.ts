@@ -17,12 +17,6 @@ class VenzraError extends Error {
     }
 }
 
-export class AccountAccessError extends VenzraError implements IVenzraError {
-    constructor(public reason: string) {
-        super('Invalid account credentials');
-    }
-}
-
 export class AccessDeniedError extends VenzraError implements IVenzraError {
     constructor(public reason: string) {
         super('Access Denied');
@@ -70,10 +64,6 @@ export const errorHandler = (err: IVenzraError, req: Request, res: Response, nex
     });
 
     switch (err.name) {
-        case 'AccountAccessError':
-            logger.info(err.reason);
-            res.status(400).send({ message: err.message });
-            break;
         case 'BadRequest':
             logger.info(err.message);
             res.status(400).send({ message: err.message });
@@ -104,7 +94,7 @@ export const errorHandler = (err: IVenzraError, req: Request, res: Response, nex
             res.status(500).send({ message: err.message });
             break;
         default:
-            //console.log(err);
+            console.log(err);
             logger.error(`${err.message} -- ${JSON.stringify(req.body)}`);
             res.status(500).send();
     }

@@ -1,0 +1,22 @@
+<div fxLayout="column" class="venzra-container">
+    <div fxFlex="grow">
+        <div class="hero">
+            <div fxLayout="column" fxLayoutAlign="center start" fxFlexOffset="50" fxLayoutGap="0">
+                <h1 class="mat-display-3">{{ subscription.storeName }}</h1>
+                <h2>{{ subscription.strapline }}</h2>
+            </div>
+        </div>
+
+        <div class="venzra-content">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+    <mat-toolbar color="accent" role="note">
+        <span fxFlex></span>
+        <div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="center center">
+            <span class="mat-body-1">powered by</span>
+            <a href="http://www.venzra.com" target="_blank" fxLayout="column"><img src="http://cdn.venzra.io/logo/white/venzra-logo-xs.png" title="Powered By Venzra"></a>
+            <span class="mat-caption" fxLayoutAlign="end" fxFlex>&copy; Copyright since 2017</span>
+        </div>
+    </mat-toolbar>
+</div>

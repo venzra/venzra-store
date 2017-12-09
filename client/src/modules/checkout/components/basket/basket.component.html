@@ -6,7 +6,10 @@
             <div fxLayout="row" fxLayoutGap="20px">
                 <mat-card fxFlex>
                     <h2>Your Products</h2>
-                    <mat-list>
+
+                    <div *ngIf="!cart.items.length">There are currently no entries in your cart.</div>
+
+                    <mat-list *ngIf="cart.items.length">
                         <mat-list-item *ngFor="let item of cart.items">
                             <h3 matLine>{{ item.product.displayName }}</h3>
                             <div fxLayout="row" matLine>

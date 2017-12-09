@@ -1,1 +1,4 @@
-<button mat-button (click)="openAccount()"><mat-icon>person</mat-icon><span>{{ account.identity || 'Login / Register' }}</span></button>
+<a mat-button routerLink="/account">
+    <mat-icon>person</mat-icon>
+    <span>{{ account.identity || 'Login / Register' }}</span>
+</a>

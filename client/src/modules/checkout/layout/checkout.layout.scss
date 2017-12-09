@@ -1,0 +1,25 @@
+@import '../../../../styles';
+
+@import '~@angular/material/theming';
+@include mat-core();
+
+:host {
+    position: absolute;
+    top: 64px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow-x: scroll;
+
+    @media ($mat-xsmall) {
+        top: 56px;
+    }
+}
+
+.venzra-container {
+    min-height: 100%;
+}
+
+.venzra-content {
+    margin: 2em 2em 4em;
+}

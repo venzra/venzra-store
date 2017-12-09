@@ -1,4 +1,5 @@
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
@@ -24,6 +25,7 @@ import { ErrorInterceptorModule } from './http.interceptor';
     ],
     imports: [
         CommonModule,
+        RouterModule,
         HttpClientModule,
         ReactiveFormsModule,
         FlexLayoutModule,

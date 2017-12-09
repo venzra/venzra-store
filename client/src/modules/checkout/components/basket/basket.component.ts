@@ -6,7 +6,7 @@ import { LayoutService } from '../../../../services/layout.service';
 
 @Component({
     templateUrl: './basket.component.html',
-    styleUrls: ['./basket.component.sass']
+    styleUrls: ['./basket.component.scss']
 })
 export class BasketComponent implements OnInit {
 

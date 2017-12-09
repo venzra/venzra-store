@@ -18,10 +18,6 @@ export class ProfileComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.layout.title = 'Account';
-    }
-
-    logout(): void {
-        this.accountService.performLogout();
+        this.layout.title = 'Account Profile';
     }
 }

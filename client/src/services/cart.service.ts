@@ -31,21 +31,10 @@ export class CartService {
         private snackbar: MatSnackBar
     ) { }
 
-    cleanValues(cart) {
-        cart.items.forEach((item) => {
-            item.product.previousPrice /= 100;
-            item.product.currentPrice /= 100;
-            return item;
-        });
-        cart.value /= 100;
-        return cart;
-    }
-
     addProduct(product: Product): any {
         return this.http.patch('/api/v1/cart', [{ op: 'add', path: 'product', value: product._id }])
             .toPromise()
             .then((response: any) => response as Cart)
-            .then((cart) => this.cleanValues(cart))
             .then((cart) => this.cart.next(cart))
             .then(() => this.snackbar.open(`${product.displayName} added to cart`, null, { duration: 2000 }));
     }
@@ -54,7 +43,6 @@ export class CartService {
         return this.http.patch('/api/v1/cart', [{ op: 'remove', path: 'product', value: product._id }])
             .toPromise()
             .then((response: any) => response as Cart)
-            .then((cart) => this.cleanValues(cart))
             .then((cart) => this.cart.next(cart))
             .then(() => this.snackbar.open(`${product.displayName} removed from cart`, null, { duration: 2000 }));
     }
@@ -67,7 +55,6 @@ export class CartService {
         this.http.get('api/v1/cart')
             .toPromise()
             .then((response: any) => response as Cart)
-            .then((cart) => this.cleanValues(cart))
             .then((cart) => this.cart.next(cart));
     }
 

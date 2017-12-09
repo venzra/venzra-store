@@ -8,6 +8,7 @@ import { BadRequest, NotFoundError, ThirdPartyError, ValidationError } from '../
 
 import { IOrderModel, OrderModel } from '../models/orders';
 import { CartModel } from '../models/cart';
+import { ProductModel } from '../models/products';
 import { email, mailer } from '../services/mailer';
 
 class OrdersController extends AuthenticationController {
@@ -18,6 +19,7 @@ class OrdersController extends AuthenticationController {
     }
 
     registerRoutes() {
+        this.router.get('/orders', this.checkSubscription.bind(this), this.validate.bind(this), this.findAll.bind(this));
         this.router.post('/orders', this.checkSubscription.bind(this), this.validate.bind(this), this.createOrder.bind(this), this.findOne.bind(this));
     }
 
@@ -96,6 +98,9 @@ class OrdersController extends AuthenticationController {
                             billing: req.body.billing,
                             payment: {
                                 reference: payment.id,
+                                name: payment.source.name,
+                                card: payment.source.last4,
+                                brand: payment.source.brand,
                                 fee: fee,
                                 value: charge
                             }
@@ -123,6 +128,29 @@ class OrdersController extends AuthenticationController {
             .findOne({ _id, subscription })
             .select('reference')
             .then((order) => order ? res.status(200).send(order) : next(new NotFoundError()));
+    }
+
+    findAll(req: Request, res: Response, next: NextFunction) {
+        const searchParams: any = { subscription: this.subscription._id, customer: this.customer._id };
+        const skip = parseInt(req.query.skip, 10) || 0;
+        const limit = parseInt(req.query.limit, 10) || 5;
+        const order = { created: -1 };
+
+        OrderModel
+            .count(searchParams).exec()
+            .then((total) =>
+                OrderModel
+                    .aggregate([
+                        { $match: searchParams },
+                        { $sort: order },
+                        { $skip: skip },
+                        { $limit: limit },
+                        { $project: { reference: 1, shipping: 1, destination: 1, payment: { name: 1, card: 1, brand: 1, value: 1 }, items: 1, status: 1, created: 1 } }
+                    ])
+                    .then((result) => ProductModel.populate(result, { path: 'items.product', select: '-_id slug displayName status' }))
+                    .then((list) => res.status(200).send({ list, total, skip, limit }))
+            )
+            .catch((productError) => next(productError));
     }
 
 }

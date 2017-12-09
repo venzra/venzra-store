@@ -2,33 +2,36 @@ import { NgModule } from '@angular/core';
 
 import { RouterModule, Routes } from '@angular/router';
 
+import { CheckoutLayout } from './layout/checkout.layout';
 import { AuthGuard } from '../../services/guard.service';
-import { SubscriptionRetrieveResolve } from '../../services/subscription.service';
-import { ProductPromotionsResolve } from '../../services/product.service';
 
 import { BasketComponent } from './components/basket/basket.component';
 import { PaymentComponent } from './components/payment/payment.component';
 
+import { ProductPromotionsResolve } from '../../services/product.service';
+
 const routes: Routes = [
-    {
-        path: 'basket',
-        component: BasketComponent,
-        resolve: {
-            products: ProductPromotionsResolve
-        }
-    },
-    {
-        path: 'payment',
-        component: PaymentComponent,
-        resolve: {
-            subscription: SubscriptionRetrieveResolve
-        },
-        canActivate: [AuthGuard]
-    },
     {
         path: '',
         redirectTo: 'basket',
         pathMatch: 'full'
+    },
+    {
+        path: '',
+        component: CheckoutLayout,
+        children: [
+            {
+                path: 'basket',
+                component: BasketComponent,
+                resolve: {
+                    products: ProductPromotionsResolve
+                }
+            },
+            {
+                path: 'payment',
+                component: PaymentComponent,
+                canActivate: [AuthGuard]
+            }]
     }
 ];
 

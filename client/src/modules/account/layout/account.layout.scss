@@ -1,0 +1,40 @@
+@import '~@angular/material/theming';
+@include mat-core();
+
+.private-container {
+    min-height: 100%;
+
+    .private-content {
+        max-width: 750px;
+        margin: 2em 2em 4em;
+    }
+}
+
+:host {
+    position: absolute;
+    top: 64px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    @media ($mat-xsmall) {
+        top: 56px;
+    }
+}
+
+mat-sidenav {
+    width: 200px;
+
+    mat-nav-list {
+        margin-top: 8px;
+        margin-bottom: 2em;
+    }
+}
+
+.mat-nav-list .mat-list-item.active {
+    color: #673ab7;
+}
+
+.mat-drawer-container {
+    width: 100%;
+}

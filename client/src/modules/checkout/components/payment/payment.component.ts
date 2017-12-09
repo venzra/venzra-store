@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 
 import { LayoutService } from '../../../../services/layout.service';
-import { Subscription } from '../../../../services/subscription.service';
+import { Subscription, SubscriptionService } from '../../../../services/subscription.service';
 import { Cart, CartService } from '../../../../services/cart.service';
 import { Address, Card, Payment, PaymentService } from '../../../../services/payment.service';
 import { Order } from '../../../../services/order.service';
@@ -12,7 +11,7 @@ import { CalendarService } from '../../../../services/calendar.service';
 
 @Component({
     templateUrl: './payment.component.html',
-    styleUrls: ['./payment.component.sass']
+    styleUrls: ['./payment.component.scss']
 })
 export class PaymentComponent implements OnInit {
 
@@ -30,10 +29,10 @@ export class PaymentComponent implements OnInit {
     public years = [];
 
     constructor(
-        private route: ActivatedRoute,
         private forms: FormBuilder,
         private layout: LayoutService,
         private snackbar: MatSnackBar,
+        private subscriptionService: SubscriptionService,
         private cartService: CartService,
         private paymentService: PaymentService,
         private calendarService: CalendarService
@@ -71,8 +70,7 @@ export class PaymentComponent implements OnInit {
             verificationCheck: ['', [Validators.required]]
         });
 
-        this.route.data.subscribe((data: { subscription: Subscription }) => this.subscription = data.subscription);
-
+        this.subscriptionService.getSubscription().subscribe((subscription) => this.subscription = subscription);
         this.cartService.getCart().subscribe((cart) => this.cart = cart);
     }
 

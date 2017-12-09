@@ -4,10 +4,15 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { PublicComponent } from './public.component';
 
+import { SubscriptionRetrieveResolve } from './services/subscription.service';
+
 const routes: Routes = [
     {
         path: '',
         component: PublicComponent,
+        resolve: {
+            subscription: SubscriptionRetrieveResolve
+        },
         children: [
             {
                 path: '',

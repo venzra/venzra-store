@@ -21,7 +21,4 @@ export class CartComponent implements OnInit {
         this.cartService.getCart().subscribe((cart) => this.cart = cart);
     }
 
-    openCart(): void {
-        this.router.navigate(['checkout']);
-    }
 }

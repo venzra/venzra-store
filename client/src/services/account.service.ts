@@ -45,13 +45,13 @@ export class AccountService {
             .then(() => this.router.navigate([redirect], { replaceUrl: true }));
     }
 
-    performLogout(): Promise<boolean> {
+    performLogout(): Promise<void> {
         return this.http.post('api/v1/identity/logout', null, { responseType: 'text' })
             .toPromise()
             .catch(() => null)
-            .then(() => this.account.next({ identity: null }))
             .then(() => localStorage.clear())
-            .then(() => this.router.navigate(['/'], { replaceUrl: true }));
+            .then(() => this.router.navigate(['/'], { replaceUrl: true }))
+            .then(() => this.account.next({ identity: null }));
     }
 
     isAuthenticated(): Observable<boolean> {

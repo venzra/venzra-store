@@ -1,0 +1,67 @@
+@Orders @OrdersSearch
+Feature: Creation of a new product entry
+
+  @Seed
+  Scenario: Setup test data seed for feature
+    Given there are the following "subscriptions" records in the database
+      | storeName         | gateway                         | transactions                      | status |
+      | Orders Search One | { "privateKey": "pk_xxxxxxxx" } | { "rate": "0.021", "base": "10" } | ACTIVE |
+      | Orders Search Two | { "privateKey": "pk_xxxxxxxx" } | { "rate": "0.021", "base": "10" } | ACTIVE |
+    Given there are the following "customers" records in the database
+      | identity                           | password | status | subscription               |
+      | orders-search-one@venzra-test.io   | PASSWORD | ACTIVE | {{ subscriptions[1]._id }} |
+      | orders-search-two@venzra-test.io   | PASSWORD | ACTIVE | {{ subscriptions[1]._id }} |
+      | orders-search-three@venzra-test.io | PASSWORD | ACTIVE | {{ subscriptions[2]._id }} |
+    And there are the following "products" records in the database
+      | subscription               | code          | slug             | displayName      | currentPrice | status   |
+      | {{ subscriptions[1]._id }} | SEARCH-01-001 | orders-search-a  | Orders Search A  | 9            | ACTIVE   |
+      | {{ subscriptions[1]._id }} | SEARCH-01-002 | orders-search-aa | Orders Search AA | 99           | ACTIVE   |
+      | {{ subscriptions[1]._id }} | SEARCH-01-003 | orders-search-b  | Orders Search B  | 999          | INACTIVE |
+      | {{ subscriptions[2]._id }} | SEARCH-02-001 | orders-search-a  | Orders Search A  | 999          | ACTIVE   |
+      | {{ subscriptions[2]._id }} | SEARCH-02-002 | orders-search-b  | Orders Search B  | 999          | INACTIVE |
+    And there are the following "orders" records in the database
+      | subscription               | customer               | reference  | shipping         | destination                                                                                                       | billing                                                                                                              | items                                                                                                                                              | payment                                                                                                                       |
+      | {{ subscriptions[1]._id }} | {{ customers[1]._id }} | 1111111111 | { "price": 100 } | { "addressee": "Mr Shipping", "street": "Street", "county": "County", "postalCode": "po57 3ox", "country": "GB" } | { "addressee": "Mr Billing", "street": "P.O. Box", "county": "Province", "postalCode": "te37 3od", "country": "GB" } | [{ "product": "{{ products[1]._id }}", "quantity": "5", "price": "15" }]                                                                           | { "reference": "ch_xxxxxxxxxxxxxxx", "name": "Example One", "card": "2345", "brand": "Visa", "fee": 36, "value": 175 }        |
+      | {{ subscriptions[1]._id }} | {{ customers[1]._id }} | 2222222222 | { "price": 150 } | { "addressee": "Mr Shipping", "street": "Street", "county": "County", "postalCode": "po57 3ox", "country": "GB" } | { "addressee": "Mr Billing", "street": "P.O. Box", "county": "Province", "postalCode": "te37 3od", "country": "GB" } | [{ "product": "{{ products[2]._id }}", "quantity": "1", "price": "100" }, { "product": "{{ products[3]._id }}", "quantity": "2", "price": "500" }] | { "reference": "ch_xxxxxxxxxxxxxxx", "name": "Example Two", "card": "3456", "brand": "MasterCard", "fee": 74, "value": 1250 } |
+      | {{ subscriptions[1]._id }} | {{ customers[2]._id }} | 3333333333 | { "price": 100 } | { "addressee": "Mr Shipping", "street": "Street", "county": "County", "postalCode": "po57 3ox", "country": "GB" } | { "addressee": "Mr Billing", "street": "P.O. Box", "county": "Province", "postalCode": "te37 3od", "country": "GB" } | [{ "product": "{{ products[3]._id }}", "quantity": "2", "price": "500" }]                                                                          | { "reference": "ch_xxxxxxxxxxxxxxx", "name": "Example Three", "card": "4567", "brand": "Visa", "fee": 69, "value": 1100 }     |
+
+  Scenario: Requesting a list of orders should return only records for that account (account one)
+    Given the request origin headers are set to "orders-search-one.venzra-test.io"
+    And I am logged in with the "orders-search-one@venzra-test.io" account
+    When I make a GET request to the API endpoint "/api/v1/orders" as "order"
+    Then there should be a 200 response from the "order" request that contains:
+      | list     | total | skip | limit |
+      | ARRAY[2] | 2     | 0    | 5     |
+    And the "order" request that has a "list" field and row 1 contains:
+      | _id       | reference    | items    | shipping         | destination                                                                                                       | payment                                                                       | status  | created   |
+      | OBJECT_ID | "2222222222" | ARRAY[2] | { "price": 150 } | { "addressee": "Mr Shipping", "street": "Street", "county": "County", "postalCode": "po57 3ox", "country": "GB" } | { "name": "Example Two", "card": 3456, "brand": "MasterCard", "value": 1250 } | CREATED | DATE_TIME |
+
+  Scenario: Requesting a list of orders should return only records for that account (account two)
+    Given the request origin headers are set to "orders-search-one.venzra-test.io"
+    And I am logged in with the "orders-search-two@venzra-test.io" account
+    When I make a GET request to the API endpoint "/api/v1/orders" as "order"
+    Then there should be a 200 response from the "order" request that contains:
+      | list     | total | skip | limit |
+      | ARRAY[1] | 1     | 0    | 5     |
+    And the "order" request that has a "list" field and row 1 contains:
+      | _id       | reference    | items                                                                                                                               | shipping         | destination                                                                                                       | payment                                                                   | status  | created   |
+      | OBJECT_ID | "3333333333" | [{ "price": 500, "product": { "slug": "orders-search-b", "displayName": "Orders Search B", "status": "INACTIVE" }, "quantity": 2 }] | { "price": 100 } | { "addressee": "Mr Shipping", "street": "Street", "county": "County", "postalCode": "po57 3ox", "country": "GB" } | { "name": "Example Three", "card": 4567, "brand": "Visa", "value": 1100 } | CREATED | DATE_TIME |
+
+  Scenario: Requesting a list of orders adheres to pagination values for skip and limit
+    Given the request origin headers are set to "orders-search-one.venzra-test.io"
+    And I am logged in with the "orders-search-one@venzra-test.io" account
+    When I make a GET request to the API endpoint "/api/v1/orders?skip=1&limit=2" as "order"
+    Then there should be a 200 response from the "order" request that contains:
+      | list     | total | skip | limit |
+      | ARRAY[1] | 2     | 1    | 2     |
+    And the "order" request that has a "list" field and row 1 contains:
+      | _id       | reference    | items    | shipping         | destination                                                                                                       | payment                                                                | status  | created   |
+      | OBJECT_ID | "1111111111" | ARRAY[1] | { "price": 100 } | { "addressee": "Mr Shipping", "street": "Street", "county": "County", "postalCode": "po57 3ox", "country": "GB" } | { "name": "Example One", "card": 2345, "brand": "Visa", "value": 175 } | CREATED | DATE_TIME |
+
+  Scenario: Requesting a list of orders returns an empty array when none have been placed
+    Given the request origin headers are set to "orders-search-two.venzra-test.io"
+    And I am logged in with the "orders-search-three@venzra-test.io" account
+    When I make a GET request to the API endpoint "/api/v1/orders" as "order"
+    Then there should be a 200 response from the "order" request that contains:
+      | list     | total | skip | limit |
+      | ARRAY[0] | 0     | 0    | 5     |

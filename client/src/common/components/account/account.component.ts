@@ -18,7 +18,4 @@ export class AccountComponent {
         accountService.getAccount().subscribe((account) => this.account = account);
     }
 
-    openAccount(): void {
-        this.router.navigate(['account']);
-    }
 }
