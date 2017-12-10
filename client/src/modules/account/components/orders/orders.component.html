@@ -1,6 +1,9 @@
 <h1>Order history</h1>
 
 <div fxLayout="column" fxLayoutGap="20px">
+
+    <div class="mat-subheading-1">No orders have yet been placed.</div>
+
     <mat-card *ngFor="let order of orders.list" fxLayout="column" fxLayoutGap="10px">
         <div fxLayout="row" fxLayoutAlign="space-between">
             <div fxLayout="column" fxFlex="33%" fxLayoutAlign="center start">

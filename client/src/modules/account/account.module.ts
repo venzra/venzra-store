@@ -11,6 +11,7 @@ import { AuthenticationComponent } from './components/authentication/authenticat
 import { ProfileComponent } from './components/profile/profile.component';
 import { OrdersComponent } from './components/orders/orders.component';
 import { OrderListResolve } from '../../services/order.service';
+import { LogoutComponent } from './components/logout/logout.component';
 
 @NgModule({
     declarations: [
@@ -18,7 +19,8 @@ import { OrderListResolve } from '../../services/order.service';
         AccountLayout,
         AuthenticationComponent,
         ProfileComponent,
-        OrdersComponent
+        OrdersComponent,
+        LogoutComponent
     ],
     imports: [
         CommonModule,

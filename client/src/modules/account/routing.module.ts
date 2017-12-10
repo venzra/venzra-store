@@ -9,6 +9,7 @@ import { AuthGuard } from '../../services/guard.service';
 import { AuthenticationComponent } from './components/authentication/authentication.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { OrdersComponent } from './components/orders/orders.component';
+import { LogoutComponent } from './components/logout/logout.component';
 
 import { OrderListResolve } from '../../services/order.service';
 
@@ -28,6 +29,10 @@ const routes: Routes = [
                 component: AuthenticationComponent
             }
         ]
+    },
+    {
+        path: 'logout',
+        component: LogoutComponent
     },
     {
         path: '',

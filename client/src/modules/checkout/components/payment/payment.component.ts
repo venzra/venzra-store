@@ -46,18 +46,18 @@ export class PaymentComponent implements OnInit {
 
         this.shippingForm = this.forms.group({
             addressee: ['', [Validators.required]],
-            building: ['', [Validators.required]],
             street: ['', [Validators.required]],
-            city: ['', [Validators.required]],
+            building: ['', []],
+            city: ['', []],
             county: ['', [Validators.required]],
             postalCode: ['', [Validators.required]]
         });
 
         this.billingForm = this.forms.group({
             addressee: ['', [Validators.required]],
-            building: ['', [Validators.required]],
             street: ['', [Validators.required]],
-            city: ['', [Validators.required]],
+            building: ['', []],
+            city: ['', []],
             county: ['', [Validators.required]],
             postalCode: ['', [Validators.required]]
         });

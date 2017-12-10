@@ -17,7 +17,7 @@ export class ErrorInterceptor implements HttpInterceptor {
             if (err instanceof HttpErrorResponse) {
                 switch (err.status) {
                     case 401:
-                        this.router.navigate(['/auth/logout']);
+                        this.router.navigate(['/account/logout']);
                         break;
                 }
             }

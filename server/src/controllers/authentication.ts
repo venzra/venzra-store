@@ -67,6 +67,7 @@ export class AuthenticationController {
                     .populate('subscription')
                     .then((customer: ICustomerModel) => {
                         if (!customer) {
+                            res.clearCookie('jwt');
                             throw new AccessDeniedError(`Invalid customer token for ${token._id}`);
                         }
 
