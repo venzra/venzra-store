@@ -19,7 +19,7 @@ class SubscriptionController extends AuthenticationController {
     retrieve(req: Request, res: Response, next: NextFunction) {
         const { _id, domainName, storeName, strapline, gateway } = this.subscription;
 
-        return res.status(200).send({ _id, domainName, storeName, strapline, gateway: gateway.publicKey });
+        return res.status(200).send({ _id, domainName, storeName, strapline, gateway: gateway ? gateway.publicKey : '' });
     }
 
 }
