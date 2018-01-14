@@ -24,7 +24,7 @@ Feature: Removing products from a cart
   Scenario: Removing a product that is not in the cart is ignored
     Given the request origin headers are set to "cart-remove-one.venzra-test.io"
     And I set the "vid" cookie to the value "{{ carts[1]._id }}"
-    When I make a PATCH request to the API endpoint "/api/v1/cart" as "cart" using:
+    When I make a PATCH request to the API endpoint "/api/cart" as "cart" using:
       | op     | path    | value                 |
       | remove | product | {{ products[1]._id }} |
     Then there should be a 200 response from the "cart" request that contains:
@@ -34,7 +34,7 @@ Feature: Removing products from a cart
   Scenario: Removing a product that is inactive does not matter
     Given the request origin headers are set to "cart-remove-one.venzra-test.io"
     And I set the "vid" cookie to the value "{{ carts[2]._id }}"
-    When I make a PATCH request to the API endpoint "/api/v1/cart" as "cart" using:
+    When I make a PATCH request to the API endpoint "/api/cart" as "cart" using:
       | op     | path    | value                 |
       | remove | product | {{ products[3]._id }} |
     Then there should be a 200 response from the "cart" request that contains:
@@ -44,7 +44,7 @@ Feature: Removing products from a cart
   Scenario: Updating a cart to remove a product will take it out of the cart
     Given the request origin headers are set to "cart-remove-one.venzra-test.io"
     And I set the "vid" cookie to the value "{{ carts[2]._id }}"
-    When I make a PATCH request to the API endpoint "/api/v1/cart" as "cart" using:
+    When I make a PATCH request to the API endpoint "/api/cart" as "cart" using:
       | op     | path    | value                 |
       | remove | product | {{ products[1]._id }} |
     Then there should be a 200 response from the "cart" request that contains:
@@ -54,7 +54,7 @@ Feature: Removing products from a cart
   Scenario: Removing a product that has more than 1 quantity from the cart just decrements the quantity by 1
     Given the request origin headers are set to "cart-remove-one.venzra-test.io"
     And I set the "vid" cookie to the value "{{ carts[3]._id }}"
-    When I make a PATCH request to the API endpoint "/api/v1/cart" as "cart" using:
+    When I make a PATCH request to the API endpoint "/api/cart" as "cart" using:
       | op     | path    | value                 |
       | remove | product | {{ products[1]._id }} |
     Then there should be a 200 response from the "cart" request that contains:
@@ -70,7 +70,7 @@ Feature: Removing products from a cart
   Scenario: It is possible to run multiple operations in a single call to remove several quantity or when quantity would hit 0 remove the item
     Given the request origin headers are set to "cart-remove-one.venzra-test.io"
     And I set the "vid" cookie to the value "{{ carts[3]._id }}"
-    When I make a PATCH request to the API endpoint "/api/v1/cart" as "cart" using:
+    When I make a PATCH request to the API endpoint "/api/cart" as "cart" using:
       | op     | path    | value                 |
       | remove | product | {{ products[1]._id }} |
       | remove | product | {{ products[2]._id }} |

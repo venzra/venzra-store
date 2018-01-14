@@ -32,7 +32,7 @@ export class CartService {
     ) { }
 
     addProduct(product: Product): any {
-        return this.http.patch('/api/v1/cart', [{ op: 'add', path: 'product', value: product._id }])
+        return this.http.patch('/api/cart', [{ op: 'add', path: 'product', value: product._id }])
             .toPromise()
             .then((response: any) => response as Cart)
             .then((cart) => this.cart.next(cart))
@@ -40,7 +40,7 @@ export class CartService {
     }
 
     removeProduct(product: Product): any {
-        return this.http.patch('/api/v1/cart', [{ op: 'remove', path: 'product', value: product._id }])
+        return this.http.patch('/api/cart', [{ op: 'remove', path: 'product', value: product._id }])
             .toPromise()
             .then((response: any) => response as Cart)
             .then((cart) => this.cart.next(cart))
@@ -52,7 +52,7 @@ export class CartService {
     }
 
     loadCart(): void {
-        this.http.get('api/v1/cart')
+        this.http.get('/api/cart')
             .toPromise()
             .then((response: any) => response as Cart)
             .then((cart) => this.cart.next(cart));

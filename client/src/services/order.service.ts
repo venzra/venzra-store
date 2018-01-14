@@ -50,7 +50,7 @@ export class OrderService {
     getAllOrders(query): Promise<ListModel<Order>> {
         const params = Object.keys(query).reduce((httpParams, key) => httpParams.set(key, query[key]), new HttpParams());
 
-        return this.http.get('api/v1/orders', { params })
+        return this.http.get('/api/orders', { params })
             .toPromise()
             .then((response: any) => response as ListModel<Order>);
     }

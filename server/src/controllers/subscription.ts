@@ -1,19 +1,24 @@
+import * as parser from 'body-parser';
+
 import { Request, Response, NextFunction, Router } from 'express';
 
 import { AuthenticationController } from './authentication';
 import { SubscriptionService } from '../services/subscription';
 
-class SubscriptionController extends AuthenticationController {
+export class SubscriptionController extends AuthenticationController {
 
-    constructor(
-        private router: Router
-    ) {
+    public router: Router;
+
+    constructor() {
         super(new SubscriptionService());
         this.registerRoutes();
     }
 
     registerRoutes() {
-        this.router.get('/subscription', this.checkSubscription.bind(this), this.retrieve.bind(this));
+        this.router = Router();
+        this.router.use(parser.json({ type: 'application/json' }));
+
+        this.router.get('/', this.checkSubscription.bind(this), this.retrieve.bind(this));
     }
 
     retrieve(req: Request, res: Response, next: NextFunction) {
@@ -24,4 +29,4 @@ class SubscriptionController extends AuthenticationController {
 
 }
 
-export { SubscriptionController };
+export default new SubscriptionController().router;

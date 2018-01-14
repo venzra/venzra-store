@@ -29,7 +29,7 @@ export class SubscriptionService {
     ) { }
 
     loadSubscription(): Observable<Subscription> {
-        this.http.get<Subscription>('api/v1/subscription').subscribe((subscription) => this.subscription.next(subscription));
+        this.http.get<Subscription>('/api/subscription').subscribe((subscription) => this.subscription.next(subscription));
         return this.subscription.asObservable();
     }
 

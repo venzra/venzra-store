@@ -25,13 +25,13 @@ Feature: Place an order using cart information
 
   Scenario: Missing request body throws required fields error
     Given the request origin headers are set to "orders-create-one.venzra-test.io"
-    When I make an empty POST request to the API endpoint "/api/v1/orders" as "order"
+    When I make an empty POST request to the API endpoint "/api/orders" as "order"
     Then the status returned from the "order" request should be a 401 error
 
   Scenario: Missing request body throws required fields error
     Given the request origin headers are set to "orders-create-one.venzra-test.io"
     And I am logged in with the "orders-create-one@venzra-test.io" account
-    When I make an empty POST request to the API endpoint "/api/v1/orders" as "order"
+    When I make an empty POST request to the API endpoint "/api/orders" as "order"
     Then there should be a 400 error from the "order" request that contains:
       | message           | detail                                                                                               |
       | Validation failed | ["cart required", "shipping required", "destination required", "billing required", "token required"] |
@@ -40,7 +40,7 @@ Feature: Place an order using cart information
     Given the request origin headers are set to "orders-create-one.venzra-test.io"
     And I am logged in with the "orders-create-one@venzra-test.io" account
     And there is a POST consumer at "https://api.stripe.com" for "/v1/charges" that will return "stripe/charges/create-invalid.json" with status 400
-    When I make a POST request to the API endpoint "/api/v1/orders" as "order" using:
+    When I make a POST request to the API endpoint "/api/orders" as "order" using:
       | cart               | shipping         | token                                    | destination                                                                                      | billing                                                                                             |
       | {{ carts[2]._id }} | { "value": 500 } | { "id": "tok_xxxxxxxxxxxxxxxxxxxxxxxx" } | { "addressee": "Mr Shipping", "street": "Street", "county": "County", "postalCode": "po57 3ox" } | { "addressee": "Mr Billing", "street": "P.O. Box", "county": "Province", "postalCode": "te37 3od" } |
     Then there should be a 500 error from the "order" request that contains:
@@ -50,7 +50,7 @@ Feature: Place an order using cart information
   Scenario: Cannot use a cart from another subscription to place an order
     Given the request origin headers are set to "orders-create-one.venzra-test.io"
     And I am logged in with the "orders-create-one@venzra-test.io" account
-    When I make a POST request to the API endpoint "/api/v1/orders" as "order" using:
+    When I make a POST request to the API endpoint "/api/orders" as "order" using:
       | cart               | shipping         | token                                    | destination                                                                                      | billing                                                                                             |
       | {{ carts[3]._id }} | { "value": 500 } | { "id": "tok_xxxxxxxxxxxxxxxxxxxxxxxx" } | { "addressee": "Mr Shipping", "street": "Street", "county": "County", "postalCode": "po57 3ox" } | { "addressee": "Mr Billing", "street": "P.O. Box", "county": "Province", "postalCode": "te37 3od" } |
     Then there should be a 400 error from the "order" request that contains:
@@ -64,7 +64,7 @@ Feature: Place an order using cart information
       | amount | currency | application_fee | source                       | statement_descriptor |
       | 1116   | gbp      | 33              | tok_xxxxxxxxxxxxxxxxxxxxxxxx | Orders Create One    |
     And there is a POST consumer at "https://email.eu-west-1.amazonaws.com" that will return status 200
-    When I make a POST request to the API endpoint "/api/v1/orders" as "order" using:
+    When I make a POST request to the API endpoint "/api/orders" as "order" using:
       | cart               | shipping         | token                                    | destination                                                                                      | billing                                                                                             |
       | {{ carts[2]._id }} | { "value": 500 } | { "id": "tok_xxxxxxxxxxxxxxxxxxxxxxxx" } | { "addressee": "Mr Shipping", "street": "Street", "county": "County", "postalCode": "po57 3ox" } | { "addressee": "Mr Billing", "street": "P.O. Box", "county": "Province", "postalCode": "te37 3od" } |
     Then there should be a 200 response from the "order" request that contains:

@@ -60,6 +60,6 @@ const ProductSchema: Schema = new Schema({
 ProductSchema.index({ subscription: 1, code: 1 }, { unique: true });
 ProductSchema.index({ subscription: 1, slug: 1 }, { unique: true });
 
-const ProductModel: Model<IProductModel> = model('products', ProductSchema);
+const ProductModel: Model<IProductModel> = model('products', ProductSchema) as Model<IProductModel>;
 
 export { ProductModel, IProductModel };

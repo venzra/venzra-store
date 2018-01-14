@@ -1,21 +1,27 @@
+import * as parser from 'body-parser';
+
 import { Request, Response, NextFunction, Router } from 'express';
-import { encode, decode } from 'jwt-simple';
 
 import { AuthenticationController } from './authentication';
 
 import { SubscriptionService } from '../services/subscription';
 
-class IdentityController extends AuthenticationController {
+export class IdentityController extends AuthenticationController {
 
-    constructor(private router: Router) {
+    public router: Router;
+
+    constructor() {
         super(new SubscriptionService());
         this.registerRoutes();
     }
 
     registerRoutes() {
-        this.router.post('/identity/login', this.checkSubscription.bind(this), this.authorise.bind(this), this.tokenise.bind(this));
-        this.router.post('/identity/recover', this.recover.bind(this));
-        this.router.post('/identity/logout', this.validate.bind(this), this.logout.bind(this));
+        this.router = Router();
+        this.router.use(parser.json({ type: 'application/json' }));
+
+        this.router.post('/login', this.checkSubscription.bind(this), this.authorise.bind(this), this.tokenise.bind(this));
+        this.router.post('/recover', this.recover.bind(this));
+        this.router.post('/logout', this.validate.bind(this), this.logout.bind(this));
     }
 
     recover(req: Request, res: Response, next: NextFunction) {
@@ -24,4 +30,4 @@ class IdentityController extends AuthenticationController {
 
 }
 
-export { IdentityController };
+export default new IdentityController().router;

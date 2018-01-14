@@ -1,20 +1,27 @@
+import * as parser from 'body-parser';
+
 import { Router } from 'express';
 
 import { AuthenticationController } from './authentication';
 
 import { SubscriptionService } from '../services/subscription';
 
-class CustomerController extends AuthenticationController {
+export class CustomerController extends AuthenticationController {
 
-    constructor(private router: Router) {
+    public router: Router;
+
+    constructor() {
         super(new SubscriptionService());
         this.registerRoutes();
     }
 
     registerRoutes() {
-        this.router.get('/customer', this.checkSubscription.bind(this), this.validate.bind(this), this.getCustomer.bind(this));
+        this.router = Router();
+        this.router.use(parser.json({ type: 'application/json' }));
+
+        this.router.get('/', this.checkSubscription.bind(this), this.validate.bind(this), this.getCustomer.bind(this));
     }
 
 }
 
-export { CustomerController };
+export default new CustomerController().router;

@@ -117,6 +117,6 @@ CustomerSchema.pre('save', function (next) {
     next();
 });
 
-const CustomerModel: Model<ICustomerModel> = model('customers', CustomerSchema);
+const CustomerModel: Model<ICustomerModel> = model('customers', CustomerSchema) as Model<ICustomerModel>;
 
 export { CustomerModel, ICustomerModel, ICustomerPassword, ICustomerLogin };

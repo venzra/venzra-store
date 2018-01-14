@@ -1,3 +1,5 @@
+import * as parser from 'body-parser';
+
 import { Request, Response, NextFunction, Router } from 'express';
 import * as Stripe from 'stripe';
 
@@ -11,21 +13,26 @@ import { CartModel } from '../models/cart';
 import { ProductModel } from '../models/products';
 import { email, mailer } from '../services/mailer';
 
-class OrdersController extends AuthenticationController {
+export class OrdersController extends AuthenticationController {
 
-    constructor(private router: Router) {
+    public router: Router;
+
+    constructor() {
         super(new SubscriptionService());
         this.registerRoutes();
     }
 
     registerRoutes() {
-        this.router.get('/orders', this.checkSubscription.bind(this), this.validate.bind(this), this.findAll.bind(this));
-        this.router.post('/orders', this.checkSubscription.bind(this), this.validate.bind(this), this.createOrder.bind(this), this.findOne.bind(this));
+        this.router = Router();
+        this.router.use(parser.json({ type: 'application/json' }));
+
+        this.router.get('/', this.checkSubscription.bind(this), this.validate.bind(this), this.findAll.bind(this));
+        this.router.post('/', this.checkSubscription.bind(this), this.validate.bind(this), this.createOrder.bind(this), this.findOne.bind(this));
     }
 
     createOrder(req: Request, res: Response, next: NextFunction) {
 
-        let errors = [];
+        const errors = [];
 
         if (!req.body.cart) {
             errors.push({ path: 'cart', kind: 'required' });
@@ -92,7 +99,7 @@ class OrdersController extends AuthenticationController {
                             subscription: this.subscription,
                             customer: this.customer,
                             reference: Math.floor((Math.random() * 0.9 + 0.1) * Math.pow(10, 10)),
-                            items: cart.items.map((item) => { return { product: item.product, quantity: item.quantity, price: item.product.currentPrice }; }),
+                            items: cart.items.map((item) => ({ product: item.product, quantity: item.quantity, price: item.product.currentPrice })),
                             shipping: req.body.shipping,
                             destination: req.body.destination,
                             billing: req.body.billing,
@@ -155,4 +162,4 @@ class OrdersController extends AuthenticationController {
 
 }
 
-export { OrdersController };
+export default new OrdersController().router;

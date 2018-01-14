@@ -23,7 +23,7 @@ export class ProductService {
     ) { }
 
     getProduct(productSlug: string): Promise<Product> {
-        return this.http.get(`api/v1/products/${productSlug}`)
+        return this.http.get(`/api/products/${productSlug}`)
             .toPromise()
             .then((response: any) => response as Product);
     }
@@ -31,7 +31,7 @@ export class ProductService {
     getAllProducts(query): Promise<ListModel<Product>> {
         const params = Object.keys(query).reduce((httpParams, key) => httpParams.set(key, query[key]), new HttpParams());
 
-        return this.http.get('api/v1/products', { params })
+        return this.http.get('/api/products', { params })
             .toPromise()
             .then((response: any) => response as ListModel<Product>);
     }

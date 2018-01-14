@@ -23,7 +23,7 @@ Feature: Adding products into a cart
   Scenario: Sending an empty patch request does not alter the cart information
     Given the request origin headers are set to "cart-add-one.venzra-test.io"
     And I set the "vid" cookie to the value "{{ carts[1]._id }}"
-    When I make an empty PATCH request to the API endpoint "/api/v1/cart" as "cart"
+    When I make an empty PATCH request to the API endpoint "/api/cart" as "cart"
     Then there should be a 200 response from the "cart" request that contains:
       | _id       | items    | value |
       | OBJECT_ID | ARRAY[1] | 9     |
@@ -31,7 +31,7 @@ Feature: Adding products into a cart
   Scenario: Adding a product that is inactive does not update the cart
     Given the request origin headers are set to "cart-add-one.venzra-test.io"
     And I set the "vid" cookie to the value "{{ carts[2]._id }}"
-    When I make a PATCH request to the API endpoint "/api/v1/cart" as "cart" using:
+    When I make a PATCH request to the API endpoint "/api/cart" as "cart" using:
       | op  | path    | value                 |
       | add | product | {{ products[3]._id }} |
     Then there should be a 200 response from the "cart" request that contains:
@@ -41,7 +41,7 @@ Feature: Adding products into a cart
   Scenario: Updating a cart to add a product
     Given the request origin headers are set to "cart-add-one.venzra-test.io"
     And I set the "vid" cookie to the value "{{ carts[2]._id }}"
-    When I make a PATCH request to the API endpoint "/api/v1/cart" as "cart" using:
+    When I make a PATCH request to the API endpoint "/api/cart" as "cart" using:
       | op  | path    | value                 |
       | add | product | {{ products[1]._id }} |
     Then there should be a 200 response from the "cart" request that contains:
@@ -54,7 +54,7 @@ Feature: Adding products into a cart
   Scenario: Updating a cart to add another product
     Given the request origin headers are set to "cart-add-one.venzra-test.io"
     And I set the "vid" cookie to the value "{{ carts[2]._id }}"
-    When I make a PATCH request to the API endpoint "/api/v1/cart" as "cart" using:
+    When I make a PATCH request to the API endpoint "/api/cart" as "cart" using:
       | op  | path    | value                 |
       | add | product | {{ products[2]._id }} |
     Then there should be a 200 response from the "cart" request that contains:
@@ -70,7 +70,7 @@ Feature: Adding products into a cart
   Scenario: Adding a product that is already in the basket should increment the quantity only
     Given the request origin headers are set to "cart-add-one.venzra-test.io"
     And I set the "vid" cookie to the value "{{ carts[2]._id }}"
-    When I make a PATCH request to the API endpoint "/api/v1/cart" as "cart" using:
+    When I make a PATCH request to the API endpoint "/api/cart" as "cart" using:
       | op  | path    | value                 |
       | add | product | {{ products[1]._id }} |
     Then there should be a 200 response from the "cart" request that contains:
@@ -86,7 +86,7 @@ Feature: Adding products into a cart
   Scenario: If the cart does not exist (for the subscription) a new cart is created automatically and the product added
     Given the request origin headers are set to "cart-add-two.venzra-test.io"
     And I set the "vid" cookie to the value "{{ carts[2]._id }}"
-    When I make a PATCH request to the API endpoint "/api/v1/cart" as "cart" using:
+    When I make a PATCH request to the API endpoint "/api/cart" as "cart" using:
       | op  | path    | value                 |
       | add | product | {{ products[4]._id }} |
     Then there should be a 200 response from the "cart" request that contains:
@@ -99,7 +99,7 @@ Feature: Adding products into a cart
   Scenario: Adding a product that does not belong to the subscription is ignored
     Given the request origin headers are set to "cart-add-two.venzra-test.io"
     And I set the "vid" cookie to the value "{{ carts[3]._id }}"
-    When I make a PATCH request to the API endpoint "/api/v1/cart" as "cart" using:
+    When I make a PATCH request to the API endpoint "/api/cart" as "cart" using:
       | op  | path    | value                 |
       | add | product | {{ products[1]._id }} |
     Then there should be a 200 response from the "cart" request that contains:

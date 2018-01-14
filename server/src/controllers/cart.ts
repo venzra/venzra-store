@@ -1,23 +1,30 @@
+import * as parser from 'body-parser';
+
 import { Request, Response, NextFunction, Router } from 'express';
 
 import { AuthenticationController } from './authentication';
 
 import { SubscriptionService } from '../services/subscription';
 
-import { CartModel, ICart } from '../models/cart';
+import { CartModel, ICartModel } from '../models/cart';
 import { IRestOperation } from '../models/rest';
 import { IProductModel, ProductModel } from '../models/products';
 
-class CartController extends AuthenticationController {
+export class CartController extends AuthenticationController {
 
-    constructor(private router: Router) {
+    public router: Router;
+
+    constructor() {
         super(new SubscriptionService());
         this.registerRoutes();
     }
 
     registerRoutes() {
-        this.router.get('/cart', this.checkSubscription.bind(this), this.findOne.bind(this));
-        this.router.patch('/cart', this.checkSubscription.bind(this), this.updateBasket.bind(this), this.findOne.bind(this));
+        this.router = Router();
+        this.router.use(parser.json({ type: 'application/json' }));
+
+        this.router.get('/', this.checkSubscription.bind(this), this.findOne.bind(this));
+        this.router.patch('/', this.checkSubscription.bind(this), this.updateBasket.bind(this), this.findOne.bind(this));
     }
 
     updateBasket(req: Request, res: Response, next: NextFunction) {
@@ -94,10 +101,10 @@ class CartController extends AuthenticationController {
                 select: 'displayName currentPrice',
                 match: { status: 'ACTIVE' }
             })
-            .then((cart) => <ICart>cart.toObject())
+            .then((cart) => <ICartModel>cart.toObject())
             .then((cart) => {
                 const items = cart.items.filter((item) => item.product);
-                const value = items.reduce((value, item) => value + (item.quantity * (<IProductModel>item.product).currentPrice), 0);
+                const value = items.reduce((total, item) => total + (item.quantity * (<IProductModel>item.product).currentPrice), 0);
                 return { ...cart, items, value };
             })
             .then((cart) => res.status(200).send(cart));
@@ -105,4 +112,4 @@ class CartController extends AuthenticationController {
 
 }
 
-export { CartController };
+export default new CartController().router;

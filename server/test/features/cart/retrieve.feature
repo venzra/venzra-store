@@ -24,7 +24,7 @@ Feature: Access cart data available for a customer
   Scenario: Attempting to a cart which belongs to another subscription will give a new empty cart in return
     Given the request origin headers are set to "cart-retrieve-one.venzra-test.io"
     And I set the "vid" cookie to the value "{{ carts[4]._id }}"
-    When I make a GET request to the API endpoint "/api/v1/cart" as "cart"
+    When I make a GET request to the API endpoint "/api/cart" as "cart"
     Then there should be a 200 response from the "cart" request that contains:
       | _id       | items    | value |
       | OBJECT_ID | ARRAY[0] | 0     |
@@ -32,7 +32,7 @@ Feature: Access cart data available for a customer
   Scenario: Successful retrieval of an empty cart will give a result
     Given the request origin headers are set to "cart-retrieve-one.venzra-test.io"
     And I set the "vid" cookie to the value "{{ carts[1]._id }}"
-    When I make a GET request to the API endpoint "/api/v1/cart" as "cart"
+    When I make a GET request to the API endpoint "/api/cart" as "cart"
     Then there should be a 200 response from the "cart" request that contains:
       | _id       | items    | value |
       | OBJECT_ID | ARRAY[0] | 0     |
@@ -40,7 +40,7 @@ Feature: Access cart data available for a customer
   Scenario: Successful retrieval of a cart with a single item will give a result
     Given the request origin headers are set to "cart-retrieve-one.venzra-test.io"
     And I set the "vid" cookie to the value "{{ carts[2]._id }}"
-    When I make a GET request to the API endpoint "/api/v1/cart" as "cart"
+    When I make a GET request to the API endpoint "/api/cart" as "cart"
     Then there should be a 200 response from the "cart" request that contains:
       | _id       | items    | value |
       | OBJECT_ID | ARRAY[1] | 9     |
@@ -51,7 +51,7 @@ Feature: Access cart data available for a customer
   Scenario: Successful retrieval of a complex cart will give a result with quantity counts and any inactive products removed
     Given the request origin headers are set to "cart-retrieve-one.venzra-test.io"
     And I set the "vid" cookie to the value "{{ carts[3]._id }}"
-    When I make a GET request to the API endpoint "/api/v1/cart" as "cart"
+    When I make a GET request to the API endpoint "/api/cart" as "cart"
     Then there should be a 200 response from the "cart" request that contains:
       | _id       | items    | value |
       | OBJECT_ID | ARRAY[2] | 117   |

@@ -5,48 +5,18 @@ import * as mongoose from 'mongoose';
 import * as morgan from 'morgan';
 import * as path from 'path';
 
-import { json } from 'body-parser';
-
 import { venzraSession } from './middleware/venzra-session';
+
+import CartController from './controllers/cart';
+import CustomerController from './controllers/customer';
+import IdentityController from './controllers/identity';
+import OrdersController from './controllers/orders';
+import ProductsController from './controllers/products';
+import SubscriptionController from './controllers/subscription';
+
 import { errorHandler } from './middleware/error-handler';
 
-import { SubscriptionController } from './controllers/subscription';
-import { IdentityController } from './controllers/identity';
-import { CustomerController } from './controllers/customer';
-import { ProductsController } from './controllers/products';
-import { CartController } from './controllers/cart';
-import { OrdersController } from './controllers/orders';
-
 require('mongoose').Promise = global.Promise;
-
-const app: express.Application = express();
-const router: express.Router = express();
-
-/*
- * Configure security elements
- */
-app.enable('trust proxy');
-app.disable('x-powered-by');
-app.use(cookieParser());
-app.use(venzraSession);
-
-/*
- * Register routing endpoints
- */
-router.use(json());
-router.use(morgan(':remote-addr - BASIC LOG - [:date[iso]] - ":method :url" :status :res[content-length] ":referrer" ":user-agent" - :response-time ms'));
-
-app.use('/api/v1/', router);
-
-app.use(express.static(path.join(__dirname, '../client')));
-app.route('*').get((req, res, next) => {
-    if (req.url.startsWith('/assets')) {
-        return next();
-    }
-
-    res.type('html');
-    res.sendFile(path.join(__dirname, '../client/index.html'));
-});
 
 /*
  * Database connection
@@ -67,14 +37,36 @@ mongoose
     .catch((err) => console.error(`Mongo connection error: ${err.message}`));
 
 /*
- * Start controllers
+ * Configure security elements
  */
-const subscription = new SubscriptionController(router);
-const identity = new IdentityController(router);
-const customer = new CustomerController(router);
-const products = new ProductsController(router);
-const cart = new CartController(router);
-const orders = new OrdersController(router);
+const app: express.Application = express();
+app.enable('trust proxy');
+app.disable('x-powered-by');
+app.use(cookieParser());
+app.use(venzraSession);
+
+/*
+ * Register routing endpoints
+ */
+app.use('/api', morgan(':remote-addr - BASIC LOG - [:date[iso]] - ":method :url" :status :res[content-length] ":referrer" ":user-agent" - :response-time ms'));
+
+app.use('/api/cart', CartController);
+app.use('/api/customer', CustomerController);
+app.use('/api/identity', IdentityController);
+app.use('/api/orders', OrdersController);
+app.use('/api/products', ProductsController);
+app.use('/api/subscription', SubscriptionController);
+
+app.use(express.static(path.join(__dirname, '../client')));
+
+app.route('*').get((req, res, next) => {
+    if (req.url.startsWith('/assets')) {
+        return next();
+    }
+
+    res.type('html');
+    res.sendFile(path.join(__dirname, '../client/index.html'));
+});
 
 app.use(errorHandler);
 

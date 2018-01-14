@@ -14,14 +14,14 @@ Feature: Ability for a user to authenticate and gain a login token to use the AP
 
   Scenario: Login without credentials
     Given the request origin headers are set to "identity-login-one.venzra-test.io"
-    When I make an empty POST request to the API endpoint "/api/v1/identity/login" as "login"
+    When I make an empty POST request to the API endpoint "/api/identity/login" as "login"
     Then there should be a 400 error from the "login" request that contains:
       | message           | detail                                     |
       | Validation failed | ["password required", "identity required"] |
 
   Scenario: Login with an UNKNOWN customer will register the user
     Given the request origin headers are set to "identity-login-one.venzra-test.io"
-    And I make a POST request to the API endpoint "/api/v1/identity/login" as "login" using:
+    And I make a POST request to the API endpoint "/api/identity/login" as "login" using:
       | identity                              | password     |
       | identity-login-unknown@venzra-test.io | VenzraTest$1 |
     Then the status returned from the "login" request should be 202
@@ -29,7 +29,7 @@ Feature: Ability for a user to authenticate and gain a login token to use the AP
 
   Scenario: Login with a RECOVERY customer
     Given the request origin headers are set to "identity-login-one.venzra-test.io"
-    And I make a POST request to the API endpoint "/api/v1/identity/login" as "login" using:
+    And I make a POST request to the API endpoint "/api/identity/login" as "login" using:
       | identity                          | password     |
       | identity-login-one@venzra-test.io | VenzraTest$1 |
     Then the status returned from the "login" request should be 202
@@ -37,7 +37,7 @@ Feature: Ability for a user to authenticate and gain a login token to use the AP
 
   Scenario: Incorrect password with an ACTIVE customer
     Given the request origin headers are set to "identity-login-one.venzra-test.io"
-    And I make a POST request to the API endpoint "/api/v1/identity/login" as "login" using:
+    And I make a POST request to the API endpoint "/api/identity/login" as "login" using:
       | identity                          | password          |
       | identity-login-two@venzra-test.io | IncorrectPassword |
     Then there should be a 400 error from the "login" request that contains:
@@ -46,7 +46,7 @@ Feature: Ability for a user to authenticate and gain a login token to use the AP
 
   Scenario: Login with an ACTIVE customer (lowercase)
     Given the request origin headers are set to "identity-login-one.venzra-test.io"
-    And I make a POST request to the API endpoint "/api/v1/identity/login" as "login" using:
+    And I make a POST request to the API endpoint "/api/identity/login" as "login" using:
       | identity                          | password     |
       | identity-login-two@venzra-test.io | VenzraTest$1 |
     Then the status returned from the "login" request should be 202
@@ -54,7 +54,7 @@ Feature: Ability for a user to authenticate and gain a login token to use the AP
 
   Scenario: Login with an ACTIVE customer (uppercase)
     Given the request origin headers are set to "identity-login-one.venzra-test.io"
-    And I make a POST request to the API endpoint "/api/v1/identity/login" as "login" using:
+    And I make a POST request to the API endpoint "/api/identity/login" as "login" using:
       | identity                          | password     |
       | IDENTITY-LOGIN-TWO@VENZRA-TEST.IO | VenzraTest$1 |
     Then the status returned from the "login" request should be 202
@@ -62,7 +62,7 @@ Feature: Ability for a user to authenticate and gain a login token to use the AP
 
   Scenario: Login with a LOCKED customer
     Given the request origin headers are set to "identity-login-one.venzra-test.io"
-    And I make a POST request to the API endpoint "/api/v1/identity/login" as "login" using:
+    And I make a POST request to the API endpoint "/api/identity/login" as "login" using:
       | identity                            | password     |
       | identity-login-three@venzra-test.io | VenzraTest$1 |
     Then there should be a 400 error from the "login" request that contains:

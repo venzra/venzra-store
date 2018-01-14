@@ -73,6 +73,6 @@ const OrderSchema: Schema = new Schema({
 
 OrderSchema.index({ subscription: 1, reference: 1 }, { unique: true });
 
-const OrderModel: Model<IOrderModel> = model('orders', OrderSchema);
+const OrderModel: Model<IOrderModel> = model('orders', OrderSchema) as Model<IOrderModel>;
 
 export { OrderModel, IOrderModel };

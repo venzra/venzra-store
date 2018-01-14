@@ -72,7 +72,7 @@ export class PaymentService {
                 })
             )))
             .then((token) =>
-                this.http.post('api/v1/orders', { cart, shipping, token, destination, billing })
+                this.http.post('/api/orders', { cart, shipping, token, destination, billing })
                     .toPromise()
                     .catch(() => {
                         throw new Error('Unable to place order, please contact us or try again later');

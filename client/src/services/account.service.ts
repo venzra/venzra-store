@@ -27,7 +27,7 @@ export class AccountService {
         private router: Router
     ) {
         if (localStorage.getItem('authenticated') === '1') {
-            this.http.get('api/v1/customer').subscribe((account: Account) => this.account.next(account));
+            this.http.get('/api/customer').subscribe((account: Account) => this.account.next(account));
         }
     }
 
@@ -38,7 +38,7 @@ export class AccountService {
     performLogin(credentialData: AccountCredentials): Promise<boolean> {
         const redirect = localStorage.getItem('redirect') || '/account';
 
-        return this.http.post('api/v1/identity/login', credentialData, { responseType: 'text' })
+        return this.http.post('/api/identity/login', credentialData, { responseType: 'text' })
             .toPromise()
             .then(() => localStorage.setItem('authenticated', '1'))
             .then(() => localStorage.removeItem('redirect'))
@@ -46,7 +46,7 @@ export class AccountService {
     }
 
     performLogout(): Promise<void> {
-        return this.http.post('api/v1/identity/logout', null, { responseType: 'text' })
+        return this.http.post('/api/identity/logout', null, { responseType: 'text' })
             .toPromise()
             .catch(() => null)
             .then(() => localStorage.clear())
@@ -61,7 +61,7 @@ export class AccountService {
         if(account.identity !== null) {
             subject.next(true);
         } else if (localStorage.getItem('authenticated') === '1') {
-            this.http.get('api/v1/customer')
+            this.http.get('/api/customer')
                 .subscribe((account: Account) => {
                     this.account.next(account);
                     subject.next(true);

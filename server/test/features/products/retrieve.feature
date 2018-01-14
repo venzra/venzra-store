@@ -17,24 +17,24 @@ Feature: Creation of a new product entry
 
   Scenario: Attempting to retrieve an INACTIVE product gives no result
     Given the request origin headers are set to "products-retrieve-one.venzra-test.io"
-    When I make a GET request to the API endpoint "/api/v1/products/{{ products[3].slug }}" as "product"
+    When I make a GET request to the API endpoint "/api/products/{{ products[3].slug }}" as "product"
     Then the status returned from the "product" request should be a 404 error
 
   Scenario: Successful retrieval of a record will give a result
     Given the request origin headers are set to "products-retrieve-one.venzra-test.io"
-    When I make a GET request to the API endpoint "/api/v1/products/{{ products[2].slug }}" as "product"
+    When I make a GET request to the API endpoint "/api/products/{{ products[2].slug }}" as "product"
     Then there should be a 200 response from the "product" request that contains:
       | _id       | code            | slug                | displayName         | previousPrice | currentPrice |
       | OBJECT_ID | RETRIEVE-01-002 | product-retrieve-aa | Product Retrieve AA | 0             | 99           |
 
   Scenario: It is not possible to retrieve a product that belongs to a different subscription
     Given the request origin headers are set to "products-retrieve-two.venzra-test.io"
-    When I make a GET request to the API endpoint "/api/v1/products/{{ products[2].slug }}" as "product"
+    When I make a GET request to the API endpoint "/api/products/{{ products[2].slug }}" as "product"
     Then the status returned from the "product" request should be a 404 error
 
   Scenario: If the product slug exists on multiple subscriptions then it returns the correct one
     Given the request origin headers are set to "products-retrieve-two.venzra-test.io"
-    When I make a GET request to the API endpoint "/api/v1/products/{{ products[1].slug }}" as "product"
+    When I make a GET request to the API endpoint "/api/products/{{ products[1].slug }}" as "product"
     Then there should be a 200 response from the "product" request that contains:
       | _id       | code            | slug               | displayName        | previousPrice | currentPrice |
       | OBJECT_ID | RETRIEVE-02-001 | product-retrieve-a | Product Retrieve A | 0             | 999          |

@@ -5,7 +5,7 @@ interface ICartItem {
     quantity?: number;
 }
 
-interface ICart extends Document {
+interface ICartModel extends Document {
     subscription?: string;
     items: ICartItem[];
     value?: number;
@@ -40,7 +40,8 @@ const CartSchema: Schema = new Schema({
     updated: {
         type: Date,
         required: true,
-        default: Date.now
+        default: Date.now,
+        expires: 2419200
     }
 });
 
@@ -49,6 +50,6 @@ CartSchema.pre('save', function (next) {
     next();
 });
 
-const CartModel: Model<ICart> = model('carts', CartSchema);
+const CartModel: Model<ICartModel> = model('carts', CartSchema) as Model<ICartModel>;
 
-export { CartModel, ICart, ICartItem };
+export { CartModel, ICartModel, ICartItem };
