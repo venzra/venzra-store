@@ -10,6 +10,7 @@ import { venzraSession } from './middleware/venzra-session';
 import CartController from './controllers/cart';
 import CustomerController from './controllers/customer';
 import IdentityController from './controllers/identity';
+import ImagesController from './controllers/images';
 import OrdersController from './controllers/orders';
 import ProductsController from './controllers/products';
 import SubscriptionController from './controllers/subscription';
@@ -53,6 +54,7 @@ app.use('/api', morgan(':remote-addr - BASIC LOG - [:date[iso]] - ":method :url"
 app.use('/api/cart', CartController);
 app.use('/api/customer', CustomerController);
 app.use('/api/identity', IdentityController);
+app.use('/api/images', ImagesController);
 app.use('/api/orders', OrdersController);
 app.use('/api/products', ProductsController);
 app.use('/api/subscription', SubscriptionController);

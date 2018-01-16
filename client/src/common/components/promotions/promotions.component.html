@@ -1,18 +1,20 @@
 <h2 class="mat-headline">Promotional products</h2>
 
 <div fxLayout="row" fxLayoutGap="20px">
-    <mat-card *ngFor="let product of products.list" fxFlex="25%">
-        <mat-card-header>
-            <mat-card-title>{{ product.displayName }}</mat-card-title>
-            <mat-card-subtitle>{{ product.currentPrice | price }}</mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-actions fxLayoutGap="10px" fxLayoutAlign="end end">
-            <button mat-icon-button (click)="show(product)">
-                <mat-icon>visibility</mat-icon>
-            </button>
-            <button mat-icon-button (click)="purchase(product)">
-                <mat-icon>add_shopping_cart</mat-icon>
-            </button>
-        </mat-card-actions>
-    </mat-card>
+    <div class="mat-elevation-z2" *ngFor="let product of products.list" fxFlex="25%">
+        <div class="promotional-image">
+            <img (click)="show(product)" [src]="'/api/images/' + product.promotionalImage" />
+        </div>
+
+        <div class="content">
+            <h2>{{ product.displayName }}</h2>
+
+            <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="end end">
+                <button mat-button (click)="show(product)">
+                    <mat-icon>add_shopping_cart</mat-icon>
+                    {{ product.currentPrice | price }}
+                </button>
+            </div>
+        </div>
+    </div>
 </div>

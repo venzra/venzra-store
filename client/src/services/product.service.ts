@@ -11,6 +11,8 @@ export class Product {
     slug?: string;
     code?: string;
     displayName: string;
+    featureImage?: string;
+    promotionalImage?: string;
     previousPrice?: number;
     currentPrice: number;
 }

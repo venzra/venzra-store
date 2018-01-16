@@ -16,7 +16,8 @@ defineSupportCode(({ Given, When, Then }) => {
         return this.setCookie(cookieName, cookieValue);
     });
 
-    When(/^I make a (GET) request to the API endpoint "([^"]*)" as "([^"]*)"$/, function (requestMethod, requestEndpoint, historyName) {
+    When(/^I make a (GET) request to the API endpoint "([^"]*)" as "([^"]*)"(?: with "([^"]*)" content type)?$/, function (requestMethod, requestEndpoint, historyName, contentType) {
+        this.setHeader('content-type', contentType ? contentType : 'application/json');
         return Promise.resolve(this.performGet(requestEndpoint, historyName));
     });
 

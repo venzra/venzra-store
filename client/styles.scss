@@ -2,8 +2,8 @@
 
 @include mat-core();
 
-$venzra-app-primary: mat-palette($mat-light-blue);
-$venzra-app-accent:  mat-palette($mat-blue-grey, 600);
+$venzra-app-primary: mat-palette($mat-deep-purple);
+$venzra-app-accent:  mat-palette($mat-amber, 800);
 $venzra-app-warn:    mat-palette($mat-red);
 $venzra-app-theme:   mat-light-theme($venzra-app-primary, $venzra-app-accent, $venzra-app-warn);
 
@@ -14,17 +14,16 @@ html, body{
     height: 100%;
 }
 
+body {
+    color: rgba(0, 0, 0, 0.67);
+}
+
 app-public {
     position: absolute;
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
-}
-
-.mat-toolbar {
-    position: relative;
-    z-index: 2;
 }
 
 article, p {

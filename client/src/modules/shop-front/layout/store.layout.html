@@ -1,17 +1,15 @@
 <div fxLayout="column" class="venzra-container">
     <div fxFlex="grow">
-        <div class="hero">
-            <div fxLayout="column" fxLayoutAlign="center start" fxFlexOffset="50" fxLayoutGap="0">
-                <h1 class="mat-display-3">{{ subscription.storeName }}</h1>
-                <h2>{{ subscription.strapline }}</h2>
-            </div>
+        <div class="hero" fxLayout="column" fxLayoutAlign="center center">
+            <h1><img [src]="'/api/images/' + subscription.logo" [alt]="subscription.storeName" /></h1>
+            <h2>{{ subscription.strapline }}</h2>
         </div>
 
         <div class="venzra-content">
             <router-outlet></router-outlet>
         </div>
     </div>
-    <mat-toolbar color="accent" role="note">
+    <mat-toolbar color="primary" role="note">
         <span fxFlex></span>
         <div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="center center">
             <span class="mat-body-1">powered by</span>

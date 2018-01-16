@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 
 import { Product } from '../../../../services/product.service';
@@ -12,10 +13,12 @@ import { CartService } from '../../../../services/cart.service';
 })
 export class ProductComponent implements OnInit {
 
-    product: Product;
+    public featureImage;
+    public product: Product;
 
     constructor(
         private route: ActivatedRoute,
+        private sanitizer: DomSanitizer,
         private layout: LayoutService,
         private cartService: CartService
     ) { }
@@ -25,6 +28,10 @@ export class ProductComponent implements OnInit {
 
         this.route.data.subscribe((data: { productData: Product }) => {
             this.product = data.productData;
+
+            if (data.productData.featureImage) {
+                this.featureImage = this.sanitizer.bypassSecurityTrustStyle(`url(/api/images/${data.productData.featureImage})`);
+            }
         });
     }
 

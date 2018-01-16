@@ -12,13 +12,17 @@ Feature: Creation of a new product entry
       | orders-search-one@venzra-test.io   | PASSWORD | ACTIVE | {{ subscriptions[1]._id }} |
       | orders-search-two@venzra-test.io   | PASSWORD | ACTIVE | {{ subscriptions[1]._id }} |
       | orders-search-three@venzra-test.io | PASSWORD | ACTIVE | {{ subscriptions[2]._id }} |
+    And there are the following "images" records in the database
+      | subscription               | name                 | usage     | size |
+      | {{ subscriptions[1]._id }} | OrdersSearch Image A | promotion | 1024 |
+      | {{ subscriptions[2]._id }} | OrdersSearch Image B | promotion | 1024 |
     And there are the following "products" records in the database
-      | subscription               | code          | slug             | displayName      | currentPrice | status   |
-      | {{ subscriptions[1]._id }} | SEARCH-01-001 | orders-search-a  | Orders Search A  | 9            | ACTIVE   |
-      | {{ subscriptions[1]._id }} | SEARCH-01-002 | orders-search-aa | Orders Search AA | 99           | ACTIVE   |
-      | {{ subscriptions[1]._id }} | SEARCH-01-003 | orders-search-b  | Orders Search B  | 999          | INACTIVE |
-      | {{ subscriptions[2]._id }} | SEARCH-02-001 | orders-search-a  | Orders Search A  | 999          | ACTIVE   |
-      | {{ subscriptions[2]._id }} | SEARCH-02-002 | orders-search-b  | Orders Search B  | 999          | INACTIVE |
+      | subscription               | code          | slug             | displayName      | promotionalImage    | currentPrice | status   |
+      | {{ subscriptions[1]._id }} | SEARCH-01-001 | orders-search-a  | Orders Search A  | {{ images[1]._id }} | 9            | ACTIVE   |
+      | {{ subscriptions[1]._id }} | SEARCH-01-002 | orders-search-aa | Orders Search AA | {{ images[1]._id }} | 99           | ACTIVE   |
+      | {{ subscriptions[1]._id }} | SEARCH-01-003 | orders-search-b  | Orders Search B  | {{ images[1]._id }} | 999          | INACTIVE |
+      | {{ subscriptions[2]._id }} | SEARCH-02-001 | orders-search-a  | Orders Search A  | {{ images[1]._id }} | 999          | ACTIVE   |
+      | {{ subscriptions[2]._id }} | SEARCH-02-002 | orders-search-b  | Orders Search B  | {{ images[1]._id }} | 999          | INACTIVE |
     And there are the following "orders" records in the database
       | subscription               | customer               | reference  | shipping         | destination                                                                                                       | billing                                                                                                              | items                                                                                                                                              | payment                                                                                                                       |
       | {{ subscriptions[1]._id }} | {{ customers[1]._id }} | 1111111111 | { "price": 100 } | { "addressee": "Mr Shipping", "street": "Street", "county": "County", "postalCode": "po57 3ox", "country": "GB" } | { "addressee": "Mr Billing", "street": "P.O. Box", "county": "Province", "postalCode": "te37 3od", "country": "GB" } | [{ "product": "{{ products[1]._id }}", "quantity": "5", "price": "15" }]                                                                           | { "reference": "ch_xxxxxxxxxxxxxxx", "name": "Example One", "card": "2345", "brand": "Visa", "fee": 36, "value": 175 }        |

@@ -14,6 +14,8 @@ interface ISubscriptionModel extends Document {
     storeName?: string;
     strapline?: string;
     domainName?: string;
+    icon?: string;
+    logo?: string;
     gateway?: IGatewayModel;
     transactions?: ITransactionModel;
     status?: string;
@@ -44,6 +46,14 @@ const SubscriptionSchema: Schema = new Schema({
         type: String,
         required: true,
         lowercase: true
+    },
+    icon: {
+        type: Schema.Types.ObjectId,
+        ref: 'images'
+    },
+    logo: {
+        type: Schema.Types.ObjectId,
+        ref: 'images'
     },
     gateway: {
         type: {

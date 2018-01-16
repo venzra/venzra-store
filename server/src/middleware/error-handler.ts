@@ -86,6 +86,7 @@ export const errorHandler = (err: IVenzraError, req: Request, res: Response, nex
             res.clearCookie('jwt');
             res.status(401).send({ message: err.message });
             break;
+        case 'NotFound':
         case 'NotFoundError':
             res.status(404).send();
             break;

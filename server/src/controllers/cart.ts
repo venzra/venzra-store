@@ -98,7 +98,7 @@ export class CartController extends AuthenticationController {
             .select('items')
             .populate({
                 path: 'items.product',
-                select: 'displayName currentPrice',
+                select: 'displayName promotionalImage currentPrice',
                 match: { status: 'ACTIVE' }
             })
             .then((cart) => <ICartModel>cart.toObject())

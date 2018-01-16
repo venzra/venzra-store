@@ -11,6 +11,7 @@
 
                     <mat-list *ngIf="cart.items.length">
                         <mat-list-item *ngFor="let item of cart.items">
+                            <img matListAvatar [src]="'/api/images/' + item.product.promotionalImage" />
                             <h3 matLine>{{ item.product.displayName }}</h3>
                             <div fxLayout="row" matLine>
                                 <p fxFlex>{{ item.quantity }} @ {{ item.product.currentPrice | price }}</p>

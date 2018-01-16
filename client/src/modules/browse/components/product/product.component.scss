@@ -1,8 +1,28 @@
-.pricing {
-    color: red;
+.feature-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 500px;
+    background-size: cover;
+    background-position: center center;
+    opacity: 0.4;
+    z-index: -1;
 }
 
-.strike {
-    color: rgba(0, 0, 0, 0.54);
-    text-decoration: line-through;
+.product-detail {
+    margin-top: 140px;
+
+    .pricing {
+        color: red;
+    }
+
+    .strike {
+        color: rgba(0, 0, 0, 0.54);
+        text-decoration: line-through;
+    }
+
+    img {
+        max-width: 100%;
+    }
 }

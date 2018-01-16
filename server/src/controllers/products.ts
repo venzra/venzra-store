@@ -33,7 +33,7 @@ export class ProductsController extends AuthenticationController {
 
         ProductModel
             .findOne({ slug, subscription, status })
-            .select('slug code displayName previousPrice currentPrice')
+            .select('slug code displayName featureImage promotionalImage previousPrice currentPrice')
             .then((product) => product ? res.status(200).send(product) : next(new NotFoundError()));
     }
 
@@ -56,7 +56,7 @@ export class ProductsController extends AuthenticationController {
                         { $sort: order },
                         { $skip: skip },
                         { $limit: limit },
-                        { $project: { slug: 1, code: 1, displayName: 1, currentPrice: 1 } }
+                        { $project: { slug: 1, code: 1, displayName: 1, promotionalImage: 1, currentPrice: 1 } }
                     ])
                     .then((list) => res.status(200).send({ list, total, skip, limit }))
             )

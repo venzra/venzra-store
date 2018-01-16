@@ -1,12 +1,37 @@
+<div class="feature-image" [style.background-image]="featureImage"></div>
+
 <div fxLayout="row" fxLayoutAlign="center center">
     <div fxFlex="90" fxFlex.gt-md="70" fxFlex.xl="60">
-        <section>
-            <h1>{{ product.displayName }}</h1>
+        <section class="product-detail">
+            <mat-toolbar class="mat-elevation-z2" color="accent">
+                <h1 fxFlex>{{ product.displayName }}</h1>
+                <button mat-button (click)="purchase(product)">
+                    <mat-icon>add_shopping_cart</mat-icon> Add to cart
+                </button>
+            </mat-toolbar>
 
             <mat-card>
                 <mat-card-content fxLayout="column">
-                    <div fxLayout="row">
-                        <div fxLayout="column" fxFlexOffset="50%" fxFlex="50%" fxLayoutGap="20px">
+                    <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px">
+                        <div fxFlex="50%" fxLayoutAlign="center start">
+                            <img [src]="'/api/images/' + product.promotionalImage" />
+                        </div>
+                        <div fxLayout="column" fxFlex="50%" fxLayoutGap="20px">
+                            <div fxFlex>
+                                <p>Lorem Ipsum</p>
+                                <p>Lorem Ipsum</p>
+                                <ul>
+                                    <li>Lorem Ipsum</li>
+                                    <li>Lorem Ipsum</li>
+                                    <li>Lorem Ipsum</li>
+                                    <li>Lorem Ipsum</li>
+                                    <li>Lorem Ipsum</li>
+                                </ul>
+                                <p>Lorem Ipsum</p>
+                                <p>Lorem Ipsum</p>
+                                <p>Lorem Ipsum</p>
+                                <p>Lorem Ipsum</p>
+                            </div>
                             <mat-list>
                                 <mat-list-item>
                                     <h3 matLine>Price</h3>
@@ -19,9 +44,9 @@
                                 </mat-list-item>
                             </mat-list>
 
-                            <div fxLayoutAlign="end end">
+                            <div fxLayout="row" fxLayoutAlign="end end">
                                 <button mat-raised-button color="primary" (click)="purchase(product)">
-                                    <mat-icon>add_shopping_cart</mat-icon> Buy
+                                    <mat-icon>add_shopping_cart</mat-icon> Add to cart
                                 </button>
                             </div>
                         </div>
