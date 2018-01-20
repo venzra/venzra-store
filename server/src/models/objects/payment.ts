@@ -5,7 +5,7 @@ import { FeeSchema, IFeeModel } from './fee';
 interface IPaymentModel extends Document {
     reference: string;
     transaction: string;
-    card: number;
+    card: string;
     brand: string;
     fee: IFeeModel;
     value: number;
@@ -25,7 +25,7 @@ const PaymentSchema: Schema = new Schema({
         required: true
     },
     card: {
-        type: Number,
+        type: String,
         required: true
     },
     brand: {
