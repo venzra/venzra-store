@@ -67,6 +67,7 @@ Feature: Place an order using cart information
     And there is a POST consumer at "https://api.stripe.com" for "/v1/charges" that will return "stripe/charges/create-success.json" with status 200 when called with:
       | amount | currency | application_fee | source                       | statement_descriptor |
       | 1116   | gbp      | 33              | tok_xxxxxxxxxxxxxxxxxxxxxxxx | Orders Create One    |
+    And there is a GET consumer at "https://api.stripe.com" for "/v1/balance/history/txn_xxxxxxxxxxxxxxxxxxxxxxxx" that will return "stripe/balance/retrieve-history.json" with status 200
     And there is a POST consumer at "https://email.eu-west-1.amazonaws.com" that will return status 200
     When I make a POST request to the API endpoint "/api/orders" as "order" using:
       | cart               | shipping         | token                                    | destination                                                                                      | billing                                                                                             |

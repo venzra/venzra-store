@@ -1,13 +1,22 @@
 import { Schema, Document } from 'mongoose';
 
+import { FeeSchema, IFeeModel } from './fee';
+
 interface IPaymentModel extends Document {
     reference: string;
+    transaction: string;
     card: number;
+    brand: string;
+    fee: IFeeModel;
     value: number;
 }
 
 const PaymentSchema: Schema = new Schema({
     reference: {
+        type: String,
+        required: true
+    },
+    transaction: {
         type: String,
         required: true
     },
@@ -24,7 +33,7 @@ const PaymentSchema: Schema = new Schema({
         required: true
     },
     fee: {
-        type: Number,
+        type: FeeSchema,
         required: true
     },
     value: {

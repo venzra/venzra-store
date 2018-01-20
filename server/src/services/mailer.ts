@@ -4,12 +4,14 @@ import { IOrderModel } from '../models/orders';
 import { ISubscriptionModel } from '../models/subscription';
 import { ICustomerModel } from '../models/customer';
 
+import { environment } from '../config';
+
 export const mailer = {
     send: (subscription: ISubscriptionModel, subject: string, destination: ICustomerModel, message: string): Promise<SES.SendEmailResponse> => {
         const ses = new SES({ region: 'eu-west-1' });
 
         const request: SES.SendEmailRequest = {
-            Source: `${subscription.storeName} <${subscription.domainName}@venzra.io>`,
+            Source: `${subscription.storeName} <${subscription.domainName}@${environment.emailDomain}>`,
             Destination: {
                 ToAddresses: [destination.get('identity')]
             },

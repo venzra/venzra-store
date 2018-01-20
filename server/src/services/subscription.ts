@@ -7,7 +7,6 @@ export class SubscriptionService {
     validate(domains) {
         const domainName = domains.pop();
 
-        return SubscriptionModel
-            .findOne({ domainName })
+        return SubscriptionModel.findOne({ domainName });
     }
 }

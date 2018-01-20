@@ -73,7 +73,8 @@ export class OrdersController extends AuthenticationController {
                     throw new BadRequest('Invalid cart reference');
                 }
 
-                const charge = cart.items.reduce((total, item) => total + (item.quantity * item.product.currentPrice), 0);
+                const postage: number = req.body.shipping.value || 0;
+                const charge = cart.items.reduce((total, item) => total + (item.quantity * item.product.currentPrice), postage);
                 const fee = Math.round(charge * this.subscription.transactions.rate) + this.subscription.transactions.base;
 
                 return stripe.charges
@@ -83,18 +84,19 @@ export class OrdersController extends AuthenticationController {
                         application_fee: fee,
                         source: req.body.token.id,
                         shipping: {
-                            name: req.body.shipping.addressee,
+                            name: req.body.destination.addressee,
                             address: {
-                                line1: req.body.shipping.street,
-                                line2: req.body.shipping.building,
-                                city: req.body.shipping.city,
-                                state: req.body.shipping.county,
-                                postal_code: req.body.shipping.postalCode
+                                line1: req.body.destination.street,
+                                line2: req.body.destination.building,
+                                city: req.body.destination.city,
+                                state: req.body.destination.county,
+                                postal_code: req.body.destination.postalCode
                             }
                         },
                         statement_descriptor: this.subscription.storeName.substr(0, 22)
                     })
-                    .then((payment) => {
+                    .then((payment) => stripe.balance.retrieveTransaction(<string> payment.balance_transaction).then((transaction) => ({ payment, transaction })))
+                    .then(({ payment, transaction }) => {
                         const order = new OrderModel({
                             subscription: this.subscription,
                             customer: this.customer,
@@ -105,11 +107,16 @@ export class OrdersController extends AuthenticationController {
                             billing: req.body.billing,
                             payment: {
                                 reference: payment.id,
+                                transaction: transaction.id,
                                 name: payment.source.name,
                                 card: payment.source.last4,
                                 brand: payment.source.brand,
-                                fee: fee,
-                                value: charge
+                                fee: {
+                                    venzra: (({ amount, currency }) => ({ amount, currency }))(transaction.fee_details.find((part) => part.type === 'application_fee')),
+                                    gateway: (({ amount, currency }) => ({ amount, currency }))(transaction.fee_details.find((part) => part.type === 'stripe_fee')),
+                                    total: transaction.fee
+                                },
+                                value: payment.amount
                             }
                         });
 
