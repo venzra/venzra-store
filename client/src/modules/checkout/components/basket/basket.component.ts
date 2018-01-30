@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Cart, CartService } from '../../../../services/cart.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MatRadioChange } from '@angular/material';
 
+import { Cart, CartService } from '../../../../services/cart.service';
+import { Shipping } from '../../services/shipping';
 import { LayoutService } from '../../../../services/layout.service';
+import { ListModel } from '../../../../services/restful.service';
 
 @Component({
     templateUrl: './basket.component.html',
@@ -10,9 +13,11 @@ import { LayoutService } from '../../../../services/layout.service';
 })
 export class BasketComponent implements OnInit {
 
-    cart: Cart = new Cart();
+    public cart: Cart;
+    public shippingData: ListModel<Shipping>;
 
     constructor(
+        private route: ActivatedRoute,
         private router: Router,
         private layout: LayoutService,
         private cartService: CartService
@@ -20,6 +25,8 @@ export class BasketComponent implements OnInit {
 
     ngOnInit(): void {
         this.layout.title = 'Cart';
+
+        this.shippingData = this.route.snapshot.data.shippingData;
         this.cartService.getCart().subscribe((cart) => this.cart = cart);
     }
 
@@ -31,7 +38,32 @@ export class BasketComponent implements OnInit {
         this.cartService.removeProduct(item.product);
     }
 
-    nextStep(): void {
+    checkShipping(shipping: Shipping) {
+        let available = true;
+
+        if (shipping.cartMinimum !== 0 && shipping.cartMinimum > this.cart.value) {
+            available = false;
+        }
+
+        if (shipping.cartMaximum !== 0 && this.cart.value > shipping.cartMaximum) {
+            available = false;
+        }
+
+        return available;
+    }
+
+    selectedShipping(shipping: Shipping) {
+        if (this.cart.shipping) {
+            return this.cart.shipping.reference === shipping._id;
+        }
+        return false;
+    }
+
+    updateShipping(event: MatRadioChange) {
+        this.cartService.allocateShipping(event.value);
+    }
+
+    checkout(): void {
         this.router.navigate(['checkout/payment']);
     }
 

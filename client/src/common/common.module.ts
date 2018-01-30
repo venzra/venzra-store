@@ -6,7 +6,7 @@ import { NgModule } from '@angular/core';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule, MatCardModule, MatCheckboxModule, MatDialogModule, MatIconModule, MatInputModule, MatListModule, MatPaginatorModule, MatSelectModule, MatSidenavModule, MatSlideToggleModule, MatSnackBarModule, MatStepperModule, MatToolbarModule, MatTooltipModule } from '@angular/material';
+import { MatButtonModule, MatCardModule, MatCheckboxModule, MatDialogModule, MatIconModule, MatInputModule, MatListModule, MatPaginatorModule, MatRadioModule, MatSelectModule, MatSidenavModule, MatSlideToggleModule, MatSnackBarModule, MatStepperModule, MatToolbarModule, MatTooltipModule } from '@angular/material';
 
 import { AccountComponent } from './components/account/account.component';
 import { CartComponent } from './components/cart/cart.component';
@@ -40,6 +40,7 @@ import { ErrorInterceptorModule } from './http.interceptor';
         MatInputModule,
         MatListModule,
         MatPaginatorModule,
+        MatRadioModule,
         MatSelectModule,
         MatSidenavModule,
         MatSlideToggleModule,
@@ -61,6 +62,7 @@ import { ErrorInterceptorModule } from './http.interceptor';
         MatInputModule,
         MatListModule,
         MatPaginatorModule,
+        MatRadioModule,
         MatSelectModule,
         MatSidenavModule,
         MatSlideToggleModule,

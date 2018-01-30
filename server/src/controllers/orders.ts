@@ -38,10 +38,6 @@ export class OrdersController extends AuthenticationController {
             errors.push({ path: 'cart', kind: 'required' });
         }
 
-        if (!req.body.shipping) {
-            errors.push({ path: 'shipping', kind: 'required' });
-        }
-
         if (!req.body.destination) {
             errors.push({ path: 'destination', kind: 'required' });
         }
@@ -73,7 +69,7 @@ export class OrdersController extends AuthenticationController {
                     throw new BadRequest('Invalid cart reference');
                 }
 
-                const postage: number = req.body.shipping.value || 0;
+                const postage = cart.shipping.price;
                 const charge = cart.items.reduce((total, item) => total + (item.quantity * item.product.currentPrice), postage);
                 const fee = Math.round(charge * this.subscription.transactions.rate) + this.subscription.transactions.base;
 
@@ -102,7 +98,7 @@ export class OrdersController extends AuthenticationController {
                             customer: this.customer,
                             reference: Math.floor((Math.random() * 0.9 + 0.1) * Math.pow(10, 10)),
                             items: cart.items.map((item) => ({ product: item.product, quantity: item.quantity, price: item.product.currentPrice })),
-                            shipping: req.body.shipping,
+                            shipping: cart.shipping,
                             destination: req.body.destination,
                             billing: req.body.billing,
                             payment: {

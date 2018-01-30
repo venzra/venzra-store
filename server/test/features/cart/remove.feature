@@ -7,6 +7,12 @@ Feature: Removing products from a cart
       | storeName       | status |
       | Cart Remove One | ACTIVE |
       | Cart Remove Two | ACTIVE |
+    And there are the following "shipping" records in the database
+      | subscription               | displayName | cartMinimum | cartMaximum | currentPrice | shipmentTime |
+      | {{ subscriptions[1]._id }} | Example A   | 0           | 0           | 100          | 24           |
+      | {{ subscriptions[1]._id }} | Example B   | 0           | 0           | 200          | 48           |
+      | {{ subscriptions[1]._id }} | Example C   | 0           | 0           | 300          | 72           |
+      | {{ subscriptions[2]._id }} | Example D   | 0           | 0           | 400          | 96           |
     And there are the following "images" records in the database
       | subscription               | name               | usage     | size |
       | {{ subscriptions[1]._id }} | CartRemove Image A | promotion | 1024 |
@@ -19,11 +25,11 @@ Feature: Removing products from a cart
       | {{ subscriptions[2]._id }} | REMOVE-02-001 | cart-remove-a  | Cart Remove A  | Automated description | {{ images[2]._id }} | 999          | ACTIVE   |
       | {{ subscriptions[2]._id }} | REMOVE-02-002 | cart-remove-b  | Cart Remove B  | Automated description | {{ images[2]._id }} | 999          | INACTIVE |
     And there are the following "carts" records in the database
-      | subscription               | items                                                                                                          |
-      | {{ subscriptions[1]._id }} |                                                                                                                |
-      | {{ subscriptions[1]._id }} | [{ "product": "{{ products[1]._id }}" }, { "product": "{{ products[3]._id }}" }]                               |
-      | {{ subscriptions[1]._id }} | [{ "product": "{{ products[1]._id }}", "quantity": 3 }, { "product": "{{ products[2]._id }}", "quantity": 2 }] |
-      | {{ subscriptions[2]._id }} | [{ "product": "{{ products[4]._id }}" }, { "product": "{{ products[5]._id }}" }]                               |
+      | subscription               | items                                                                                                          | shipping                                                                    |
+      | {{ subscriptions[1]._id }} | []                                                                                                             | { "reference": "{{ shipping[1]._id }}", "name": "Example A", "price": 100 } |
+      | {{ subscriptions[1]._id }} | [{ "product": "{{ products[1]._id }}" }, { "product": "{{ products[3]._id }}" }]                               | { "reference": "{{ shipping[2]._id }}", "name": "Example B", "price": 200 } |
+      | {{ subscriptions[1]._id }} | [{ "product": "{{ products[1]._id }}", "quantity": 3 }, { "product": "{{ products[2]._id }}", "quantity": 2 }] | { "reference": "{{ shipping[3]._id }}", "name": "Example C", "price": 300 } |
+      | {{ subscriptions[2]._id }} | [{ "product": "{{ products[4]._id }}" }, { "product": "{{ products[5]._id }}" }]                               | { "reference": "{{ shipping[4]._id }}", "name": "Example D", "price": 400 } |
 
   Scenario: Removing a product that is not in the cart is ignored
     Given the request origin headers are set to "cart-remove-one.venzra-test.io"
@@ -32,8 +38,8 @@ Feature: Removing products from a cart
       | op     | path    | value                 |
       | remove | product | {{ products[1]._id }} |
     Then there should be a 200 response from the "cart" request that contains:
-      | _id       | items    | value |
-      | OBJECT_ID | ARRAY[0] | 0     |
+      | _id       | items    | shipping                                                                    | value |
+      | OBJECT_ID | ARRAY[0] | { "reference": "{{ shipping[1]._id }}", "name": "Example A", "price": 100 } | 0     |
 
   Scenario: Removing a product that is inactive does not matter
     Given the request origin headers are set to "cart-remove-one.venzra-test.io"

@@ -18,6 +18,8 @@ export class Payment {
 }
 
 export class Shipping {
+    reference: string;
+    name: string;
     price: number;
 }
 

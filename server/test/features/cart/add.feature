@@ -7,6 +7,11 @@ Feature: Adding products into a cart
       | storeName    | status |
       | Cart Add One | ACTIVE |
       | Cart Add Two | ACTIVE |
+    And there are the following "shipping" records in the database
+      | subscription               | displayName | cartMinimum | cartMaximum | currentPrice | shipmentTime |
+      | {{ subscriptions[1]._id }} | Example A   | 0           | 0           | 100          | 24           |
+      | {{ subscriptions[1]._id }} | Example B   | 0           | 0           | 200          | 48           |
+      | {{ subscriptions[2]._id }} | Example C   | 0           | 0           | 300          | 72           |
     And there are the following "images" records in the database
       | subscription               | name            | usage     | size |
       | {{ subscriptions[1]._id }} | CartAdd Image A | promotion | 1024 |
@@ -19,18 +24,18 @@ Feature: Adding products into a cart
       | {{ subscriptions[2]._id }} | ADD-02-001 | cart-add-a  | Cart Add A  | Automated description | {{ images[2]._id }} | 999          | ACTIVE   |
       | {{ subscriptions[2]._id }} | ADD-02-002 | cart-add-b  | Cart Add B  | Automated description | {{ images[2]._id }} | 999          | INACTIVE |
     And there are the following "carts" records in the database
-      | subscription               | items                                    |
-      | {{ subscriptions[1]._id }} | [{ "product": "{{ products[1]._id }}" }] |
-      | {{ subscriptions[1]._id }} |                                          |
-      | {{ subscriptions[2]._id }} | [{ "product": "{{ products[4]._id }}" }] |
+      | subscription               | items                                    | shipping                                                                    |
+      | {{ subscriptions[1]._id }} | [{ "product": "{{ products[1]._id }}" }] | { "reference": "{{ shipping[1]._id }}", "name": "Example A", "price": 100 } |
+      | {{ subscriptions[1]._id }} | []                                       | { "reference": "{{ shipping[2]._id }}", "name": "Example B", "price": 200 } |
+      | {{ subscriptions[2]._id }} | [{ "product": "{{ products[4]._id }}" }] | { "reference": "{{ shipping[3]._id }}", "name": "Example C", "price": 300 } |
 
   Scenario: Sending an empty patch request does not alter the cart information
     Given the request origin headers are set to "cart-add-one.venzra-test.io"
     And I set the "vid" cookie to the value "{{ carts[1]._id }}"
     When I make an empty PATCH request to the API endpoint "/api/cart" as "cart"
     Then there should be a 200 response from the "cart" request that contains:
-      | _id       | items    | value |
-      | OBJECT_ID | ARRAY[1] | 9     |
+      | _id       | items    | shipping                                                                    | value |
+      | OBJECT_ID | ARRAY[1] | { "reference": "{{ shipping[1]._id }}", "name": "Example A", "price": 100 } | 9     |
 
   Scenario: Adding a product that is inactive does not update the cart
     Given the request origin headers are set to "cart-add-one.venzra-test.io"
@@ -39,8 +44,8 @@ Feature: Adding products into a cart
       | op  | path    | value                 |
       | add | product | {{ products[3]._id }} |
     Then there should be a 200 response from the "cart" request that contains:
-      | _id       | items    | value |
-      | OBJECT_ID | ARRAY[0] | 0     |
+      | _id       | items    | shipping                                                                    | value |
+      | OBJECT_ID | ARRAY[0] | { "reference": "{{ shipping[2]._id }}", "name": "Example B", "price": 200 } | 0     |
 
   Scenario: Updating a cart to add a product
     Given the request origin headers are set to "cart-add-one.venzra-test.io"
@@ -107,8 +112,8 @@ Feature: Adding products into a cart
       | op  | path    | value                 |
       | add | product | {{ products[1]._id }} |
     Then there should be a 200 response from the "cart" request that contains:
-      | _id       | items    | value |
-      | OBJECT_ID | ARRAY[1] | 999   |
+      | _id       | items    | shipping                                                                    | value |
+      | OBJECT_ID | ARRAY[1] | { "reference": "{{ shipping[3]._id }}", "name": "Example C", "price": 300 } | 999   |
     And the "cart" request that has an "items" field and row 1 contains:
       | _id       | product                                               | quantity |
       | OBJECT_ID | OBJECT[_id,displayName,promotionalImage,currentPrice] | 1        |

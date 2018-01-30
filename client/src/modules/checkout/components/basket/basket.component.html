@@ -31,31 +31,34 @@
                 </mat-card>
 
                 <div fxFlex="25%">
-                    <mat-card fxLayout="column" fxLayoutGap="20px">
-                        <div>
-                            <h2>Order details</h2>
-                            <mat-list>
-                                <mat-list-item>
-                                    <h3 matLine>Sub-total</h3>
-                                    <div matLine>{{ cart.value | price }}</div>
-                                </mat-list-item>
+                    <mat-card *ngIf="cart.value > 0" fxLayout="column" fxLayoutGap="20px">
+                        <h2>Order details</h2>
+                        <div fxLayout="column" fxLayoutGap="30px">
+                            <div fxLayout="column" fxLayoutGap="6px">
+                                <div class="mat-subheading-2">Sub-total</div>
+                                <div class="mat-title">{{ cart.value | price }}</div>
+                            </div>
 
-                                <mat-list-item>
-                                    <h3 matLine>Shipping</h3>
-                                    <div matLine>tbc...</div>
-                                </mat-list-item>
+                            <div fxLayout="column" fxLayoutGap="12px">
+                                <div class="mat-subheading-2">Select shipping</div>
+                                <mat-radio-group (change)="updateShipping($event)" fxLayout="column" fxLayoutGap="12px" required>
+                                    <ng-container *ngFor="let shipping of shippingData.list">
+                                        <mat-radio-button *ngIf="checkShipping(shipping)" [value]="shipping._id" [checked]="selectedShipping(shipping)" color="primary">
+                                            <div>{{ shipping.displayName }}</div>
+                                            <div class="mat-body-2">{{ shipping.currentPrice | price }}</div>
+                                        </mat-radio-button>
+                                    </ng-container>
+                                </mat-radio-group>
+                            </div>
 
-                                <mat-list-item>
-                                    <h3 matLine>Total</h3>
-                                    <div matLine>{{ cart.value | price }}</div>
-                                </mat-list-item>
-                            </mat-list>
-                        </div>
+                            <div fxLayout="column" fxLayoutGap="6px">
+                                <div class="mat-subheading-2">Total</div>
+                                <div class="mat-display-1">{{ cart.value + (cart.shipping ? cart.shipping.price : 0) | price }}</div>
+                            </div>
 
-                        <div fxLayoutAlign="center">
-                            <a mat-raised-button color="primary" (click)="nextStep()">
-                                Checkout <mat-icon>arrow_forward</mat-icon>
-                            </a>
+                            <div fxLayoutAlign="center">
+                                <button mat-raised-button color="primary" (click)="checkout()" [disabled]="!cart.shipping">Checkout <mat-icon>arrow_forward</mat-icon></button>
+                            </div>
                         </div>
                     </mat-card>
                 </div>

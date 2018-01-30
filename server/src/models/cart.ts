@@ -1,5 +1,7 @@
 import { Schema, Document, Model, model } from 'mongoose';
 
+import { IShippingModel, ShippingSchema } from './objects/shipping';
+
 interface ICartItem {
     product: any;
     quantity?: number;
@@ -8,6 +10,7 @@ interface ICartItem {
 interface ICartModel extends Document {
     subscription?: string;
     items: ICartItem[];
+    shipping: IShippingModel;
     value?: number;
 }
 
@@ -31,6 +34,9 @@ const CartSchema: Schema = new Schema({
             }
         }],
         default: []
+    },
+    shipping: {
+        type: ShippingSchema
     },
     created: {
         type: Date,

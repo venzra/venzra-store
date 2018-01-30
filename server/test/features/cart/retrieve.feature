@@ -7,6 +7,10 @@ Feature: Access cart data available for a customer
       | storeName         | status |
       | Cart Retrieve One | ACTIVE |
       | Cart Retrieve Two | ACTIVE |
+    And there are the following "shipping" records in the database
+      | subscription               | displayName | cartMinimum | cartMaximum | currentPrice | shipmentTime |
+      | {{ subscriptions[1]._id }} | Example A   | 0           | 0           | 100          | 24           |
+      | {{ subscriptions[2]._id }} | Example B   | 0           | 0           | 200          | 48           |
     And there are the following "images" records in the database
       | subscription               | name                 | usage     | size |
       | {{ subscriptions[1]._id }} | CartRetrieve Image A | promotion | 1024 |
@@ -19,11 +23,11 @@ Feature: Access cart data available for a customer
       | {{ subscriptions[2]._id }} | RETRIEVE-02-001 | cart-retrieve-a  | Cart Retrieve A  | Automated description | {{ images[1]._id }} | 999          | ACTIVE   |
       | {{ subscriptions[2]._id }} | RETRIEVE-02-002 | cart-retrieve-b  | Cart Retrieve B  | Automated description | {{ images[1]._id }} | 999          | INACTIVE |
     And there are the following "carts" records in the database
-      | subscription               | items                                                                                                                                   |
-      | {{ subscriptions[1]._id }} |                                                                                                                                         |
-      | {{ subscriptions[1]._id }} | [{ "product": "{{ products[1]._id }}" }]                                                                                                |
-      | {{ subscriptions[1]._id }} | [{ "product": "{{ products[1]._id }}", "quantity": 2 }, { "product": "{{ products[2]._id }}" }, { "product": "{{ products[3]._id }}" }] |
-      | {{ subscriptions[2]._id }} | [{ "product": "{{ products[4]._id }}" }, { "product": "{{ products[5]._id }}" }]                                                        |
+      | subscription               | items                                                                                                                                   | shipping                                                                    |
+      | {{ subscriptions[1]._id }} | []                                                                                                                                      |                                                                             |
+      | {{ subscriptions[1]._id }} | [{ "product": "{{ products[1]._id }}" }]                                                                                                |                                                                             |
+      | {{ subscriptions[1]._id }} | [{ "product": "{{ products[1]._id }}", "quantity": 2 }, { "product": "{{ products[2]._id }}" }, { "product": "{{ products[3]._id }}" }] | { "reference": "{{ shipping[1]._id }}", "name": "Example A", "price": 100 } |
+      | {{ subscriptions[2]._id }} | [{ "product": "{{ products[4]._id }}" }, { "product": "{{ products[5]._id }}" }]                                                        | { "reference": "{{ shipping[2]._id }}", "name": "Example B", "price": 200 } |
 
   Scenario: Attempting to a cart which belongs to another subscription will give a new empty cart in return
     Given the request origin headers are set to "cart-retrieve-one.venzra-test.io"
@@ -57,8 +61,8 @@ Feature: Access cart data available for a customer
     And I set the "vid" cookie to the value "{{ carts[3]._id }}"
     When I make a GET request to the API endpoint "/api/cart" as "cart"
     Then there should be a 200 response from the "cart" request that contains:
-      | _id       | items    | value |
-      | OBJECT_ID | ARRAY[2] | 117   |
+      | _id       | items    | shipping                                                                    | value |
+      | OBJECT_ID | ARRAY[2] | { "reference": "{{ shipping[1]._id }}", "name": "Example A", "price": 100 } | 117   |
     And the "cart" request that has an "items" field and row 1 contains:
       | _id       | product                                               | quantity |
       | OBJECT_ID | OBJECT[_id,displayName,promotionalImage,currentPrice] | 2        |

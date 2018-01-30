@@ -7,17 +7,19 @@ import 'rxjs/add/operator/toPromise';
 
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
+import { Shipping } from './order.service';
 import { Product } from './product.service';
 
-export class CartItem {
+export interface CartItem {
     _id: string;
     product: Product;
     quantity: number;
 }
 
-export class Cart {
+export interface Cart {
     _id?: string;
     items: CartItem[];
+    shipping?: Shipping;
     value: number;
 }
 
@@ -45,6 +47,14 @@ export class CartService {
             .then((response: any) => response as Cart)
             .then((cart) => this.cart.next(cart))
             .then(() => this.snackbar.open(`${product.displayName} removed from cart`, null, { duration: 2000 }));
+    }
+
+    allocateShipping(shippingId) {
+        this.http.patch('/api/cart', [{ op: 'replace', path: 'shipping', value: shippingId }])
+            .toPromise()
+            .then((response: any) => response as Cart)
+            .then((cart) => this.cart.next(cart))
+            .catch(() => this.snackbar.open(`Failed to allocate shipping option`, null, { duration: 2000 }));
     }
 
     getCart(): BehaviorSubject<Cart> {

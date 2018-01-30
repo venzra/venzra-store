@@ -8,6 +8,8 @@ import { AuthGuard } from '../../services/guard.service';
 import { BasketComponent } from './components/basket/basket.component';
 import { PaymentComponent } from './components/payment/payment.component';
 
+import { ShippingListResolve, ShippingService } from './services/shipping';
+
 const routes: Routes = [
     {
         path: '',
@@ -20,7 +22,10 @@ const routes: Routes = [
         children: [
             {
                 path: 'basket',
-                component: BasketComponent
+                component: BasketComponent,
+                resolve: {
+                    shippingData: ShippingListResolve
+                }
             },
             {
                 path: 'payment',
@@ -36,6 +41,10 @@ const routes: Routes = [
     ],
     exports: [
         RouterModule
+    ],
+    providers: [
+        ShippingService,
+        ShippingListResolve
     ]
 })
 export class CheckoutRoutingModule {

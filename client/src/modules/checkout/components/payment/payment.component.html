@@ -18,7 +18,8 @@
                                     </mat-list-item>
                                 </mat-list>
 
-                                <div class="mat-headline" fxLayoutAlign="end end">Total: {{ cart.value | price }}</div>
+                                <div class="mat-title" *ngIf="cart.shipping" fxLayoutAlign="end end">Shipping ({{ cart.shipping.name }}): {{ cart.shipping.price | price }}</div>
+                                <div class="mat-headline" fxLayoutAlign="end end">Total: {{ cart.value + (cart.shipping ? cart.shipping.price : 0) | price }}</div>
 
                                 <div fxLayoutGap="20px" fxLayoutAlign="end center">
                                     <button mat-raised-button color="primary" matStepperNext>Continue</button>

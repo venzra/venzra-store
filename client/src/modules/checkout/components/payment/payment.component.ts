@@ -17,11 +17,10 @@ export class PaymentComponent implements OnInit {
 
     public subscription: Subscription;
     public order: Order = { reference: '' };
-    public cart: Cart = new Cart();
+    public cart: Cart;
 
     public saving = false;
     public completed = false;
-    public useShipping = false;
     public shippingForm: FormGroup;
     public billingForm: FormGroup;
     public paymentForm: FormGroup;

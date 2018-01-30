@@ -9,6 +9,7 @@ import { SubscriptionService } from '../services/subscription';
 import { CartModel, ICartModel } from '../models/cart';
 import { IRestOperation } from '../models/rest';
 import { IProductModel, ProductModel } from '../models/products';
+import { IShippingModel, ShippingModel } from '../models/shipping';
 
 export class CartController extends AuthenticationController {
 
@@ -59,6 +60,22 @@ export class CartController extends AuthenticationController {
                                             } else {
                                                 cart.items.push({ product: product._id });
                                             }
+
+                                            cart.set('shipping', undefined);
+                                        });
+                            }
+                            break;
+                        case 'replace':
+                            switch (operation.path) {
+                                case 'shipping':
+                                    promise = promise
+                                        .then(() => ShippingModel.findOne({ _id: operation.value, subscription }))
+                                        .then((shipping: IShippingModel) => {
+                                            if (!shipping) {
+                                                return;
+                                            }
+
+                                            cart.set('shipping', { reference: shipping._id, name: shipping.displayName, price: shipping.currentPrice });
                                         });
                             }
                             break;
@@ -78,6 +95,8 @@ export class CartController extends AuthenticationController {
                                             if (item.quantity <= 0) {
                                                 cart.items = cart.items.filter((entry) => entry.product.toString() !== operation.value);
                                             }
+
+                                            cart.set('shipping', undefined);
                                         });
                             }
                     }
@@ -95,7 +114,7 @@ export class CartController extends AuthenticationController {
 
         CartModel
             .findOne({ _id, subscription })
-            .select('items')
+            .select('items shipping')
             .populate({
                 path: 'items.product',
                 select: 'displayName promotionalImage currentPrice',
