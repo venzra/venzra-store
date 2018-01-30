@@ -14,22 +14,22 @@ Feature: Creation of a new product entry
       | {{ subscriptions[1]._id }} | ProductsSearch Image B | promotion | 4096 |
       | {{ subscriptions[2]._id }} | ProductsSearch Image C | feature   | 4096 |
     And there are the following "products" records in the database
-      | subscription               | code          | slug               | displayName        | featureImage        | promotionalImage    | currentPrice | status   |
-      | {{ subscriptions[1]._id }} | SEARCH-01-001 | product-search-a   | Product Search A   | {{ images[1]._id }} | {{ images[2]._id }} | 9            | ACTIVE   |
-      | {{ subscriptions[1]._id }} | SEARCH-01-002 | product-search-aa  | Product Search AA  | {{ images[1]._id }} | {{ images[2]._id }} | 99           | ACTIVE   |
-      | {{ subscriptions[1]._id }} | SEARCH-01-003 | product-search-aaa | Product Search AAA | {{ images[1]._id }} | {{ images[2]._id }} | 999          | ACTIVE   |
-      | {{ subscriptions[1]._id }} | SEARCH-01-004 | product-search-b   | Product Search B   | {{ images[1]._id }} | {{ images[2]._id }} | 6            | ACTIVE   |
-      | {{ subscriptions[1]._id }} | SEARCH-01-005 | product-search-bb  | Product Search BB  | {{ images[1]._id }} | {{ images[2]._id }} | 66           | ACTIVE   |
-      | {{ subscriptions[1]._id }} | SEARCH-01-006 | product-search-c   | Product Search C   | {{ images[1]._id }} | {{ images[2]._id }} | 0            | ACTIVE   |
-      | {{ subscriptions[1]._id }} | SEARCH-01-007 | product-search-d   | Product Search D   | {{ images[1]._id }} | {{ images[2]._id }} | 1000         | ACTIVE   |
-      | {{ subscriptions[1]._id }} | SEARCH-01-008 | product-search-e   | Product Search E   | {{ images[1]._id }} | {{ images[2]._id }} | 2000         | ACTIVE   |
-      | {{ subscriptions[1]._id }} | SEARCH-01-009 | product-search-f   | Product Search F   | {{ images[1]._id }} | {{ images[2]._id }} | 3000         | INACTIVE |
-      | {{ subscriptions[1]._id }} | SEARCH-01-010 | product-search-g   | Product Search G   | {{ images[1]._id }} | {{ images[2]._id }} | 5            | INACTIVE |
-      | {{ subscriptions[1]._id }} | SEARCH-01-011 | product-search-gg  | Product Search GG  | {{ images[1]._id }} | {{ images[2]._id }} | 50           | INACTIVE |
-      | {{ subscriptions[1]._id }} | SEARCH-01-012 | product-search-ggg | Product Search GGG | {{ images[1]._id }} | {{ images[2]._id }} | 500          | ACTIVE   |
-      | {{ subscriptions[2]._id }} | SEARCH-02-001 | product-search-a   | Product Search A   | {{ images[3]._id }} | {{ images[3]._id }} | 999          | ACTIVE   |
-      | {{ subscriptions[2]._id }} | SEARCH-02-002 | product-search-b   | Product Search B   | {{ images[3]._id }} | {{ images[3]._id }} | 999          | ACTIVE   |
-      | {{ subscriptions[2]._id }} | SEARCH-02-003 | product-search-c   | Product Search C   | {{ images[3]._id }} | {{ images[3]._id }} | 999          | INACTIVE |
+      | subscription               | code          | slug               | displayName        | description           | featureImage        | promotionalImage    | currentPrice | status   |
+      | {{ subscriptions[1]._id }} | SEARCH-01-001 | product-search-a   | Product Search A   | Automated description | {{ images[1]._id }} | {{ images[2]._id }} | 9            | ACTIVE   |
+      | {{ subscriptions[1]._id }} | SEARCH-01-002 | product-search-aa  | Product Search AA  | Automated description | {{ images[1]._id }} | {{ images[2]._id }} | 99           | ACTIVE   |
+      | {{ subscriptions[1]._id }} | SEARCH-01-003 | product-search-aaa | Product Search AAA | Automated description | {{ images[1]._id }} | {{ images[2]._id }} | 999          | ACTIVE   |
+      | {{ subscriptions[1]._id }} | SEARCH-01-004 | product-search-b   | Product Search B   | Automated description | {{ images[1]._id }} | {{ images[2]._id }} | 6            | ACTIVE   |
+      | {{ subscriptions[1]._id }} | SEARCH-01-005 | product-search-bb  | Product Search BB  | Automated description | {{ images[1]._id }} | {{ images[2]._id }} | 66           | ACTIVE   |
+      | {{ subscriptions[1]._id }} | SEARCH-01-006 | product-search-c   | Product Search C   | Automated description | {{ images[1]._id }} | {{ images[2]._id }} | 0            | ACTIVE   |
+      | {{ subscriptions[1]._id }} | SEARCH-01-007 | product-search-d   | Product Search D   | Automated description | {{ images[1]._id }} | {{ images[2]._id }} | 1000         | ACTIVE   |
+      | {{ subscriptions[1]._id }} | SEARCH-01-008 | product-search-e   | Product Search E   | Automated description | {{ images[1]._id }} | {{ images[2]._id }} | 2000         | ACTIVE   |
+      | {{ subscriptions[1]._id }} | SEARCH-01-009 | product-search-f   | Product Search F   | Automated description | {{ images[1]._id }} | {{ images[2]._id }} | 3000         | INACTIVE |
+      | {{ subscriptions[1]._id }} | SEARCH-01-010 | product-search-g   | Product Search G   | Automated description | {{ images[1]._id }} | {{ images[2]._id }} | 5            | INACTIVE |
+      | {{ subscriptions[1]._id }} | SEARCH-01-011 | product-search-gg  | Product Search GG  | Automated description | {{ images[1]._id }} | {{ images[2]._id }} | 50           | INACTIVE |
+      | {{ subscriptions[1]._id }} | SEARCH-01-012 | product-search-ggg | Product Search GGG | Automated description | {{ images[1]._id }} | {{ images[2]._id }} | 500          | ACTIVE   |
+      | {{ subscriptions[2]._id }} | SEARCH-02-001 | product-search-a   | Product Search A   | Automated description | {{ images[3]._id }} | {{ images[3]._id }} | 999          | ACTIVE   |
+      | {{ subscriptions[2]._id }} | SEARCH-02-002 | product-search-b   | Product Search B   | Automated description | {{ images[3]._id }} | {{ images[3]._id }} | 999          | ACTIVE   |
+      | {{ subscriptions[2]._id }} | SEARCH-02-003 | product-search-c   | Product Search C   | Automated description | {{ images[3]._id }} | {{ images[3]._id }} | 999          | INACTIVE |
 
   Scenario: Requesting a list of products should return only records for that subscription (subscription one)
     Given the request origin headers are set to "products-search-one.venzra-test.io"

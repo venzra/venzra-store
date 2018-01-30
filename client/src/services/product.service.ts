@@ -11,6 +11,7 @@ export class Product {
     slug?: string;
     code?: string;
     displayName: string;
+    description: string;
     featureImage?: string;
     promotionalImage?: string;
     previousPrice?: number;
@@ -30,7 +31,7 @@ export class ProductService {
             .then((response: any) => response as Product);
     }
 
-    getAllProducts(query): Promise<ListModel<Product>> {
+    getAllProducts(query = {}): Promise<ListModel<Product>> {
         const params = Object.keys(query).reduce((httpParams, key) => httpParams.set(key, query[key]), new HttpParams());
 
         return this.http.get('/api/products', { params })
@@ -51,12 +52,12 @@ export class ProductRetrieveResolve implements Resolve<Product> {
 }
 
 @Injectable()
-export class ProductPromotionsResolve implements Resolve<ListModel<Product>> {
+export class ProductListResolve implements Resolve<ListModel<Product>> {
     constructor(
         private productService: ProductService
     ) { }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<ListModel<Product>> {
-        return this.productService.getAllProducts({ limit: 4 });
+        return this.productService.getAllProducts();
     }
 }

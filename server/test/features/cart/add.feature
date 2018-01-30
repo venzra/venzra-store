@@ -12,12 +12,12 @@ Feature: Adding products into a cart
       | {{ subscriptions[1]._id }} | CartAdd Image A | promotion | 1024 |
       | {{ subscriptions[2]._id }} | CartAdd Image B | promotion | 1024 |
     And there are the following "products" records in the database
-      | subscription               | code       | slug        | displayName | promotionalImage    | currentPrice | status   |
-      | {{ subscriptions[1]._id }} | ADD-01-001 | cart-add-a  | Cart Add A  | {{ images[1]._id }} | 9            | ACTIVE   |
-      | {{ subscriptions[1]._id }} | ADD-01-002 | cart-add-aa | Cart Add AA | {{ images[1]._id }} | 99           | ACTIVE   |
-      | {{ subscriptions[1]._id }} | ADD-01-003 | cart-add-b  | Cart Add B  | {{ images[1]._id }} | 999          | INACTIVE |
-      | {{ subscriptions[2]._id }} | ADD-02-001 | cart-add-a  | Cart Add A  | {{ images[2]._id }} | 999          | ACTIVE   |
-      | {{ subscriptions[2]._id }} | ADD-02-002 | cart-add-b  | Cart Add B  | {{ images[2]._id }} | 999          | INACTIVE |
+      | subscription               | code       | slug        | displayName | description           | promotionalImage    | currentPrice | status   |
+      | {{ subscriptions[1]._id }} | ADD-01-001 | cart-add-a  | Cart Add A  | Automated description | {{ images[1]._id }} | 9            | ACTIVE   |
+      | {{ subscriptions[1]._id }} | ADD-01-002 | cart-add-aa | Cart Add AA | Automated description | {{ images[1]._id }} | 99           | ACTIVE   |
+      | {{ subscriptions[1]._id }} | ADD-01-003 | cart-add-b  | Cart Add B  | Automated description | {{ images[1]._id }} | 999          | INACTIVE |
+      | {{ subscriptions[2]._id }} | ADD-02-001 | cart-add-a  | Cart Add A  | Automated description | {{ images[2]._id }} | 999          | ACTIVE   |
+      | {{ subscriptions[2]._id }} | ADD-02-002 | cart-add-b  | Cart Add B  | Automated description | {{ images[2]._id }} | 999          | INACTIVE |
     And there are the following "carts" records in the database
       | subscription               | items                                    |
       | {{ subscriptions[1]._id }} | [{ "product": "{{ products[1]._id }}" }] |

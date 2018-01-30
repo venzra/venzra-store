@@ -12,12 +12,12 @@ Feature: Access cart data available for a customer
       | {{ subscriptions[1]._id }} | CartRetrieve Image A | promotion | 1024 |
       | {{ subscriptions[2]._id }} | CartRetrieve Image B | promotion | 1024 |
     And there are the following "products" records in the database
-      | subscription               | code            | slug             | displayName      | promotionalImage    | currentPrice | status   |
-      | {{ subscriptions[1]._id }} | RETRIEVE-01-001 | cart-retrieve-a  | Cart Retrieve A  | {{ images[1]._id }} | 9            | ACTIVE   |
-      | {{ subscriptions[1]._id }} | RETRIEVE-01-002 | cart-retrieve-aa | Cart Retrieve AA | {{ images[1]._id }} | 99           | ACTIVE   |
-      | {{ subscriptions[1]._id }} | RETRIEVE-01-003 | cart-retrieve-b  | Cart Retrieve B  | {{ images[1]._id }} | 999          | INACTIVE |
-      | {{ subscriptions[2]._id }} | RETRIEVE-02-001 | cart-retrieve-a  | Cart Retrieve A  | {{ images[1]._id }} | 999          | ACTIVE   |
-      | {{ subscriptions[2]._id }} | RETRIEVE-02-002 | cart-retrieve-b  | Cart Retrieve B  | {{ images[1]._id }} | 999          | INACTIVE |
+      | subscription               | code            | slug             | displayName      | description           | promotionalImage    | currentPrice | status   |
+      | {{ subscriptions[1]._id }} | RETRIEVE-01-001 | cart-retrieve-a  | Cart Retrieve A  | Automated description | {{ images[1]._id }} | 9            | ACTIVE   |
+      | {{ subscriptions[1]._id }} | RETRIEVE-01-002 | cart-retrieve-aa | Cart Retrieve AA | Automated description | {{ images[1]._id }} | 99           | ACTIVE   |
+      | {{ subscriptions[1]._id }} | RETRIEVE-01-003 | cart-retrieve-b  | Cart Retrieve B  | Automated description | {{ images[1]._id }} | 999          | INACTIVE |
+      | {{ subscriptions[2]._id }} | RETRIEVE-02-001 | cart-retrieve-a  | Cart Retrieve A  | Automated description | {{ images[1]._id }} | 999          | ACTIVE   |
+      | {{ subscriptions[2]._id }} | RETRIEVE-02-002 | cart-retrieve-b  | Cart Retrieve B  | Automated description | {{ images[1]._id }} | 999          | INACTIVE |
     And there are the following "carts" records in the database
       | subscription               | items                                                                                                                                   |
       | {{ subscriptions[1]._id }} |                                                                                                                                         |

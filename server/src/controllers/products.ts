@@ -33,7 +33,7 @@ export class ProductsController extends AuthenticationController {
 
         ProductModel
             .findOne({ slug, subscription, status })
-            .select('slug code displayName featureImage promotionalImage previousPrice currentPrice')
+            .select('slug code displayName description featureImage promotionalImage previousPrice currentPrice')
             .then((product) => product ? res.status(200).send(product) : next(new NotFoundError()));
     }
 

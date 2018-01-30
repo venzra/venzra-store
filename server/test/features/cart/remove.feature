@@ -12,12 +12,12 @@ Feature: Removing products from a cart
       | {{ subscriptions[1]._id }} | CartRemove Image A | promotion | 1024 |
       | {{ subscriptions[2]._id }} | CartRemove Image B | promotion | 1024 |
     And there are the following "products" records in the database
-      | subscription               | code          | slug           | displayName    | promotionalImage    | currentPrice | status   |
-      | {{ subscriptions[1]._id }} | REMOVE-01-001 | cart-remove-a  | Cart Remove A  | {{ images[1]._id }} | 9            | ACTIVE   |
-      | {{ subscriptions[1]._id }} | REMOVE-01-002 | cart-remove-aa | Cart Remove AA | {{ images[1]._id }} | 99           | ACTIVE   |
-      | {{ subscriptions[1]._id }} | REMOVE-01-003 | cart-remove-b  | Cart Remove B  | {{ images[1]._id }} | 999          | INACTIVE |
-      | {{ subscriptions[2]._id }} | REMOVE-02-001 | cart-remove-a  | Cart Remove A  | {{ images[2]._id }} | 999          | ACTIVE   |
-      | {{ subscriptions[2]._id }} | REMOVE-02-002 | cart-remove-b  | Cart Remove B  | {{ images[2]._id }} | 999          | INACTIVE |
+      | subscription               | code          | slug           | displayName    | description           | promotionalImage    | currentPrice | status   |
+      | {{ subscriptions[1]._id }} | REMOVE-01-001 | cart-remove-a  | Cart Remove A  | Automated description | {{ images[1]._id }} | 9            | ACTIVE   |
+      | {{ subscriptions[1]._id }} | REMOVE-01-002 | cart-remove-aa | Cart Remove AA | Automated description | {{ images[1]._id }} | 99           | ACTIVE   |
+      | {{ subscriptions[1]._id }} | REMOVE-01-003 | cart-remove-b  | Cart Remove B  | Automated description | {{ images[1]._id }} | 999          | INACTIVE |
+      | {{ subscriptions[2]._id }} | REMOVE-02-001 | cart-remove-a  | Cart Remove A  | Automated description | {{ images[2]._id }} | 999          | ACTIVE   |
+      | {{ subscriptions[2]._id }} | REMOVE-02-002 | cart-remove-b  | Cart Remove B  | Automated description | {{ images[2]._id }} | 999          | INACTIVE |
     And there are the following "carts" records in the database
       | subscription               | items                                                                                                          |
       | {{ subscriptions[1]._id }} |                                                                                                                |

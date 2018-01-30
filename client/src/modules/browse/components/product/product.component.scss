@@ -1,3 +1,8 @@
+@import '../../../../../styles';
+
+@import '~@angular/material/theming';
+@include mat-core();
+
 .feature-image {
     position: absolute;
     top: 0;
@@ -11,10 +16,11 @@
 }
 
 .product-detail {
-    margin-top: 140px;
+    margin-top: 100px;
 
-    .pricing {
-        color: red;
+    .mat-list .mat-line.pricing {
+        color: mat-color($venzra-app-primary);
+        font-size: 24px;
     }
 
     .strike {

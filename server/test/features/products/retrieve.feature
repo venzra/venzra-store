@@ -13,12 +13,12 @@ Feature: Creation of a new product entry
       | {{ subscriptions[1]._id }} | ProductsRetrieve Image B | promotion | 4096 |
       | {{ subscriptions[2]._id }} | ProductsRetrieve Image C | feature   | 4096 |
     And there are the following "products" records in the database
-      | subscription               | code            | slug                | displayName         | featureImage        | promotionalImage    | currentPrice | status   |
-      | {{ subscriptions[1]._id }} | RETRIEVE-01-001 | product-retrieve-a  | Product Retrieve A  | {{ images[1]._id }} | {{ images[2]._id }} | 9            | ACTIVE   |
-      | {{ subscriptions[1]._id }} | RETRIEVE-01-002 | product-retrieve-aa | Product Retrieve AA | {{ images[1]._id }} | {{ images[2]._id }} | 99           | ACTIVE   |
-      | {{ subscriptions[1]._id }} | RETRIEVE-01-003 | product-retrieve-b  | Product Retrieve B  | {{ images[1]._id }} | {{ images[2]._id }} | 999          | INACTIVE |
-      | {{ subscriptions[2]._id }} | RETRIEVE-02-001 | product-retrieve-a  | Product Retrieve A  | {{ images[3]._id }} | {{ images[3]._id }} | 999          | ACTIVE   |
-      | {{ subscriptions[2]._id }} | RETRIEVE-02-002 | product-retrieve-b  | Product Retrieve B  | {{ images[3]._id }} | {{ images[3]._id }} | 999          | INACTIVE |
+      | subscription               | code            | slug                | displayName         | description           | featureImage        | promotionalImage    | currentPrice | status   |
+      | {{ subscriptions[1]._id }} | RETRIEVE-01-001 | product-retrieve-a  | Product Retrieve A  | Automated description | {{ images[1]._id }} | {{ images[2]._id }} | 9            | ACTIVE   |
+      | {{ subscriptions[1]._id }} | RETRIEVE-01-002 | product-retrieve-aa | Product Retrieve AA | Automated description | {{ images[1]._id }} | {{ images[2]._id }} | 99           | ACTIVE   |
+      | {{ subscriptions[1]._id }} | RETRIEVE-01-003 | product-retrieve-b  | Product Retrieve B  | Automated description | {{ images[1]._id }} | {{ images[2]._id }} | 999          | INACTIVE |
+      | {{ subscriptions[2]._id }} | RETRIEVE-02-001 | product-retrieve-a  | Product Retrieve A  | Automated description | {{ images[3]._id }} | {{ images[3]._id }} | 999          | ACTIVE   |
+      | {{ subscriptions[2]._id }} | RETRIEVE-02-002 | product-retrieve-b  | Product Retrieve B  | Automated description | {{ images[3]._id }} | {{ images[3]._id }} | 999          | INACTIVE |
 
   Scenario: Attempting to retrieve an INACTIVE product gives no result
     Given the request origin headers are set to "products-retrieve-one.venzra-test.io"
@@ -29,8 +29,8 @@ Feature: Creation of a new product entry
     Given the request origin headers are set to "products-retrieve-one.venzra-test.io"
     When I make a GET request to the API endpoint "/api/products/{{ products[2].slug }}" as "product"
     Then there should be a 200 response from the "product" request that contains:
-      | _id       | code            | slug                | displayName         | featureImage        | promotionalImage    | previousPrice | currentPrice |
-      | OBJECT_ID | RETRIEVE-01-002 | product-retrieve-aa | Product Retrieve AA | {{ images[1]._id }} | {{ images[2]._id }} | 0             | 99           |
+      | _id       | code            | slug                | displayName         | description           | featureImage        | promotionalImage    | previousPrice | currentPrice |
+      | OBJECT_ID | RETRIEVE-01-002 | product-retrieve-aa | Product Retrieve AA | Automated description | {{ images[1]._id }} | {{ images[2]._id }} | 0             | 99           |
 
   Scenario: It is not possible to retrieve a product that belongs to a different subscription
     Given the request origin headers are set to "products-retrieve-two.venzra-test.io"
@@ -41,5 +41,5 @@ Feature: Creation of a new product entry
     Given the request origin headers are set to "products-retrieve-two.venzra-test.io"
     When I make a GET request to the API endpoint "/api/products/{{ products[1].slug }}" as "product"
     Then there should be a 200 response from the "product" request that contains:
-      | _id       | code            | slug               | displayName        | featureImage        | promotionalImage    | previousPrice | currentPrice |
-      | OBJECT_ID | RETRIEVE-02-001 | product-retrieve-a | Product Retrieve A | {{ images[3]._id }} | {{ images[3]._id }} | 0             | 999          |
+      | _id       | code            | slug               | displayName        | description           | featureImage        | promotionalImage    | previousPrice | currentPrice |
+      | OBJECT_ID | RETRIEVE-02-001 | product-retrieve-a | Product Retrieve A | Automated description | {{ images[3]._id }} | {{ images[3]._id }} | 0             | 999          |

@@ -5,7 +5,7 @@ import { StoreLayout } from './layout/store.layout';
 
 import { LandingComponent } from './components/landing/landing.component';
 
-import { ProductPromotionsResolve } from '../../services/product.service';
+import { ProductListResolve } from '../../services/product.service';
 
 const routes: Routes = [
     {
@@ -16,7 +16,7 @@ const routes: Routes = [
                 path: '',
                 component: LandingComponent,
                 resolve: {
-                    products: ProductPromotionsResolve
+                    products: ProductListResolve
                 }
             }
         ]

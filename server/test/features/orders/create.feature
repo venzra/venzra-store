@@ -15,12 +15,12 @@ Feature: Place an order using cart information
       | {{ subscriptions[1]._id }} | OrdersCreate Image A | promotion | 1024 |
       | {{ subscriptions[2]._id }} | OrdersCreate Image B | promotion | 1024 |
     And there are the following "products" records in the database
-      | subscription               | code          | slug             | displayName      | promotionalImage    | currentPrice | status   |
-      | {{ subscriptions[1]._id }} | CREATE-01-001 | orders-create-a  | Orders Create A  | {{ images[1]._id }} | 9            | ACTIVE   |
-      | {{ subscriptions[1]._id }} | CREATE-01-002 | orders-create-aa | Orders Create AA | {{ images[1]._id }} | 99           | ACTIVE   |
-      | {{ subscriptions[1]._id }} | CREATE-01-003 | orders-create-b  | Orders Create B  | {{ images[1]._id }} | 999          | INACTIVE |
-      | {{ subscriptions[2]._id }} | CREATE-02-001 | orders-create-a  | Orders Create A  | {{ images[2]._id }} | 999          | ACTIVE   |
-      | {{ subscriptions[2]._id }} | CREATE-02-002 | orders-create-b  | Orders Create B  | {{ images[2]._id }} | 999          | INACTIVE |
+      | subscription               | code          | slug             | displayName      | description           | promotionalImage    | currentPrice | status   |
+      | {{ subscriptions[1]._id }} | CREATE-01-001 | orders-create-a  | Orders Create A  | Automated description | {{ images[1]._id }} | 9            | ACTIVE   |
+      | {{ subscriptions[1]._id }} | CREATE-01-002 | orders-create-aa | Orders Create AA | Automated description | {{ images[1]._id }} | 99           | ACTIVE   |
+      | {{ subscriptions[1]._id }} | CREATE-01-003 | orders-create-b  | Orders Create B  | Automated description | {{ images[1]._id }} | 999          | INACTIVE |
+      | {{ subscriptions[2]._id }} | CREATE-02-001 | orders-create-a  | Orders Create A  | Automated description | {{ images[2]._id }} | 999          | ACTIVE   |
+      | {{ subscriptions[2]._id }} | CREATE-02-002 | orders-create-b  | Orders Create B  | Automated description | {{ images[2]._id }} | 999          | INACTIVE |
     And there are the following "carts" records in the database
       | subscription               | items                                                                                                                                   |
       | {{ subscriptions[1]._id }} |                                                                                                                                         |

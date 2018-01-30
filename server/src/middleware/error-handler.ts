@@ -81,6 +81,9 @@ export const errorHandler = (err: IVenzraError, req: Request, res: Response, nex
             res.clearCookie('jwt');
             res.status(400).send({ message: err.message });
             break;
+        case 'StripeCardError':
+            res.status(400).send({ message: err.reason });
+            break;
         case 'AccessDeniedError':
             logger.info(err.reason);
             res.clearCookie('jwt');

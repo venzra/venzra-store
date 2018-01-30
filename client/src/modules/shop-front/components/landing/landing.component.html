@@ -1,11 +1,7 @@
 <section fxLayout="row" fxLayoutAlign="center center">
-    <div fxFlex="90" fxFlex.gt-md="70" fxFlex.xl="60">
-        <product-promotions></product-promotions>
-
-        <h2 class="mat-headline">Popular products</h2>
-        <p>A list of popular products purchased in the last 48 hours</p>
-
-        <h2 class="mat-headline">Account Information</h2>
-        <p>Orders history summary and account details</p>
+    <div fxFlex="95%" fxFlex.sm="80%" fxFlex.md="80%" fxFlex.lg="70%"  fxFlex.xl="60%">
+        <div fxLayout="row" fxLayoutWrap>
+            <venzra-product *ngFor="let product of products.list" [product]="product" fxFlex="100%" fxFlex.sm="50%" fxFlex.md="33%" fxFlex.gt-md="25%"></venzra-product>
+        </div>
     </div>
 </section>

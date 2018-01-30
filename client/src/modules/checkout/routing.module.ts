@@ -8,8 +8,6 @@ import { AuthGuard } from '../../services/guard.service';
 import { BasketComponent } from './components/basket/basket.component';
 import { PaymentComponent } from './components/payment/payment.component';
 
-import { ProductPromotionsResolve } from '../../services/product.service';
-
 const routes: Routes = [
     {
         path: '',
@@ -22,10 +20,7 @@ const routes: Routes = [
         children: [
             {
                 path: 'basket',
-                component: BasketComponent,
-                resolve: {
-                    products: ProductPromotionsResolve
-                }
+                component: BasketComponent
             },
             {
                 path: 'payment',

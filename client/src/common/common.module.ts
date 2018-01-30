@@ -10,7 +10,9 @@ import { MatButtonModule, MatCardModule, MatCheckboxModule, MatDialogModule, Mat
 
 import { AccountComponent } from './components/account/account.component';
 import { CartComponent } from './components/cart/cart.component';
-import { PromotionsComponent } from './components/promotions/promotions.component';
+import { ProductComponent } from './components/product/product.component';
+
+import { MarkdownDirective } from './directives/markdown/markdown.directive';
 
 import { PricePipe } from './filters/price.pipe';
 
@@ -21,7 +23,8 @@ import { ErrorInterceptorModule } from './http.interceptor';
         PricePipe,
         AccountComponent,
         CartComponent,
-        PromotionsComponent
+        ProductComponent,
+        MarkdownDirective
     ],
     imports: [
         CommonModule,
@@ -69,7 +72,8 @@ import { ErrorInterceptorModule } from './http.interceptor';
         PricePipe,
         AccountComponent,
         CartComponent,
-        PromotionsComponent
+        ProductComponent,
+        MarkdownDirective
     ]
 })
 export class VenzraCommonModule {

@@ -17,25 +17,11 @@
                             <img [src]="'/api/images/' + product.promotionalImage" />
                         </div>
                         <div fxLayout="column" fxFlex="50%" fxLayoutGap="20px">
-                            <div fxFlex>
-                                <p>Lorem Ipsum</p>
-                                <p>Lorem Ipsum</p>
-                                <ul>
-                                    <li>Lorem Ipsum</li>
-                                    <li>Lorem Ipsum</li>
-                                    <li>Lorem Ipsum</li>
-                                    <li>Lorem Ipsum</li>
-                                    <li>Lorem Ipsum</li>
-                                </ul>
-                                <p>Lorem Ipsum</p>
-                                <p>Lorem Ipsum</p>
-                                <p>Lorem Ipsum</p>
-                                <p>Lorem Ipsum</p>
-                            </div>
+                            <div [venzraMarkdown]="product.description" fxFlex></div>
                             <mat-list>
                                 <mat-list-item>
                                     <h3 matLine>Price</h3>
-                                    <div class="pricing" matLine>{{ product.currentPrice | price }}</div>
+                                    <h4 class="pricing" matLine>{{ product.currentPrice | price }}</h4>
                                 </mat-list-item>
 
                                 <mat-list-item *ngIf="product.previousPrice">

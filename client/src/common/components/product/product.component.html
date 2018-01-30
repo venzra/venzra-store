@@ -1,0 +1,11 @@
+<div>
+    <mat-card>
+        <img matCardImage (click)="show(product)" [src]="'/api/images/' + product.promotionalImage" />
+        <mat-card-content>
+            <h2>{{ product.displayName }}</h2>
+        </mat-card-content>
+        <mat-card-actions fxLayoutAlign="end">
+            <button mat-button (click)="show(product)"><mat-icon>shopping_cart</mat-icon>{{ product.currentPrice | price }}</button>
+        </mat-card-actions>
+    </mat-card>
+</div>
