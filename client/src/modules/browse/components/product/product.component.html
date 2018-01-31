@@ -24,7 +24,7 @@
                                     <h4 class="pricing" matLine>{{ product.currentPrice | price }}</h4>
                                 </mat-list-item>
 
-                                <mat-list-item *ngIf="product.previousPrice">
+                                <mat-list-item *ngIf="product.previousPrice && product.previousPrice !== product.currentPrice">
                                     <h3 matLine>Savings</h3>
                                     <div matLine><span>{{ 1 - product.currentPrice / product.previousPrice | percent }}</span> <span class="strike">(was {{ product.previousPrice | price }})</span></div>
                                 </mat-list-item>
