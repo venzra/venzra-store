@@ -17,7 +17,7 @@ Feature: Ability for a user to authenticate and gain a login token to use the AP
     When I make an empty POST request to the API endpoint "/api/identity/login" as "login"
     Then there should be a 400 error from the "login" request that contains:
       | message           | detail                                     |
-      | Validation failed | ["password required", "identity required"] |
+      | Validation failed | ["identity required", "password required"] |
 
   Scenario: Login with an UNKNOWN customer will register the user
     Given the request origin headers are set to "identity-login-one.venzra-test.io"

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { StoreLayout } from './layout/store.layout';
+import { StoreLayoutComponent } from './layout/store.layout';
 
 import { LandingComponent } from './components/landing/landing.component';
 
@@ -10,7 +10,7 @@ import { ProductListResolve } from '../../services/product.service';
 const routes: Routes = [
     {
         path: '',
-        component: StoreLayout,
+        component: StoreLayoutComponent,
         children: [
             {
                 path: '',

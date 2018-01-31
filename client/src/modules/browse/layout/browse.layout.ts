@@ -4,5 +4,5 @@ import { Component } from '@angular/core';
     templateUrl: './browse.layout.html',
     styleUrls: ['browse.layout.scss']
 })
-export class BrowseLayout {
+export class BrowseLayoutComponent {
 }

@@ -7,7 +7,6 @@ import { LayoutService } from '../../../../services/layout.service';
 import { CartService } from '../../../../services/cart.service';
 
 @Component({
-    selector: 'product-view',
     templateUrl: './product.component.html',
     styleUrls: ['product.component.scss']
 })

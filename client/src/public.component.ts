@@ -5,7 +5,7 @@ import { Subscription, SubscriptionService } from './services/subscription.servi
 import { LayoutService } from './services/layout.service';
 
 @Component({
-    selector: 'app-public',
+    selector: 'venzra-public',
     templateUrl: './public.component.html',
     styleUrls: ['./public.component.scss']
 })

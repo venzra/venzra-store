@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 
 import { RouterModule, Routes } from '@angular/router';
 
-import { CheckoutLayout } from './layout/checkout.layout';
+import { CheckoutLayoutComponent } from './layout/checkout.layout';
 import { AuthGuard } from '../../services/guard.service';
 
 import { BasketComponent } from './components/basket/basket.component';
@@ -18,7 +18,7 @@ const routes: Routes = [
     },
     {
         path: '',
-        component: CheckoutLayout,
+        component: CheckoutLayoutComponent,
         children: [
             {
                 path: 'basket',

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 
 import { RouterModule, Routes } from '@angular/router';
 
-import { BrowseLayout } from './layout/browse.layout';
+import { BrowseLayoutComponent } from './layout/browse.layout';
 
 import { ProductComponent } from './components/product/product.component';
 
@@ -11,7 +11,7 @@ import { ProductRetrieveResolve } from '../../services/product.service';
 const routes: Routes = [
     {
         path: '',
-        component: BrowseLayout,
+        component: BrowseLayoutComponent,
         children: [
             {
                 path: 'product/:productSlug',

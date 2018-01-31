@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 
 import { RouterModule, Routes } from '@angular/router';
 
-import { AuthLayout } from './layout/auth.layout';
-import { AccountLayout } from './layout/account.layout';
+import { AuthLayoutComponent } from './layout/auth.layout';
+import { AccountLayoutComponent } from './layout/account.layout';
 import { AuthGuard } from '../../services/guard.service';
 
 import { AuthenticationComponent } from './components/authentication/authentication.component';
@@ -22,7 +22,7 @@ const routes: Routes = [
     },
     {
         path: '',
-        component: AuthLayout,
+        component: AuthLayoutComponent,
         children: [
             {
                 path: 'authenticate',
@@ -36,7 +36,7 @@ const routes: Routes = [
     },
     {
         path: '',
-        component: AccountLayout,
+        component: AccountLayoutComponent,
         canActivate: [AuthGuard],
         children: [
             {

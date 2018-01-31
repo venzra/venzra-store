@@ -4,5 +4,5 @@ import { Component } from '@angular/core';
     templateUrl: './checkout.layout.html',
     styleUrls: ['checkout.layout.scss']
 })
-export class CheckoutLayout {
+export class CheckoutLayoutComponent {
 }

@@ -4,8 +4,8 @@ import { NgModule } from '@angular/core';
 import { VenzraCommonModule } from '../../common/common.module';
 import { AccountRoutingModule } from './routing.module';
 
-import { AuthLayout } from './layout/auth.layout';
-import { AccountLayout } from './layout/account.layout';
+import { AuthLayoutComponent } from './layout/auth.layout';
+import { AccountLayoutComponent } from './layout/account.layout';
 
 import { AuthenticationComponent } from './components/authentication/authentication.component';
 import { ProfileComponent } from './components/profile/profile.component';
@@ -15,8 +15,8 @@ import { LogoutComponent } from './components/logout/logout.component';
 
 @NgModule({
     declarations: [
-        AuthLayout,
-        AccountLayout,
+        AuthLayoutComponent,
+        AccountLayoutComponent,
         AuthenticationComponent,
         ProfileComponent,
         OrdersComponent,

@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Cart, CartService } from '../../../services/cart.service';
 
 @Component({
-    selector: 'shopping-cart',
+    selector: 'venzra-cart',
     templateUrl: './cart.component.html'
 })
 export class CartComponent implements OnInit {

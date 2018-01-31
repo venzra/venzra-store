@@ -58,12 +58,12 @@ export class AccountService {
         const subject = new BehaviorSubject<boolean>(true);
         const account = this.account.getValue();
 
-        if(account.identity !== null) {
+        if (account.identity !== null) {
             subject.next(true);
         } else if (localStorage.getItem('authenticated') === '1') {
             this.http.get('/api/customer')
-                .subscribe((account: Account) => {
-                    this.account.next(account);
+                .subscribe((customer: Account) => {
+                    this.account.next(customer);
                     subject.next(true);
                 }, () => {
                     subject.next(false);

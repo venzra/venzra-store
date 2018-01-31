@@ -15,6 +15,6 @@ export class ProductComponent {
     ) { }
 
     show(product) {
-        this.router.navigate([`browse/product/${product.slug}`])
+        this.router.navigate([`browse/product/${product.slug}`]);
     }
 }

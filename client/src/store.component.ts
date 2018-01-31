@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-    selector: 'app-store',
+    selector: 'venzra-store',
     template: '<router-outlet></router-outlet>'
 })
 export class StoreComponent {

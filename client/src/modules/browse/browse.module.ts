@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { VenzraCommonModule } from '../../common/common.module';
 import { AccountRoutingModule } from './routing.module';
 
-import { BrowseLayout } from './layout/browse.layout';
+import { BrowseLayoutComponent } from './layout/browse.layout';
 
 import { ProductComponent } from './components/product/product.component';
 
@@ -12,7 +12,7 @@ import { ProductRetrieveResolve, ProductService } from '../../services/product.s
 
 @NgModule({
     declarations: [
-        BrowseLayout,
+        BrowseLayoutComponent,
         ProductComponent
     ],
     imports: [

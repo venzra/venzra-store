@@ -25,7 +25,7 @@ interface ICustomerModel extends Document {
     subscription?: ISubscriptionModel;
     identity?: string;
     password?: ICustomerPassword;
-    access?: ICustomerLogin,
+    access?: ICustomerLogin;
     lock?: ICustomerFailure;
     status?: string;
 }

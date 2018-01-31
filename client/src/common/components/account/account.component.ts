@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Account, AccountService } from '../../../services/account.service';
 
 @Component({
-    selector: 'store-account',
+    selector: 'venzra-account',
     templateUrl: './account.component.html'
 })
 export class AccountComponent {

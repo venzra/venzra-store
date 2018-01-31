@@ -6,7 +6,7 @@ import { Subscription, SubscriptionService } from '../../../services/subscriptio
     templateUrl: './store.layout.html',
     styleUrls: ['store.layout.scss']
 })
-export class StoreLayout implements OnInit {
+export class StoreLayoutComponent implements OnInit {
 
     subscription: Subscription;
 

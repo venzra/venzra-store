@@ -6,7 +6,7 @@ import { AccountService } from '../../../services/account.service';
     templateUrl: './account.layout.html',
     styleUrls: ['account.layout.scss']
 })
-export class AccountLayout {
+export class AccountLayoutComponent {
 
     constructor(
         private accountService: AccountService
