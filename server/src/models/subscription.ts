@@ -1,14 +1,9 @@
 import { Schema, Document, Model, model } from 'mongoose';
+import { v4 } from 'uuid';
 
-interface IGatewayModel {
-    publicKey: string;
-    privateKey: string;
-}
-
-interface ITransactionModel {
-    base: number;
-    rate: number;
-}
+import { GatewaySchema, IGatewayModel } from './objects/gateway';
+import { FeeSchema, IFeeModel } from './objects/transaction';
+import { ISubscriptionPaymentModel, SubscriptionPaymentSchema } from './objects/subscription-payment';
 
 interface ISubscriptionModel extends Document {
     storeName?: string;
@@ -16,27 +11,18 @@ interface ISubscriptionModel extends Document {
     domainName?: string;
     icon?: string;
     logo?: string;
+    payment?: ISubscriptionPaymentModel;
     gateway?: IGatewayModel;
-    transactions?: ITransactionModel;
+    transactions: IFeeModel;
     status?: string;
 }
-
-const TransactionSchema: Schema = new Schema({
-    base: {
-        type: Number,
-        required: true
-    },
-    rate: {
-        type: Number,
-        required: true
-    }
-}, { _id: false });
 
 const SubscriptionSchema: Schema = new Schema({
     storeName: {
         type: String,
         required: true,
-        trim: true
+        trim: true,
+        minlength: 3
     },
     strapline: {
         type: String,
@@ -44,8 +30,8 @@ const SubscriptionSchema: Schema = new Schema({
     },
     domainName: {
         type: String,
-        required: true,
-        lowercase: true
+        lowercase: true,
+        required: true
     },
     icon: {
         type: Schema.Types.ObjectId,
@@ -55,20 +41,15 @@ const SubscriptionSchema: Schema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'images'
     },
+    payment: {
+        type: SubscriptionPaymentSchema
+    },
     gateway: {
-        type: {
-            publicKey: {
-                type: String,
-                required: true
-            },
-            privateKey: {
-                type: String,
-                required: true
-            }
-        }
+        type: GatewaySchema
     },
     transactions: {
-        type: TransactionSchema
+        type: FeeSchema,
+        default: FeeSchema
     },
     status: {
         type: String,
@@ -89,9 +70,11 @@ const SubscriptionSchema: Schema = new Schema({
 });
 
 SubscriptionSchema.index({ storeName: 1 }, { unique: true });
+SubscriptionSchema.index({ domainName: 1 }, { unique: true });
 
 SubscriptionSchema.pre('validate', function (next) {
-    this.domainName = this.storeName.replace(/[^a-z|0-9\-\s]/gi, ' ').trim().replace(/\s+/g, '-');
+    this.storeName = this.storeName || `store ${v4().substr(0, 8)}`;
+    this.domainName = (this.storeName).replace(/[^a-z|0-9\-\s]/gi, ' ').trim().replace(/\s+/g, '-');
     next();
 });
 

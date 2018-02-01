@@ -1,5 +1,8 @@
 import { Schema, Document, Model, model } from 'mongoose';
 import { ISubscriptionModel } from './subscription';
+import { AccountPasswordSchema } from './objects/password';
+import { AccountAccessSchema } from './objects/account-access';
+import { AccountBlockedSchema } from './objects/account-blocked';
 
 const EMAIL_REGEX = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/;
 
@@ -45,52 +48,14 @@ const CustomerSchema: Schema = new Schema({
         ]
     },
     password: {
-        type: {
-            salt: {
-                type: String,
-                required: true
-            },
-            secure: {
-                type: String,
-                required: true
-            },
-            created: {
-                type: Date,
-                required: true
-            }
-        },
-        required: true
+        type: AccountPasswordSchema
     },
     access: {
-        type: {
-            key: {
-                type: String,
-                required: true
-            },
-            ip: {
-                type: String,
-                required: true
-            },
-            created: {
-                type: Date,
-                required: true
-            }
-        }
+        type: AccountAccessSchema
     },
     lock: {
-        type: {
-            failures: {
-                type: Number,
-                required: true
-            },
-            ip: {
-                type: String
-            },
-            updated: {
-                type: Date
-            }
-        },
-        default: { failures: 0 }
+        type: AccountBlockedSchema,
+        default: AccountBlockedSchema
     },
     status: {
         type: String,

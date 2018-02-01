@@ -27,6 +27,6 @@ Feature: Access a list of plans that a user will be able to subscribe to after r
     Given the request origin headers are set to "registration-plans-two.venzra-test.io"
     And I make a GET request to the API endpoint "/api/subscription" as "subscription"
     Then there should be a 200 response from the "subscription" request that contains:
-      | _id       | domainName             | storeName              | gateway |
-      | OBJECT_ID | registration-plans-two | Registration Plans Two | ""      |
+      | _id       | domainName             | storeName              |
+      | OBJECT_ID | registration-plans-two | Registration Plans Two |
     And there is a cookie called "vid" in the "subscription" response header

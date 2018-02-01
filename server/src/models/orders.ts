@@ -3,9 +3,10 @@ import { Schema, Document, Model, model } from 'mongoose';
 import { IItemModel, ItemSchema } from './objects/items';
 import { IShippingModel, ShippingSchema } from './objects/shipping';
 import { IAddressModel, AddressSchema } from './objects/address';
-import { IPaymentModel, PaymentSchema } from './objects/payment';
+import { IOrderPaymentModel, OrderPaymentSchema } from './objects/order-payment';
 
 interface IOrderModel extends Document {
+    _id: string;
     subscription: string;
     customer: string;
     reference: string;
@@ -13,7 +14,7 @@ interface IOrderModel extends Document {
     shipping: IShippingModel;
     destination: IAddressModel;
     billing: IAddressModel;
-    payment: IPaymentModel;
+    payment: IOrderPaymentModel;
     status?: string;
 }
 
@@ -50,12 +51,12 @@ const OrderSchema: Schema = new Schema({
         required: true
     },
     payment: {
-        type: PaymentSchema,
+        type: OrderPaymentSchema,
         required: true
     },
     status: {
         type: String,
-        enum: ['CREATED'],
+        enum: ['CREATED', 'AUTHORISED', 'PROCESSING', 'DISPATCHED', 'DELIVERED'],
         required: true,
         default: 'CREATED'
     },
@@ -72,6 +73,9 @@ const OrderSchema: Schema = new Schema({
 });
 
 OrderSchema.index({ subscription: 1, reference: 1 }, { unique: true });
+
+OrderSchema.index({ reference: 1 });
+OrderSchema.index({ status: 1 });
 
 const OrderModel: Model<IOrderModel> = model('orders', OrderSchema) as Model<IOrderModel>;
 

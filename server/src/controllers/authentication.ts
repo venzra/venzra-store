@@ -3,7 +3,7 @@ import { createHash, pbkdf2Sync } from 'crypto';
 import { v4 } from 'uuid';
 import { encode, decode } from 'jwt-simple';
 
-import { AccessDeniedError, AuthenticationError, NotFoundError } from '../middleware/error-handler';
+import { AccessDeniedError, AuthenticationError, NotFoundError, ValidationError } from '../middleware/error-handler';
 
 import { ISubscriptionModel } from '../models/subscription';
 import { SubscriptionService } from '../services/subscription';
@@ -79,8 +79,22 @@ export class AuthenticationController {
     }
 
     authorise(req: Request, res: Response, next: NextFunction) {
+        const errors = [];
+
+        if (!req.body.identity) {
+            errors.push({ path: 'identity', kind: 'required' });
+        }
+
+        if (!req.body.password) {
+            errors.push({ path: 'password', kind: 'required' });
+        }
+
+        if (errors.length) {
+            return next(new ValidationError(errors));
+        }
+
         const subscription = this.subscription._id;
-        const identity = (req.body.identity || '').toLowerCase();
+        const identity = (req.body.identity).toLowerCase();
 
         CustomerModel.findOne({ subscription, identity })
             .then((customer: ICustomerModel) => {
