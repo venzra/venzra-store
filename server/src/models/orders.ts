@@ -4,6 +4,7 @@ import { IItemModel, ItemSchema } from './objects/items';
 import { IShippingModel, ShippingSchema } from './objects/shipping';
 import { IAddressModel, AddressSchema } from './objects/address';
 import { IOrderPaymentModel, OrderPaymentSchema } from './objects/order-payment';
+import { IHistoryModel } from './objects/history';
 
 interface IOrderModel extends Document {
     _id: string;
@@ -15,6 +16,7 @@ interface IOrderModel extends Document {
     destination: IAddressModel;
     billing: IAddressModel;
     payment: IOrderPaymentModel;
+    history?: IHistoryModel[];
     status?: string;
 }
 
@@ -32,7 +34,8 @@ const OrderSchema: Schema = new Schema({
     reference: {
         type: String,
         required: true,
-        trim: true
+        trim: true,
+        maxlength: 20
     },
     items: {
         type: [ItemSchema],
@@ -54,9 +57,15 @@ const OrderSchema: Schema = new Schema({
         type: OrderPaymentSchema,
         required: true
     },
+    history: {
+        type: [{
+            type: Schema.Types.ObjectId,
+            ref: 'orderHistory'
+        }]
+    },
     status: {
         type: String,
-        enum: ['CREATED', 'AUTHORISED', 'PROCESSING', 'DISPATCHED', 'DELIVERED'],
+        enum: ['CREATED', 'AUTHORISED', 'PROCESSING', 'DISPATCHED', 'DELIVERED', 'REFUNDED'],
         required: true,
         default: 'CREATED'
     },

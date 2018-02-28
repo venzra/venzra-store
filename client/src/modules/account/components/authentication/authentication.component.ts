@@ -32,7 +32,7 @@ export class AuthenticationComponent implements OnInit {
     createForm(): void {
         this.authenticationForm = this.forms.group({
             emailAddress: ['', [Validators.required, Validators.pattern(EMAIL_REGEX)]],
-            password: ['', [Validators.required]]
+            password: ['', [Validators.required, Validators.minLength(8)]]
         });
     }
 

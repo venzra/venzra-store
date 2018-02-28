@@ -44,25 +44,25 @@ export class PaymentComponent implements OnInit {
         this.layout.title = 'Checkout';
 
         this.shippingForm = this.forms.group({
-            addressee: ['', [Validators.required]],
-            street: ['', [Validators.required]],
-            building: ['', []],
-            city: ['', []],
-            county: ['', [Validators.required]],
-            postalCode: ['', [Validators.required]]
+            addressee: ['', [Validators.required, Validators.maxLength(80)]],
+            street: ['', [Validators.required, Validators.maxLength(50)]],
+            building: [null, [Validators.maxLength(50)]],
+            city: [null, [Validators.maxLength(50)]],
+            county: ['', [Validators.required, Validators.maxLength(50)]],
+            postalCode: ['', [Validators.required, Validators.maxLength(12)]]
         });
 
         this.billingForm = this.forms.group({
-            addressee: ['', [Validators.required]],
-            street: ['', [Validators.required]],
-            building: ['', []],
-            city: ['', []],
-            county: ['', [Validators.required]],
-            postalCode: ['', [Validators.required]]
+            addressee: ['', [Validators.required, Validators.maxLength(80)]],
+            street: ['', [Validators.required, Validators.maxLength(50)]],
+            building: [null, [Validators.maxLength(50)]],
+            city: [null, [Validators.maxLength(50)]],
+            county: ['', [Validators.required, Validators.maxLength(50)]],
+            postalCode: ['', [Validators.required, Validators.maxLength(12)]]
         });
 
         this.paymentForm = this.forms.group({
-            holder: ['', [Validators.required]],
+            holder: ['', [Validators.required, Validators.maxLength(80)]],
             number: ['', [Validators.required]],
             expiryMonth: ['', [Validators.required]],
             expiryYear: ['', [Validators.required]],

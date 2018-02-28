@@ -42,8 +42,8 @@ Feature: Creation of a new product entry
       | list     | total | skip | limit |
       | ARRAY[2] | 2     | 0    | 5     |
     And the "order" request that has a "list" field and row 1 contains:
-      | _id       | reference    | items    | shipping                                                                    | destination                                                                                                       | payment                                                                         | status  | created   |
-      | OBJECT_ID | "2222222222" | ARRAY[2] | { "reference": "{{ shipping[2]._id }}", "name": "Example B", "price": 150 } | { "addressee": "Mr Shipping", "street": "Street", "county": "County", "postalCode": "po57 3ox", "country": "GB" } | { "name": "Example Two", "card": "3456", "brand": "MasterCard", "value": 1250 } | CREATED | DATE_TIME |
+      | _id       | reference    | items    | shipping                                                                    | destination                                                                                                      | payment                                                                         | status  | created   |
+      | OBJECT_ID | "2222222222" | ARRAY[2] | { "reference": "{{ shipping[2]._id }}", "name": "Example B", "price": 150 } | { "addressee": "Mr Shipping", "street": "Street", "county": "County", "postalCode": "po573ox", "country": "GB" } | { "name": "Example Two", "card": "3456", "brand": "MasterCard", "value": 1250 } | CREATED | DATE_TIME |
 
   Scenario: Requesting a list of orders should return only records for that account (account two)
     Given the request origin headers are set to "orders-search-one.venzra-test.io"
@@ -53,8 +53,8 @@ Feature: Creation of a new product entry
       | list     | total | skip | limit |
       | ARRAY[1] | 1     | 0    | 5     |
     And the "order" request that has a "list" field and row 1 contains:
-      | _id       | reference    | items                                                                                                                               | shipping                                                                    | destination                                                                                                       | payment                                                                     | status  | created   |
-      | OBJECT_ID | "3333333333" | [{ "price": 500, "product": { "slug": "orders-search-b", "displayName": "Orders Search B", "status": "INACTIVE" }, "quantity": 2 }] | { "reference": "{{ shipping[3]._id }}", "name": "Example C", "price": 100 } | { "addressee": "Mr Shipping", "street": "Street", "county": "County", "postalCode": "po57 3ox", "country": "GB" } | { "name": "Example Three", "card": "4567", "brand": "Visa", "value": 1100 } | CREATED | DATE_TIME |
+      | _id       | reference    | items                                                                                                                               | shipping                                                                    | destination                                                                                                      | payment                                                                     | status  | created   |
+      | OBJECT_ID | "3333333333" | [{ "price": 500, "product": { "slug": "orders-search-b", "displayName": "Orders Search B", "status": "INACTIVE" }, "quantity": 2 }] | { "reference": "{{ shipping[3]._id }}", "name": "Example C", "price": 100 } | { "addressee": "Mr Shipping", "street": "Street", "county": "County", "postalCode": "po573ox", "country": "GB" } | { "name": "Example Three", "card": "4567", "brand": "Visa", "value": 1100 } | CREATED | DATE_TIME |
 
   Scenario: Requesting a list of orders adheres to pagination values for skip and limit
     Given the request origin headers are set to "orders-search-one.venzra-test.io"
@@ -64,8 +64,8 @@ Feature: Creation of a new product entry
       | list     | total | skip | limit |
       | ARRAY[1] | 2     | 1    | 2     |
     And the "order" request that has a "list" field and row 1 contains:
-      | _id       | reference    | items    | shipping                                                                    | destination                                                                                                       | payment                                                                  | status  | created   |
-      | OBJECT_ID | "1111111111" | ARRAY[1] | { "reference": "{{ shipping[1]._id }}", "name": "Example A", "price": 100 } | { "addressee": "Mr Shipping", "street": "Street", "county": "County", "postalCode": "po57 3ox", "country": "GB" } | { "name": "Example One", "card": "2345", "brand": "Visa", "value": 175 } | CREATED | DATE_TIME |
+      | _id       | reference    | items    | shipping                                                                    | destination                                                                                                      | payment                                                                  | status  | created   |
+      | OBJECT_ID | "1111111111" | ARRAY[1] | { "reference": "{{ shipping[1]._id }}", "name": "Example A", "price": 100 } | { "addressee": "Mr Shipping", "street": "Street", "county": "County", "postalCode": "po573ox", "country": "GB" } | { "name": "Example One", "card": "2345", "brand": "Visa", "value": 175 } | CREATED | DATE_TIME |
 
   Scenario: Requesting a list of orders returns an empty array when none have been placed
     Given the request origin headers are set to "orders-search-two.venzra-test.io"
