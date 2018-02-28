@@ -25,11 +25,11 @@ Feature: Removing products from a cart
       | {{ subscriptions[2]._id }} | REMOVE-02-001 | cart-remove-a  | Cart Remove A  | Automated description | {{ images[2]._id }} | 999          | ACTIVE   |
       | {{ subscriptions[2]._id }} | REMOVE-02-002 | cart-remove-b  | Cart Remove B  | Automated description | {{ images[2]._id }} | 999          | INACTIVE |
     And there are the following "carts" records in the database
-      | subscription               | items                                                                                                          | shipping                                                                    |
-      | {{ subscriptions[1]._id }} | []                                                                                                             | { "reference": "{{ shipping[1]._id }}", "name": "Example A", "price": 100 } |
-      | {{ subscriptions[1]._id }} | [{ "product": "{{ products[1]._id }}" }, { "product": "{{ products[3]._id }}" }]                               | { "reference": "{{ shipping[2]._id }}", "name": "Example B", "price": 200 } |
-      | {{ subscriptions[1]._id }} | [{ "product": "{{ products[1]._id }}", "quantity": 3 }, { "product": "{{ products[2]._id }}", "quantity": 2 }] | { "reference": "{{ shipping[3]._id }}", "name": "Example C", "price": 300 } |
-      | {{ subscriptions[2]._id }} | [{ "product": "{{ products[4]._id }}" }, { "product": "{{ products[5]._id }}" }]                               | { "reference": "{{ shipping[4]._id }}", "name": "Example D", "price": 400 } |
+      | subscription               | ip        | items                                                                                                          | shipping                                                                    |
+      | {{ subscriptions[1]._id }} | 127.0.0.1 | []                                                                                                             | { "reference": "{{ shipping[1]._id }}", "name": "Example A", "price": 100 } |
+      | {{ subscriptions[1]._id }} | 127.0.0.1 | [{ "product": "{{ products[1]._id }}" }, { "product": "{{ products[3]._id }}" }]                               | { "reference": "{{ shipping[2]._id }}", "name": "Example B", "price": 200 } |
+      | {{ subscriptions[1]._id }} | 127.0.0.1 | [{ "product": "{{ products[1]._id }}", "quantity": 3 }, { "product": "{{ products[2]._id }}", "quantity": 2 }] | { "reference": "{{ shipping[3]._id }}", "name": "Example C", "price": 300 } |
+      | {{ subscriptions[2]._id }} | 127.0.0.1 | [{ "product": "{{ products[4]._id }}" }, { "product": "{{ products[5]._id }}" }]                               | { "reference": "{{ shipping[4]._id }}", "name": "Example D", "price": 400 } |
 
   Scenario: Removing a product that is not in the cart is ignored
     Given the request origin headers are set to "cart-remove-one.venzra-test.io"

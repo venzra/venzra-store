@@ -6,8 +6,8 @@ import { CartModel } from '../models/cart';
 
 import { SubscriptionService } from '../services/subscription';
 
-const createCart = (subscription) => {
-    return CartModel.create({ subscription });
+const createCart = (subscription, ip) => {
+    return CartModel.create({ subscription, ip });
 };
 
 export const venzraSession = (req: Request, res: Response, next: NextFunction): void => {
@@ -24,12 +24,12 @@ export const venzraSession = (req: Request, res: Response, next: NextFunction): 
         .then((subscription) => {
             const _id = req.cookies.vid;
             if (!_id) {
-                return createCart(subscription);
+                return createCart(subscription, req.ip);
             }
             return CartModel.findOne({ _id, subscription })
                 .then((cart) => {
                     if (!cart) {
-                        return createCart(subscription);
+                        return createCart(subscription, req.ip);
                     }
                     return cart;
                 });

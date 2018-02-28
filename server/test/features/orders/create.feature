@@ -27,10 +27,10 @@ Feature: Place an order using cart information
       | {{ subscriptions[2]._id }} | CREATE-02-001 | orders-create-a  | Orders Create A  | Automated description | {{ images[2]._id }} | 999          | ACTIVE   |
       | {{ subscriptions[2]._id }} | CREATE-02-002 | orders-create-b  | Orders Create B  | Automated description | {{ images[2]._id }} | 999          | INACTIVE |
     And there are the following "carts" records in the database
-      | subscription               | items                                                                                                                                   | shipping                                                                    |
-      | {{ subscriptions[1]._id }} | []                                                                                                                                      | { "reference": "{{ shipping[1]._id }}", "name": "Example A", "price": 200 } |
-      | {{ subscriptions[1]._id }} | [{ "product": "{{ products[1]._id }}", "quantity": 2 }, { "product": "{{ products[2]._id }}" }, { "product": "{{ products[3]._id }}" }] | { "reference": "{{ shipping[2]._id }}", "name": "Example B", "price": 500 } |
-      | {{ subscriptions[2]._id }} | [{ "product": "{{ products[4]._id }}" }, { "product": "{{ products[5]._id }}" }]                                                        | { "reference": "{{ shipping[3]._id }}", "name": "Example C", "price": 0 }   |
+      | subscription               | ip        | items                                                                                                                                   | shipping                                                                    |
+      | {{ subscriptions[1]._id }} | 127.0.0.1 | []                                                                                                                                      | { "reference": "{{ shipping[1]._id }}", "name": "Example A", "price": 200 } |
+      | {{ subscriptions[1]._id }} | 127.0.0.1 | [{ "product": "{{ products[1]._id }}", "quantity": 2 }, { "product": "{{ products[2]._id }}" }, { "product": "{{ products[3]._id }}" }] | { "reference": "{{ shipping[2]._id }}", "name": "Example B", "price": 500 } |
+      | {{ subscriptions[2]._id }} | 127.0.0.1 | [{ "product": "{{ products[4]._id }}" }, { "product": "{{ products[5]._id }}" }]                                                        | { "reference": "{{ shipping[3]._id }}", "name": "Example C", "price": 0 }   |
 
   Scenario: Missing request body throws required fields error
     Given the request origin headers are set to "orders-create-one.venzra-test.io"

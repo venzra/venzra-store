@@ -24,10 +24,10 @@ Feature: Adding products into a cart
       | {{ subscriptions[2]._id }} | ADD-02-001 | cart-add-a  | Cart Add A  | Automated description | {{ images[2]._id }} | 999          | ACTIVE   |
       | {{ subscriptions[2]._id }} | ADD-02-002 | cart-add-b  | Cart Add B  | Automated description | {{ images[2]._id }} | 999          | INACTIVE |
     And there are the following "carts" records in the database
-      | subscription               | items                                    | shipping                                                                    |
-      | {{ subscriptions[1]._id }} | [{ "product": "{{ products[1]._id }}" }] | { "reference": "{{ shipping[1]._id }}", "name": "Example A", "price": 100 } |
-      | {{ subscriptions[1]._id }} | []                                       | { "reference": "{{ shipping[2]._id }}", "name": "Example B", "price": 200 } |
-      | {{ subscriptions[2]._id }} | [{ "product": "{{ products[4]._id }}" }] | { "reference": "{{ shipping[3]._id }}", "name": "Example C", "price": 300 } |
+      | subscription               | ip        | items                                    | shipping                                                                    |
+      | {{ subscriptions[1]._id }} | 127.0.0.1 | [{ "product": "{{ products[1]._id }}" }] | { "reference": "{{ shipping[1]._id }}", "name": "Example A", "price": 100 } |
+      | {{ subscriptions[1]._id }} | 127.0.0.1 | []                                       | { "reference": "{{ shipping[2]._id }}", "name": "Example B", "price": 200 } |
+      | {{ subscriptions[2]._id }} | 127.0.0.1 | [{ "product": "{{ products[4]._id }}" }] | { "reference": "{{ shipping[3]._id }}", "name": "Example C", "price": 300 } |
 
   Scenario: Sending an empty patch request does not alter the cart information
     Given the request origin headers are set to "cart-add-one.venzra-test.io"

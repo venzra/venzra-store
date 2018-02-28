@@ -25,10 +25,10 @@ Feature: Assigning shipping onptions to a cart
       | {{ subscriptions[2]._id }} | SHIPPING-02-001 | cart-shipping-a  | Cart Shipping A  | Automated description | {{ images[2]._id }} | 999          | ACTIVE   |
       | {{ subscriptions[2]._id }} | SHIPPING-02-002 | cart-shipping-b  | Cart Shipping B  | Automated description | {{ images[2]._id }} | 999          | INACTIVE |
     And there are the following "carts" records in the database
-      | subscription               | items                                    | shipping                                                                    |
-      | {{ subscriptions[1]._id }} | [{ "product": "{{ products[1]._id }}" }] |                                                                             |
-      | {{ subscriptions[1]._id }} | []                                       | { "reference": "{{ shipping[3]._id }}", "name": "Example A", "price": 300 } |
-      | {{ subscriptions[2]._id }} | [{ "product": "{{ products[4]._id }}" }] | { "reference": "{{ shipping[4]._id }}", "name": "Example B", "price": 400 } |
+      | subscription               | ip        | items                                    | shipping                                                                    |
+      | {{ subscriptions[1]._id }} | 127.0.0.1 | [{ "product": "{{ products[1]._id }}" }] |                                                                             |
+      | {{ subscriptions[1]._id }} | 127.0.0.1 | []                                       | { "reference": "{{ shipping[3]._id }}", "name": "Example A", "price": 300 } |
+      | {{ subscriptions[2]._id }} | 127.0.0.1 | [{ "product": "{{ products[4]._id }}" }] | { "reference": "{{ shipping[4]._id }}", "name": "Example B", "price": 400 } |
 
   Scenario: Sending a request to replace shipping to a cart without shipping adds the requested entry data
     Given the request origin headers are set to "cart-shipping-one.venzra-test.io"

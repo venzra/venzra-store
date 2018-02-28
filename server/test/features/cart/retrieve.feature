@@ -23,11 +23,11 @@ Feature: Access cart data available for a customer
       | {{ subscriptions[2]._id }} | RETRIEVE-02-001 | cart-retrieve-a  | Cart Retrieve A  | Automated description | {{ images[1]._id }} | 999          | ACTIVE   |
       | {{ subscriptions[2]._id }} | RETRIEVE-02-002 | cart-retrieve-b  | Cart Retrieve B  | Automated description | {{ images[1]._id }} | 999          | INACTIVE |
     And there are the following "carts" records in the database
-      | subscription               | items                                                                                                                                   | shipping                                                                    |
-      | {{ subscriptions[1]._id }} | []                                                                                                                                      |                                                                             |
-      | {{ subscriptions[1]._id }} | [{ "product": "{{ products[1]._id }}" }]                                                                                                |                                                                             |
-      | {{ subscriptions[1]._id }} | [{ "product": "{{ products[1]._id }}", "quantity": 2 }, { "product": "{{ products[2]._id }}" }, { "product": "{{ products[3]._id }}" }] | { "reference": "{{ shipping[1]._id }}", "name": "Example A", "price": 100 } |
-      | {{ subscriptions[2]._id }} | [{ "product": "{{ products[4]._id }}" }, { "product": "{{ products[5]._id }}" }]                                                        | { "reference": "{{ shipping[2]._id }}", "name": "Example B", "price": 200 } |
+      | subscription               | ip        | items                                                                                                                                   | shipping                                                                    |
+      | {{ subscriptions[1]._id }} | 127.0.0.1 | []                                                                                                                                      |                                                                             |
+      | {{ subscriptions[1]._id }} | 127.0.0.1 | [{ "product": "{{ products[1]._id }}" }]                                                                                                |                                                                             |
+      | {{ subscriptions[1]._id }} | 127.0.0.1 | [{ "product": "{{ products[1]._id }}", "quantity": 2 }, { "product": "{{ products[2]._id }}" }, { "product": "{{ products[3]._id }}" }] | { "reference": "{{ shipping[1]._id }}", "name": "Example A", "price": 100 } |
+      | {{ subscriptions[2]._id }} | 127.0.0.1 | [{ "product": "{{ products[4]._id }}" }, { "product": "{{ products[5]._id }}" }]                                                        | { "reference": "{{ shipping[2]._id }}", "name": "Example B", "price": 200 } |
 
   Scenario: Attempting to a cart which belongs to another subscription will give a new empty cart in return
     Given the request origin headers are set to "cart-retrieve-one.venzra-test.io"
