@@ -2,16 +2,17 @@ import { NgModule } from '@angular/core';
 
 import { RouterModule, Routes } from '@angular/router';
 
-import { AuthLayoutComponent } from './layout/auth.layout';
-import { AccountLayoutComponent } from './layout/account.layout';
 import { AuthGuard } from '../../services/guard.service';
 
-import { AuthenticationComponent } from './components/authentication/authentication.component';
-import { ProfileComponent } from './components/profile/profile.component';
-import { OrdersComponent } from './components/orders/orders.component';
-import { LogoutComponent } from './components/logout/logout.component';
+import { AuthLayoutComponent } from './layout/auth.layout';
+import { AccountLayoutComponent } from './layout/account.layout';
 
-import { OrderListResolve } from '../../services/order.service';
+import { AuthenticationComponent } from './fragments/authentication/authentication.component';
+import { ProfileComponent } from './fragments/profile/profile.component';
+import { OrdersComponent } from './fragments/orders/orders.component';
+import { LogoutComponent } from './fragments/logout/logout.component';
+
+import { OrderListResolve, OrderService } from './services/order.service';
 
 const routes: Routes = [
     {
@@ -60,6 +61,10 @@ const routes: Routes = [
     ],
     exports: [
         RouterModule
+    ],
+    providers: [
+        OrderService,
+        OrderListResolve
     ]
 })
 export class AccountRoutingModule {

@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Subscription, SubscriptionService } from './services/subscription.service';
+import { Subscription } from './models/subscription';
 
 import { LayoutService } from './services/layout.service';
+import { SubscriptionService } from './services/subscription.service';
+
 
 @Component({
     selector: 'venzra-public',

@@ -7,8 +7,8 @@ import 'rxjs/add/operator/toPromise';
 
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-import { Shipping } from './order.service';
-import { Product } from './product.service';
+import { Shipping } from '../models/shipping';
+import { Product } from '../models/product';
 
 export interface CartItem {
     _id: string;

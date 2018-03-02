@@ -23,10 +23,7 @@ export class ShippingService {
 
     getAllShipping(query = {}): Promise<ListModel<Shipping>> {
         const params = Object.keys(query).reduce((httpParams, key) => httpParams.set(key, query[key]), new HttpParams());
-
-        return this.http.get('/api/shipping', { params })
-            .toPromise()
-            .then((response: any) => response as ListModel<Shipping>);
+        return this.http.get<ListModel<Shipping>>('/api/shipping', { params }).toPromise();
     }
 }
 

@@ -3,9 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { StoreLayoutComponent } from './layout/store.layout';
 
-import { LandingComponent } from './components/landing/landing.component';
+import { LandingComponent } from './fragments/landing/landing.component';
 
-import { ProductListResolve } from '../../services/product.service';
+import { ProductListResolve, ProductService } from './services/product.service';
 
 const routes: Routes = [
     {
@@ -29,6 +29,10 @@ const routes: Routes = [
     ],
     exports: [
         RouterModule
+    ],
+    providers: [
+        ProductService,
+        ProductListResolve
     ]
 })
 export class ShopFrontRoutingModule {

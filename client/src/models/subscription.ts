@@ -1,0 +1,11 @@
+export interface Subscription {
+    _id?: string;
+    storeName: string;
+    strapline?: string;
+    icon?: string;
+    logo?: string;
+    gateway?: string;
+    status?: string;
+    created?: Date;
+    updated?: Date;
+}

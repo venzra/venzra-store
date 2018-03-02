@@ -9,17 +9,7 @@ import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/do';
 
-export class Subscription {
-    _id?: string;
-    storeName: string;
-    strapline?: string;
-    icon?: string;
-    logo?: string;
-    gateway?: string;
-    status?: string;
-    created?: Date;
-    updated?: Date;
-}
+import { Subscription } from '../models/subscription';
 
 @Injectable()
 export class SubscriptionService {

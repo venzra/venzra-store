@@ -6,10 +6,10 @@ import { CheckoutRoutingModule } from './routing.module';
 
 import { CheckoutLayoutComponent } from './layout/checkout.layout';
 
-import { BasketComponent } from './components/basket/basket.component';
-import { PaymentComponent } from './components/payment/payment.component';
+import { BasketComponent } from './fragments/basket/basket.component';
+import { PaymentComponent } from './fragments/payment/payment.component';
 
-import { CalendarService } from '../../services/calendar.service';
+import { CalendarService } from './services/calendar.service';
 
 @NgModule({
     declarations: [

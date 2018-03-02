@@ -1,12 +1,10 @@
 import { NgModule } from '@angular/core';
-
 import { RouterModule, Routes } from '@angular/router';
 
 import { BrowseLayoutComponent } from './layout/browse.layout';
+import { ProductComponent } from './fragments/product/product.component';
 
-import { ProductComponent } from './components/product/product.component';
-
-import { ProductRetrieveResolve } from '../../services/product.service';
+import { ProductRetrieveResolve, ProductService } from './services/product.service';
 
 const routes: Routes = [
     {
@@ -30,6 +28,10 @@ const routes: Routes = [
     ],
     exports: [
         RouterModule
+    ],
+    providers: [
+        ProductService,
+        ProductRetrieveResolve
     ]
 })
 export class AccountRoutingModule {

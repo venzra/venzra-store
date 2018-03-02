@@ -3,8 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { PublicComponent } from './public.component';
-
-import { SubscriptionRetrieveResolve } from './services/subscription.service';
+import { SubscriptionRetrieveResolve, SubscriptionService } from './services/subscription.service';
 
 const routes: Routes = [
     {
@@ -45,6 +44,10 @@ const routes: Routes = [
     ],
     exports: [
         RouterModule
+    ],
+    providers: [
+        SubscriptionService,
+        SubscriptionRetrieveResolve
     ]
 })
 export class StoreRoutingModule {

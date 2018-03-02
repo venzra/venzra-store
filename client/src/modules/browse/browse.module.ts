@@ -6,9 +6,7 @@ import { AccountRoutingModule } from './routing.module';
 
 import { BrowseLayoutComponent } from './layout/browse.layout';
 
-import { ProductComponent } from './components/product/product.component';
-
-import { ProductRetrieveResolve, ProductService } from '../../services/product.service';
+import { ProductComponent } from './fragments/product/product.component';
 
 @NgModule({
     declarations: [
@@ -19,10 +17,6 @@ import { ProductRetrieveResolve, ProductService } from '../../services/product.s
         CommonModule,
         VenzraCommonModule,
         AccountRoutingModule
-    ],
-    providers: [
-        ProductService,
-        ProductRetrieveResolve
     ]
 })
 export class BrowseModule {

@@ -6,7 +6,7 @@ import { ShopFrontRoutingModule } from './routing.module';
 
 import { StoreLayoutComponent } from './layout/store.layout';
 
-import { LandingComponent } from './components/landing/landing.component';
+import { LandingComponent } from './fragments/landing/landing.component';
 
 @NgModule({
     declarations: [

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Subscription, SubscriptionService } from '../../../services/subscription.service';
+import { Subscription } from '../../../models/subscription';
+
+import { SubscriptionService } from '../../../services/subscription.service';
 
 @Component({
     templateUrl: './store.layout.html',
@@ -8,7 +10,7 @@ import { Subscription, SubscriptionService } from '../../../services/subscriptio
 })
 export class StoreLayoutComponent implements OnInit {
 
-    subscription: Subscription;
+    public subscription: Subscription;
 
     constructor(
         private subscriptionService: SubscriptionService

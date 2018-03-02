@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { Account, AccountService } from '../../../services/account.service';
+import { Account } from '../../../models/account';
+
+import { AccountService } from '../../../services/account.service';
 
 @Component({
     selector: 'venzra-account',

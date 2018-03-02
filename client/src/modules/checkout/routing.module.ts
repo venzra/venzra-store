@@ -5,9 +5,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { CheckoutLayoutComponent } from './layout/checkout.layout';
 import { AuthGuard } from '../../services/guard.service';
 
-import { BasketComponent } from './components/basket/basket.component';
-import { PaymentComponent } from './components/payment/payment.component';
+import { BasketComponent } from './fragments/basket/basket.component';
+import { PaymentComponent } from './fragments/payment/payment.component';
 
+import { PaymentService } from './services/payment.service';
 import { ShippingListResolve, ShippingService } from './services/shipping';
 
 const routes: Routes = [
@@ -43,6 +44,7 @@ const routes: Routes = [
         RouterModule
     ],
     providers: [
+        PaymentService,
         ShippingService,
         ShippingListResolve
     ]
