@@ -1,0 +1,11 @@
+@mixin browse-theme($theme) {
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $warn: map-get($theme, warn);
+
+    .product-detail {
+        .mat-list .mat-line.pricing {
+            color: mat-color($primary);
+        }
+    }
+}

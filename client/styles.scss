@@ -2,13 +2,6 @@
 
 @include mat-core();
 
-$venzra-app-primary: mat-palette($mat-indigo);
-$venzra-app-accent:  mat-palette($mat-indigo, 100);
-$venzra-app-warn:    mat-palette($mat-red);
-$venzra-app-theme:   mat-light-theme($venzra-app-primary, $venzra-app-accent, $venzra-app-warn);
-
-@include angular-material-theme($venzra-app-theme);
-
 html, body{
     margin: 0;
     height: 100%;

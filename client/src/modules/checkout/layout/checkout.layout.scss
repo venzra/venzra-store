@@ -1,7 +1,6 @@
 @import '../../../../styles';
 
 @import '~@angular/material/theming';
-@include mat-core();
 
 :host {
     position: absolute;

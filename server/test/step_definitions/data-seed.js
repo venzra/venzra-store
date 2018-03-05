@@ -9,6 +9,7 @@ defineSupportCode(({ Given, When, Then }) => {
         if (mongoose.models[collection]) {
             return Promise
                 .all(dataset.map((row) => {
+                    Object.keys(row).forEach((key) => (row[key] === null || row[key] === '') && delete row[key]);
                     const creation = new mongoose.models[collection](row);
                     return creation.save();
                 }))

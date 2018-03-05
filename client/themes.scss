@@ -1,0 +1,17 @@
+@import '../node_modules/@angular/material/theming';
+
+@import './src/modules/account/theme';
+@import './src/modules/browse/theme';
+@import './src/modules/checkout/theme';
+@import './src/modules/shop-front/theme';
+
+@mixin venzra-store-theme($theme) {
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $warn: map-get($theme, warn);
+
+    @include account-theme($theme);
+    @include browse-theme($theme);
+    @include checkout-theme($theme);
+    @include shop-front-theme($theme);
+}

@@ -2,6 +2,7 @@ const { defineSupportCode } = require('cucumber');
 const { expect } = require('chai');
 
 const cookieParser = require('cookie');
+const cheerio = require('cheerio');
 const sharp = require('sharp');
 
 defineSupportCode(({ Given, When, Then }) => {
@@ -76,6 +77,21 @@ defineSupportCode(({ Given, When, Then }) => {
                     checkValues(expectedData[0], expectedField && expectedRecord ? history.response[expectedField][expectedRecord - 1] : history.response)
                 ])
             );
+    });
+
+    Then(/^(?:there should be a (200|400|500) (?:response|error) from )?the "([^"]*)" request that contains the html:$/, function (statusCode, historyName, expectedData) {
+        expectedData = this.getHashes(expectedData);
+
+        return Promise.resolve(this.getHistory(historyName))
+            .then((history) => cheerio.load(history.response))
+            .then(($) => {
+                const actualData = {
+                    title: $('head title').text(),
+                    description: $('head meta[name="description"]').attr('content'),
+                    theme: $(`head link[href="${expectedData[0].theme}"]`).attr('href')
+                };
+                return checkValues(expectedData[0], actualData);
+            });
     });
 
     Then(/^the response path "([^"]*)" from the "([^"]*)" request contains:$/, function (responsePath, historyName, expectedData) {

@@ -16,6 +16,7 @@ import OrdersController from './controllers/orders';
 import ProductsController from './controllers/products';
 import ShippingController from './controllers/shipping';
 import SubscriptionController from './controllers/subscription';
+import WelcomeController from './controllers/welcome';
 
 import { errorHandler } from './middleware/error-handler';
 
@@ -61,16 +62,9 @@ app.use('/api/products', ProductsController);
 app.use('/api/shipping', ShippingController);
 app.use('/api/subscription', SubscriptionController);
 
+app.use(WelcomeController);
+
 app.use(express.static(path.join(__dirname, '../client')));
-
-app.route('*').get((req, res, next) => {
-    if (req.url.startsWith('/assets')) {
-        return next();
-    }
-
-    res.type('html');
-    res.sendFile(path.join(__dirname, '../client/index.html'));
-});
 
 app.use(errorHandler);
 

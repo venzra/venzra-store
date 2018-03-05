@@ -17,7 +17,7 @@ export class LayoutService {
 
     set title(title: string) {
         this._title = title;
-        this.pageTitle.setTitle(`${title} | ${this._name}`);
+        this.pageTitle.setTitle(`${this._name} | ${title}`);
     }
 
     get title() {
