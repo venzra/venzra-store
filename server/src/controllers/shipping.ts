@@ -25,8 +25,6 @@ export class ShippingController extends AuthenticationController {
 
     findAll(req: Request, res: Response, next: NextFunction) {
         const searchParams: any = { subscription: this.subscription._id };
-        const skip = parseInt(req.query.skip, 10) || 0;
-        const limit = parseInt(req.query.limit, 10) || 20;
         const order = { currentPrice: 1, shipmentTime: 1 };
 
         ShippingModel
@@ -36,11 +34,9 @@ export class ShippingController extends AuthenticationController {
                     .aggregate([
                         { $match: searchParams },
                         { $sort: order },
-                        { $skip: skip },
-                        { $limit: limit },
-                        { $project: { displayName: 1, cartMinimum: 1, cartMaximum: 1, currentPrice: 1, shipmentTime: 1, created: 1 } }
+                        { $project: { displayName: 1, cartMinimum: 1, cartMaximum: 1, currentPrice: 1 } }
                     ])
-                    .then((list) => res.status(200).send({ list, total, skip, limit }))
+                    .then((list) => res.status(200).send({ list, total }))
             )
             .catch((shippingError) => next(shippingError));
     }
