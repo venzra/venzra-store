@@ -1,6 +1,6 @@
 <section fxLayout="row" fxLayoutAlign="center center">
     <div fxFlex="95%" fxFlex.sm="80%" fxFlex.md="80%" fxFlex.lg="70%"  fxFlex.xl="60%">
-        <div fxLayout="row" fxLayoutWrap>
+        <div fxLayout="row wrap">
             <venzra-product *ngFor="let product of products.list" [product]="product" fxFlex="100%" fxFlex.sm="50%" fxFlex.md="33%" fxFlex.gt-md="25%"></venzra-product>
         </div>
     </div>
