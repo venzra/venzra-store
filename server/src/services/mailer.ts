@@ -2,18 +2,16 @@ import { SES } from 'aws-sdk';
 
 import { IOrderModel } from '../models/orders';
 import { ISubscriptionModel } from '../models/subscription';
-import { ICustomerModel } from '../models/customer';
-
-import { environment } from '../config';
+import { ContactModel } from '../models/objects/contact';
 
 export const mailer = {
-    send: (subscription: ISubscriptionModel, subject: string, destination: ICustomerModel, message: string): Promise<SES.SendEmailResponse> => {
+    send: (subject: string, destination: string, message: string, origin: string): Promise<SES.SendEmailResponse> => {
         const ses = new SES({ region: 'eu-west-1' });
 
         const request: SES.SendEmailRequest = {
-            Source: `${subscription.storeName} <${subscription.domainName}@${environment.emailDomain}>`,
+            Source: origin,
             Destination: {
-                ToAddresses: [destination.get('identity')]
+                ToAddresses: [destination]
             },
             Message: {
                 Subject: {
@@ -60,6 +58,26 @@ export const email = {
                         </td>
                     </tr>
     `,
+
+    contactMessage: (subscription: ISubscriptionModel, contact: ContactModel): string => {
+        const template = `
+                    <tr>
+                        <td>
+                            <h2>Order confirmation,</h2>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>Message from <strong>${contact.fullName}</strong>.</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>${contact.message}</td>
+                    </tr>
+        `;
+
+        return email.header('Web contact') + template + email.footer(subscription.storeName);
+    },
 
     orderConfirmation: (subscription: ISubscriptionModel, order: IOrderModel): string => {
         const template = `

@@ -1,0 +1,44 @@
+<div fxLayout="row" fxLayoutAlign="center center">
+    <div fxFlex="60" fxFlex.gt-md="40" fxFlex.xl="30">
+        <div class="page-header">
+            <h2>Contact Us</h2>
+        </div>
+
+        <form (ngSubmit)="sendMessage()" [formGroup]="contactForm" fxLayout="column" fxLayoutGap="20px">
+            <mat-form-field *ngIf="hasField('NAME')">
+                <input matInput placeholder="Your name" formControlName="fullName" required>
+                <mat-error *ngIf="contactForm.controls['fullName'].hasError('required')">This field is required.</mat-error>
+            </mat-form-field>
+
+            <mat-form-field *ngIf="hasField('COMPANY')">
+                <input matInput placeholder="Your company name" formControlName="companyName">
+            </mat-form-field>
+
+            <mat-form-field *ngIf="hasField('EMAIL')">
+                <input matInput type="email" placeholder="Please provide your email address" formControlName="email" required>
+                <mat-error *ngIf="contactForm.controls['email'].hasError('required')">This field is required.</mat-error>
+                <mat-error *ngIf="contactForm.controls['email'].hasError('pattern')">A valid email address is required.</mat-error>
+            </mat-form-field>
+
+            <mat-form-field *ngIf="hasField('PHONE')">
+                <input matInput type="tel" placeholder="Your contact phone number" formControlName="phoneNumber">
+            </mat-form-field>
+
+            <mat-form-field *ngIf="hasField('SUBJECT')">
+                <input matInput placeholder="Message subject" formControlName="subject">
+            </mat-form-field>
+
+            <mat-form-field *ngIf="hasField('REASON')">
+                <input matInput placeholder="Reason for your message" formControlName="reason">
+            </mat-form-field>
+
+            <mat-form-field *ngIf="hasField('MESSAGE')">
+                <textarea matInput placeholder="Your message" formControlName="message" required></textarea>
+                <mat-error *ngIf="contactForm.controls['message'].hasError('required')">This field is required.</mat-error>
+            </mat-form-field>
+
+            <button mat-raised-button type="submit" color="primary" [disabled]="contactForm.pristine || contactForm.invalid">Send Email</button>
+        </form>
+
+    </div>
+</div>

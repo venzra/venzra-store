@@ -13,6 +13,8 @@ import { CartModel } from '../models/cart';
 import { ProductModel } from '../models/products';
 import { email, mailer } from '../services/mailer';
 
+import { environment } from '../config';
+
 export class OrdersController extends AuthenticationController {
 
     public router: Router;
@@ -122,7 +124,11 @@ export class OrdersController extends AuthenticationController {
                             .then(() => order)
                             .catch((orderError) => next(orderError));
                     })
-                    .then((order: IOrderModel) => mailer.send(this.subscription, 'Order confirmation', this.customer, email.orderConfirmation(this.subscription, order)))
+                    .then((order: IOrderModel) => {
+                        const sender = `${this.subscription.storeName} <${this.subscription.domainName}@${environment.emailDomain}>`;
+                        const message = email.orderConfirmation(this.subscription, order);
+                        return mailer.send('Order confirmation', this.customer.get('identity'), message, sender);
+                    })
                     .then(() => next())
                     .catch((err) => next(new ThirdPartyError(err.type, err.message)));
             })

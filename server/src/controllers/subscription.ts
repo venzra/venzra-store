@@ -22,9 +22,9 @@ export class SubscriptionController extends AuthenticationController {
     }
 
     retrieve(req: Request, res: Response, next: NextFunction) {
-        const { _id, domainName, storeName, strapline, icon, logo, gateway } = this.subscription;
+        const { _id, domainName, storeName, strapline, icon, logo, gateway, contact } = this.subscription;
 
-        return res.status(200).send({ _id, domainName, storeName, strapline, icon, logo, gateway: gateway ? gateway.publicKey : '' });
+        return res.status(200).send({ _id, domainName, storeName, strapline, icon, logo, contact, gateway: gateway ? gateway.publicKey : '' });
     }
 
 }

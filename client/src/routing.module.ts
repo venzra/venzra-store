@@ -31,6 +31,10 @@ const routes: Routes = [
                 loadChildren: './modules/checkout/checkout.module#CheckoutModule'
             },
             {
+                path: 'contact',
+                loadChildren: './modules/contact/contact.module#ContactModule'
+            },
+            {
                 path: '**',
                 redirectTo: '/errors/404'
             }

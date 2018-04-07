@@ -1,6 +1,7 @@
 import { Schema, Document, Model, model } from 'mongoose';
 import { v4 } from 'uuid';
 
+import { ContactSchema, IContactModel } from './objects/contact';
 import { GatewaySchema, IGatewayModel } from './objects/gateway';
 import { FeeSchema, IFeeModel } from './objects/transaction';
 import { IThemeModel, ThemeSchema } from './objects/theme';
@@ -16,6 +17,7 @@ interface ISubscriptionModel extends Document {
     payment?: ISubscriptionPaymentModel;
     gateway?: IGatewayModel;
     transactions: IFeeModel;
+    contact: IContactModel;
     status?: string;
 }
 
@@ -57,6 +59,9 @@ const SubscriptionSchema: Schema = new Schema({
     transactions: {
         type: FeeSchema,
         default: FeeSchema
+    },
+    contact: {
+        type: ContactSchema
     },
     status: {
         type: String,
