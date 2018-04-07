@@ -1,6 +1,7 @@
 export interface Subscription {
     _id?: string;
     storeName: string;
+    features: string[];
     strapline?: string;
     icon?: string;
     logo?: string;

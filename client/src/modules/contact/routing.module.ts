@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { ContentGuard } from './services/content-guard.service';
+
 import { ContactComponent } from './contact/contact.component';
 import { SubscriptionRetrieveResolve, SubscriptionService } from './services/subscription.service';
 
@@ -10,7 +12,9 @@ const routes: Routes = [
         component: ContactComponent,
         resolve: {
             subscription: SubscriptionRetrieveResolve
-        }
+        },
+        data: { feature: 'CONTACT' },
+        canActivate: [ContentGuard]
     }
 ];
 
@@ -23,7 +27,8 @@ const routes: Routes = [
     ],
     providers: [
         SubscriptionService,
-        SubscriptionRetrieveResolve
+        SubscriptionRetrieveResolve,
+        ContentGuard
     ]
 })
 export class ContactRoutingModule {

@@ -41,7 +41,10 @@ export class AuthenticationController {
 
     checkSubscription(req: Request, res: Response, next: NextFunction) {
         this.subscriptionService.validate(req.subdomains)
-            .then((subscription: ISubscriptionModel) => this.subscription = subscription)
+            .then((subscription: ISubscriptionModel) => {
+                subscription.features = subscription.addons.map((addon) => addon.name);
+                this.subscription = subscription;
+            })
             .then(() => next());
     }
 

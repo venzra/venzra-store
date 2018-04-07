@@ -26,4 +26,8 @@ export class PublicComponent implements OnInit {
             this.layout.name = subscription.storeName;
         });
     }
+
+    hasFeature(feature: string): boolean {
+        return this.subscription.features.includes(feature);
+    }
 }

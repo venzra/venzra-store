@@ -1,6 +1,7 @@
 import { Schema, Document, Model, model } from 'mongoose';
 import { v4 } from 'uuid';
 
+import { AddonSchema, IAddonModel } from './objects/addons';
 import { ContactSchema, IContactModel } from './objects/contact';
 import { GatewaySchema, IGatewayModel } from './objects/gateway';
 import { FeeSchema, IFeeModel } from './objects/transaction';
@@ -9,6 +10,8 @@ import { ISubscriptionPaymentModel, SubscriptionPaymentSchema } from './objects/
 
 interface ISubscriptionModel extends Document {
     storeName?: string;
+    features: string[];
+    addons?: IAddonModel[];
     strapline?: string;
     domainName?: string;
     icon?: string;
@@ -28,6 +31,10 @@ const SubscriptionSchema: Schema = new Schema({
         trim: true,
         minlength: 3,
         maxlength: 40
+    },
+    addons: {
+        type: [AddonSchema],
+        default: []
     },
     strapline: {
         type: String,
