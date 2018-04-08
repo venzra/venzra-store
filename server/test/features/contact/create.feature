@@ -10,6 +10,13 @@ Feature: Ability to send a contact message
 
   Scenario: Sending a message via the contact endpoint
     Given the request origin headers are set to "contact-create-one.venzra-test.io"
+    When I make an empty POST request to the API endpoint "/api/contact" as "contact"
+    Then there should be a 400 error from the "contact" request that contains:
+      | message           | detail                                                      |
+      | Validation failed | ["fullName required", "email required", "message required"] |
+
+  Scenario: Sending a message via the contact endpoint
+    Given the request origin headers are set to "contact-create-one.venzra-test.io"
     And there is a POST consumer at "https://email.eu-west-1.amazonaws.com" that will return status 200
     When I make a POST request to the API endpoint "/api/contact" as "contact" using:
       | fullName   | email                     | message           |

@@ -3,8 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { ContentGuard } from './services/content-guard.service';
 
-import { ContactComponent } from './contact/contact.component';
 import { SubscriptionRetrieveResolve, SubscriptionService } from './services/subscription.service';
+import { ContactComponent } from './contact/contact.component';
+import { ConfirmationComponent } from './confirmation/confirmation.component';
 
 const routes: Routes = [
     {
@@ -13,6 +14,12 @@ const routes: Routes = [
         resolve: {
             subscription: SubscriptionRetrieveResolve
         },
+        data: { feature: 'CONTACT' },
+        canActivate: [ContentGuard]
+    },
+    {
+        path: 'confirmation',
+        component: ConfirmationComponent,
         data: { feature: 'CONTACT' },
         canActivate: [ContentGuard]
     }

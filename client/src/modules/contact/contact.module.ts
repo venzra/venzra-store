@@ -5,10 +5,12 @@ import { ContactRoutingModule } from './routing.module';
 import { VenzraCommonModule } from '../../common/common.module';
 
 import { ContactComponent } from './contact/contact.component';
+import { ConfirmationComponent } from './confirmation/confirmation.component';
 
 @NgModule({
     declarations: [
-        ContactComponent
+        ContactComponent,
+        ConfirmationComponent
     ],
     imports: [
         CommonModule,

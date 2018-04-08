@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
+import 'rxjs/add/operator/toPromise';
+
 import { Contact } from '../models/contact';
 
 @Injectable()
@@ -10,8 +12,8 @@ export class ContactService {
         private http: HttpClient
     ) { }
 
-    sendMessage(contact: Contact): void {
-        this.http.post('/api/contact', contact);
+    sendMessage(contact: Contact): Promise<boolean> {
+        return this.http.post<boolean>('/api/contact', contact).toPromise();
     }
 
 }
