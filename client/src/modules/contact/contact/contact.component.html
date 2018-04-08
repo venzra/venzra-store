@@ -2,7 +2,7 @@
     <div fxFlex="60" fxFlex.gt-md="40" fxFlex.xl="30">
         <div class="page-header">
             <h2>Contact Us</h2>
-            <p [venzraMarkdown]="content.content"></p>
+            <p [venzraMarkdown]="content.content" [headers]="'simple'"></p>
         </div>
 
         <form (ngSubmit)="sendMessage()" [formGroup]="contactForm" fxLayout="column" fxLayoutGap="20px">
@@ -34,7 +34,7 @@
             </mat-form-field>
 
             <mat-form-field *ngIf="hasField('MESSAGE')">
-                <textarea matInput placeholder="Your message" formControlName="message" required></textarea>
+                <textarea matInput matTextareaAutosize matAutosizeMinRows="10" matAutosizeMaxRows="18" placeholder="Your message" formControlName="message" required></textarea>
                 <mat-error *ngIf="contactForm.controls['message'].hasError('required')">This field is required.</mat-error>
             </mat-form-field>
 
