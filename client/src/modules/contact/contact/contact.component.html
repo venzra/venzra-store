@@ -2,6 +2,7 @@
     <div fxFlex="60" fxFlex.gt-md="40" fxFlex.xl="30">
         <div class="page-header">
             <h2>Contact Us</h2>
+            <p [venzraMarkdown]="content.content"></p>
         </div>
 
         <form (ngSubmit)="sendMessage()" [formGroup]="contactForm" fxLayout="column" fxLayoutGap="20px">

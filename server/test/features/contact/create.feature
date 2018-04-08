@@ -22,3 +22,11 @@ Feature: Ability to send a contact message
       | fullName   | email                     | message           |
       | John Smith | john.smith@venzra-test.io | Automated message |
     Then the status returned from the "contact" request should be 202
+
+  Scenario: Sending a message via the contact endpoint
+    Given the request origin headers are set to "contact-create-one.venzra-test.io"
+    And there is a POST consumer at "https://email.eu-west-1.amazonaws.com" that will return status 400
+    When I make a POST request to the API endpoint "/api/contact" as "contact" using:
+      | fullName   | email                     | message           |
+      | John Smith | john.smith@venzra-test.io | Automated message |
+    Then the status returned from the "contact" request should be a 500 error

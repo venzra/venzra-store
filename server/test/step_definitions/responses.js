@@ -51,7 +51,7 @@ defineSupportCode(({ Given, When, Then }) => {
             .then((history) => expect(history.status).to.equal(parseInt(statusCode)));
     });
 
-    Then(/^the status returned from the "([^"]*)" request should be a (401|403|404) error$/, function (historyName, statusCode) {
+    Then(/^the status returned from the "([^"]*)" request should be a (401|403|404|500) error$/, function (historyName, statusCode) {
         return Promise.resolve(this.getHistory(historyName))
             .then((history) => expect(history.status).to.equal(parseInt(statusCode)));
     });
@@ -79,7 +79,7 @@ defineSupportCode(({ Given, When, Then }) => {
             );
     });
 
-    Then(/^(?:there should be a (200|400|500) (?:response|error) from )?the "([^"]*)" request that contains the html:$/, function (statusCode, historyName, expectedData) {
+    Then(/^(?:there should be a (200|400) (?:response|error) from )?the "([^"]*)" request that contains the html:$/, function (statusCode, historyName, expectedData) {
         expectedData = this.getHashes(expectedData);
 
         return Promise.resolve(this.getHistory(historyName))

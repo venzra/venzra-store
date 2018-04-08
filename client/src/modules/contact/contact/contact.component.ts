@@ -6,6 +6,7 @@ import { MatSnackBar } from '@angular/material';
 import { Subscription } from '../models/subscription';
 import { ContactService } from '../services/contact.service';
 import { Contact } from '../models/contact';
+import { Content } from '../models/content';
 
 const EMAIL_REGEX = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
 
@@ -16,6 +17,7 @@ const EMAIL_REGEX = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9]
 })
 export class ContactComponent implements OnInit {
 
+    public content: Content;
     public subscription: Subscription;
 
     public contactForm: FormGroup;
@@ -29,6 +31,7 @@ export class ContactComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
+        this.content = this.route.snapshot.data.content;
         this.subscription = this.route.snapshot.data.subscription;
 
         this.contactForm = this.forms.group({
