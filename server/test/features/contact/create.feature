@@ -29,4 +29,6 @@ Feature: Ability to send a contact message
     When I make a POST request to the API endpoint "/api/contact" as "contact" using:
       | fullName   | email                     | message           |
       | John Smith | john.smith@venzra-test.io | Automated message |
-    Then the status returned from the "contact" request should be a 500 error
+    Then there should be a 500 error from the "contact" request that contains:
+      | message |
+      |         |
