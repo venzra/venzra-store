@@ -13,8 +13,8 @@
                                placeholder="Your email address"
                                formControlName="emailAddress"
                         />
-                        <mat-error *ngIf="authenticationForm.controls['emailAddress'].hasError('required')">This field is required.</mat-error>
-                        <mat-error *ngIf="authenticationForm.controls['emailAddress'].hasError('pattern')">A valid email address is required.</mat-error>
+                        <mat-error *ngIf="authenticationForm.get(['emailAddress']).hasError('required')">This field is required.</mat-error>
+                        <mat-error *ngIf="authenticationForm.get(['emailAddress']).hasError('pattern')">A valid email address is required.</mat-error>
                     </mat-form-field>
 
                     <mat-form-field>
@@ -24,8 +24,8 @@
                                formControlName="password"
                         />
                         <mat-hint align="end">Password should be entered carefully</mat-hint>
-                        <mat-error *ngIf="authenticationForm.controls['password'].hasError('required')">This field is required.</mat-error>
-                        <mat-error *ngIf="authenticationForm.controls['password'].hasError('minlength')">Password is too short.</mat-error>
+                        <mat-error *ngIf="authenticationForm.get(['password']).hasError('required')">This field is required.</mat-error>
+                        <mat-error *ngIf="authenticationForm.get(['password']).hasError('minlength')">Password is too short.</mat-error>
                     </mat-form-field>
 
                     <div fxLayoutAlign="end">

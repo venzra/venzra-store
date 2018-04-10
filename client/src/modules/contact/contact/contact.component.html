@@ -8,7 +8,7 @@
         <form (ngSubmit)="sendMessage()" [formGroup]="contactForm" fxLayout="column" fxLayoutGap="20px">
             <mat-form-field *ngIf="hasField('NAME')">
                 <input matInput placeholder="Your name" formControlName="fullName" required>
-                <mat-error *ngIf="contactForm.controls['fullName'].hasError('required')">This field is required.</mat-error>
+                <mat-error *ngIf="contactForm.get(['fullName']).hasError('required')">This field is required.</mat-error>
             </mat-form-field>
 
             <mat-form-field *ngIf="hasField('COMPANY')">
@@ -17,8 +17,8 @@
 
             <mat-form-field *ngIf="hasField('EMAIL')">
                 <input matInput type="email" placeholder="Please provide your email address" formControlName="email" required>
-                <mat-error *ngIf="contactForm.controls['email'].hasError('required')">This field is required.</mat-error>
-                <mat-error *ngIf="contactForm.controls['email'].hasError('pattern')">A valid email address is required.</mat-error>
+                <mat-error *ngIf="contactForm.get(['email']).hasError('required')">This field is required.</mat-error>
+                <mat-error *ngIf="contactForm.get(['email']).hasError('pattern')">A valid email address is required.</mat-error>
             </mat-form-field>
 
             <mat-form-field *ngIf="hasField('PHONE')">
@@ -35,7 +35,7 @@
 
             <mat-form-field *ngIf="hasField('MESSAGE')">
                 <textarea matInput matTextareaAutosize matAutosizeMinRows="10" matAutosizeMaxRows="18" placeholder="Your message" formControlName="message" required></textarea>
-                <mat-error *ngIf="contactForm.controls['message'].hasError('required')">This field is required.</mat-error>
+                <mat-error *ngIf="contactForm.get(['message']).hasError('required')">This field is required.</mat-error>
             </mat-form-field>
 
             <button mat-raised-button type="submit" color="primary" [disabled]="contactForm.pristine || contactForm.invalid">Send Email</button>
