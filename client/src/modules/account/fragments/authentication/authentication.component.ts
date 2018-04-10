@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { AccountCredentials } from '../../../../models/credentials';
+import { AccountCredentials } from '@venzra/models/credentials';
 
-import { LayoutService } from '../../../../services/layout.service';
-import { AccountService } from '../../../../services/account.service';
+import { LayoutService } from '@venzra/services/layout.service';
+import { AccountService } from '@venzra/services/account.service';
 
 const EMAIL_REGEX = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
 

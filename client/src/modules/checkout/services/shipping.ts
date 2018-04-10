@@ -4,7 +4,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import 'rxjs/add/operator/toPromise';
 
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
-import { ListModel } from '../../../services/restful.service';
+import { ListModel } from '@venzra/services/restful.service';
 
 export class Shipping {
     _id?: string;

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { AccountService } from '../../../../services/account.service';
+import { AccountService } from '@venzra/services/account.service';
 
 @Component({
     template: `

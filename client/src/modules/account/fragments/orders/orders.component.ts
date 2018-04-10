@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PageEvent } from '@angular/material';
 
-import { LayoutService } from '../../../../services/layout.service';
-import { ListModel } from '../../../../services/restful.service';
+import { LayoutService } from '@venzra/services/layout.service';
+import { ListModel } from '@venzra/services/restful.service';
 
 import { Order } from '../../models/order';
 

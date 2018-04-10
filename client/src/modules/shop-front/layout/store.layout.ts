@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Subscription } from '../../../models/subscription';
+import { Subscription } from '@venzra/models/subscription';
 
-import { SubscriptionService } from '../../../services/subscription.service';
+import { SubscriptionService } from '@venzra/services/subscription.service';
 
 @Component({
     templateUrl: './store.layout.html',

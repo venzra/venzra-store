@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatRadioChange } from '@angular/material';
 
-import { Cart, CartService } from '../../../../services/cart.service';
-import { LayoutService } from '../../../../services/layout.service';
+import { Cart, CartService } from '@venzra/services/cart.service';
+import { LayoutService } from '@venzra/services/layout.service';
 
 import { List } from '../../models/list';
 import { Shipping } from '../../services/shipping';

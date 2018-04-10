@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 
 import { RouterModule, Routes } from '@angular/router';
 
-import { AuthGuard } from '../../services/guard.service';
+import { AuthGuard } from '@venzra/services/guard.service';
 
 import { AuthLayoutComponent } from './layout/auth.layout';
 import { AccountLayoutComponent } from './layout/account.layout';

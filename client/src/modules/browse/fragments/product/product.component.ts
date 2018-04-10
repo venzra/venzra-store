@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 
-import { LayoutService } from '../../../../services/layout.service';
-import { CartService } from '../../../../services/cart.service';
+import { LayoutService } from '@venzra/services/layout.service';
+import { CartService } from '@venzra/services/cart.service';
 
 import { Product } from '../../models/product';
 

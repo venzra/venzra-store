@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 
 import { RouterModule, Routes } from '@angular/router';
 
+import { AuthGuard } from '@venzra/services/guard.service';
 import { CheckoutLayoutComponent } from './layout/checkout.layout';
-import { AuthGuard } from '../../services/guard.service';
 
 import { BasketComponent } from './fragments/basket/basket.component';
 import { PaymentComponent } from './fragments/payment/payment.component';

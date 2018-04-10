@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { List } from '../../models/list';
 import { Product } from '../../models/product';
 
-import { LayoutService } from '../../../../services/layout.service';
+import { LayoutService } from '@venzra/services/layout.service';
 
 @Component({
     templateUrl: './landing.component.html'

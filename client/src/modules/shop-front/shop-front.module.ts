@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
-import { VenzraCommonModule } from '../../common/common.module';
+import { VenzraCommonModule } from '@venzra/common/common.module';
 import { ShopFrontRoutingModule } from './routing.module';
 
 import { StoreLayoutComponent } from './layout/store.layout';

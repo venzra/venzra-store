@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 
-import { Subscription } from '../../../../models/subscription';
+import { Subscription } from '@venzra/models/subscription';
 
-import { Cart, CartService } from '../../../../services/cart.service';
-import { LayoutService } from '../../../../services/layout.service';
-import { SubscriptionService } from '../../../../services/subscription.service';
+import { Cart, CartService } from '@venzra/services/cart.service';
+import { LayoutService } from '@venzra/services/layout.service';
+import { SubscriptionService } from '@venzra/services/subscription.service';
 
 import { Address } from '../../models/address';
 import { Card } from '../../models/card';
