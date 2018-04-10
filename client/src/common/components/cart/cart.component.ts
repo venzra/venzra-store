@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { Cart, CartService } from '@venzra/services/cart.service';
+import { Cart } from '@venzra/models/cart';
+import { CartService } from '@venzra/services/cart.service';
 
 @Component({
     selector: 'venzra-cart',

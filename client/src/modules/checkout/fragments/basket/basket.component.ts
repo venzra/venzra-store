@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatRadioChange } from '@angular/material';
 
-import { Cart, CartService } from '@venzra/services/cart.service';
+import { Cart } from '@venzra/models/cart';
+import { CartService } from '@venzra/services/cart.service';
 import { LayoutService } from '@venzra/services/layout.service';
 
 import { List } from '../../models/list';
-import { Shipping } from '../../services/shipping';
+import { Shipping } from '../../models/shipping';
 
 @Component({
     templateUrl: './basket.component.html',

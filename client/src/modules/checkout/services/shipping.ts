@@ -6,13 +6,7 @@ import 'rxjs/add/operator/toPromise';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { ListModel } from '@venzra/services/restful.service';
 
-export class Shipping {
-    _id?: string;
-    displayName: string;
-    currentPrice: number;
-    cartMinimum: number;
-    cartMaximum: number;
-}
+import { Shipping } from '../models/shipping';
 
 @Injectable()
 export class ShippingService {

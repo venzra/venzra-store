@@ -7,21 +7,8 @@ import 'rxjs/add/operator/toPromise';
 
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-import { Shipping } from '../models/shipping';
+import { Cart } from '../models/cart';
 import { Product } from '../models/product';
-
-export interface CartItem {
-    _id: string;
-    product: Product;
-    quantity: number;
-}
-
-export interface Cart {
-    _id?: string;
-    items: CartItem[];
-    shipping?: Shipping;
-    value: number;
-}
 
 @Injectable()
 export class CartService {
