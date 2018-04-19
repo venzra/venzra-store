@@ -1,6 +1,7 @@
-<mat-toolbar class="mat-elevation-z2">
+<mat-toolbar class="mat-elevation-z2" fxLayout="row" fxLayoutGap="20px">
     <a mat-button *ngIf="hasFeature('ABOUT')" routerLink="/about">About us</a>
     <span fxFlex></span>
+    <a mat-button routerLink="/terms">Terms and Conditions</a>
     <div class="mat-caption" fxLayout="column" fxLayoutAlign="center center">
         <div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="center center">
             <span>powered by</span>

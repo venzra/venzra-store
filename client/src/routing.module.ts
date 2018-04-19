@@ -25,12 +25,12 @@ const routes: Routes = [
                 loadChildren: './modules/about/about.module#AboutModule'
             },
             {
-                path: 'browse',
-                loadChildren: './modules/browse/browse.module#BrowseModule'
-            },
-            {
                 path: 'account',
                 loadChildren: './modules/account/account.module#AccountModule'
+            },
+            {
+                path: 'browse',
+                loadChildren: './modules/browse/browse.module#BrowseModule'
             },
             {
                 path: 'checkout',
@@ -39,6 +39,10 @@ const routes: Routes = [
             {
                 path: 'contact',
                 loadChildren: './modules/contact/contact.module#ContactModule'
+            },
+            {
+                path: 'terms',
+                loadChildren: './modules/terms/terms.module#TermsModule'
             },
             {
                 path: 'errors',
