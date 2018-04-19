@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AuthGuard } from '@venzra/services/guard.service';
-import { CheckoutLayoutComponent } from './layout/checkout.layout';
 
 import { BasketComponent } from './fragments/basket/basket.component';
 import { PaymentComponent } from './fragments/payment/payment.component';
@@ -18,21 +17,16 @@ const routes: Routes = [
         pathMatch: 'full'
     },
     {
-        path: '',
-        component: CheckoutLayoutComponent,
-        children: [
-            {
-                path: 'basket',
-                component: BasketComponent,
-                resolve: {
-                    shippingData: ShippingListResolve
-                }
-            },
-            {
-                path: 'payment',
-                component: PaymentComponent,
-                canActivate: [AuthGuard]
-            }]
+        path: 'basket',
+        component: BasketComponent,
+        resolve: {
+            shippingData: ShippingListResolve
+        }
+    },
+    {
+        path: 'payment',
+        component: PaymentComponent,
+        canActivate: [AuthGuard]
     }
 ];
 

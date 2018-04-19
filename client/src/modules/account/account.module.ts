@@ -1,29 +1,32 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 
-import { VenzraCommonModule } from '@venzra/common/common.module';
 import { AccountRoutingModule } from './routing.module';
-
-import { AuthLayoutComponent } from './layout/auth.layout';
-import { AccountLayoutComponent } from './layout/account.layout';
+import { MaterialDesignModule } from '@venzra/material.module';
+import { VenzraContentModule } from '@venzra/components/content/content.module';
+import { VenzraFiltersModule } from '@venzra/filters/filters.module';
 
 import { AuthenticationComponent } from './fragments/authentication/authentication.component';
+import { PasswordComponent } from './fragments/password/password.component';
+import { PasswordConfirmationComponent } from './fragments/password/confirmation/confirmation.component';
 import { ProfileComponent } from './fragments/profile/profile.component';
 import { OrdersComponent } from './fragments/orders/orders.component';
-import { LogoutComponent } from './fragments/logout/logout.component';
 
 @NgModule({
     declarations: [
-        AuthLayoutComponent,
-        AccountLayoutComponent,
         AuthenticationComponent,
+        PasswordComponent,
+        PasswordConfirmationComponent,
         ProfileComponent,
-        OrdersComponent,
-        LogoutComponent
+        OrdersComponent
     ],
     imports: [
         CommonModule,
-        VenzraCommonModule,
+        ReactiveFormsModule,
+        MaterialDesignModule,
+        VenzraContentModule,
+        VenzraFiltersModule,
         AccountRoutingModule
     ]
 })

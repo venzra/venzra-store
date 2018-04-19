@@ -1,21 +1,25 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { VenzraCommonModule } from '../../common/common.module';
-import { AccountRoutingModule } from './routing.module';
+import { MaterialDesignModule } from '@venzra/material.module';
+import { VenzraContentModule } from '@venzra/components/content/content.module';
+import { VenzraDirectivesModule } from '@venzra/directives/directives.module';
+import { VenzraFiltersModule } from '@venzra/filters/filters.module';
 
-import { BrowseLayoutComponent } from './layout/browse.layout';
+import { AccountRoutingModule } from './routing.module';
 
 import { ProductComponent } from './fragments/product/product.component';
 
 @NgModule({
     declarations: [
-        BrowseLayoutComponent,
         ProductComponent
     ],
     imports: [
         CommonModule,
-        VenzraCommonModule,
+        MaterialDesignModule,
+        VenzraContentModule,
+        VenzraDirectivesModule,
+        VenzraFiltersModule,
         AccountRoutingModule
     ]
 })

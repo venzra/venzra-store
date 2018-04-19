@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { StoreLayoutComponent } from './layout/store.layout';
-
 import { LandingComponent } from './fragments/landing/landing.component';
 
 import { ProductListResolve, ProductService } from './services/product.service';
@@ -10,16 +8,10 @@ import { ProductListResolve, ProductService } from './services/product.service';
 const routes: Routes = [
     {
         path: '',
-        component: StoreLayoutComponent,
-        children: [
-            {
-                path: '',
-                component: LandingComponent,
-                resolve: {
-                    products: ProductListResolve
-                }
-            }
-        ]
+        component: LandingComponent,
+        resolve: {
+            products: ProductListResolve
+        }
     }
 ];
 

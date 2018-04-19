@@ -1,0 +1,7 @@
+.mat-menu-item {
+    min-width: 200px;
+
+    &.selected {
+        background-color: rgba(100, 100, 100, 0.12);
+    }
+}

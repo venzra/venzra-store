@@ -19,14 +19,14 @@ Feature: Access a list of plans that a user will be able to subscribe to after r
     Given the request origin headers are set to "registration-plans-one.venzra-test.io"
     And I make a GET request to the API endpoint "/api/subscription" as "subscription"
     Then there should be a 200 response from the "subscription" request that contains:
-      | _id       | domainName             | storeName              | features             | contact                                                   | gateway     |
-      | OBJECT_ID | registration-plans-one | Registration Plans One | ["ABOUT", "CONTACT"] | { "recipient": "no-reply@venzra-test.com", "fields": [] } | pk_xxxxxxxx |
+      | _id       | domainName             | storeName              | features             | contact                                                   | gateway     | created   |
+      | OBJECT_ID | registration-plans-one | Registration Plans One | ["ABOUT", "CONTACT"] | { "recipient": "no-reply@venzra-test.com", "fields": [] } | pk_xxxxxxxx | DATE_TIME |
     And there is a cookie called "vid" in the "subscription" response header
 
   Scenario: A store without a publicKey should still return without error
     Given the request origin headers are set to "registration-plans-two.venzra-test.io"
     And I make a GET request to the API endpoint "/api/subscription" as "subscription"
     Then there should be a 200 response from the "subscription" request that contains:
-      | _id       | domainName             | storeName              | features     | contact                                                   |
-      | OBJECT_ID | registration-plans-two | Registration Plans Two | ["LOCATION"] | { "recipient": "no-reply@venzra-test.com", "fields": [] } |
+      | _id       | domainName             | storeName              | features     | contact                                                   | created   |
+      | OBJECT_ID | registration-plans-two | Registration Plans Two | ["LOCATION"] | { "recipient": "no-reply@venzra-test.com", "fields": [] } | DATE_TIME |
     And there is a cookie called "vid" in the "subscription" response header

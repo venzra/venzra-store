@@ -1,7 +1,7 @@
 @import '../../themes';
 
 $primary: mat-palette($mat-deep-purple);
-$accent:  mat-palette($mat-deep-purple, 100);
+$accent:  mat-palette($mat-deep-purple, 200);
 $warn:    mat-palette($mat-red);
 
 $theme:   mat-light-theme($primary, $accent, $warn);

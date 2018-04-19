@@ -22,8 +22,8 @@ export class SubscriptionController extends AuthenticationController {
     }
 
     retrieve(req: Request, res: Response, next: NextFunction) {
-        const { _id, features, domainName, storeName, strapline, icon, logo, gateway, contact } = this.subscription;
-        return res.status(200).send({ _id, features, domainName, storeName, strapline, icon, logo, contact, gateway: gateway ? gateway.publicKey : '' });
+        const { _id, features, domainName, storeName, strapline, icon, logo, gateway, contact, created } = this.subscription;
+        return res.status(200).send({ _id, features, domainName, storeName, strapline, icon, logo, contact, gateway: (gateway ? gateway.publicKey : ''), created });
     }
 
 }

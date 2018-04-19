@@ -1,10 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 
-import { VenzraCommonModule } from '@venzra/common/common.module';
 import { CheckoutRoutingModule } from './routing.module';
-
-import { CheckoutLayoutComponent } from './layout/checkout.layout';
+import { MaterialDesignModule } from '@venzra/material.module';
+import { VenzraContentModule } from '@venzra/components/content/content.module';
+import { VenzraDirectivesModule } from '@venzra/directives/directives.module';
+import { VenzraFiltersModule } from '@venzra/filters/filters.module';
 
 import { BasketComponent } from './fragments/basket/basket.component';
 import { PaymentComponent } from './fragments/payment/payment.component';
@@ -13,13 +15,16 @@ import { CalendarService } from './services/calendar.service';
 
 @NgModule({
     declarations: [
-        CheckoutLayoutComponent,
         BasketComponent,
         PaymentComponent
     ],
     imports: [
         CommonModule,
-        VenzraCommonModule,
+        ReactiveFormsModule,
+        MaterialDesignModule,
+        VenzraContentModule,
+        VenzraDirectivesModule,
+        VenzraFiltersModule,
         CheckoutRoutingModule
     ],
     providers: [

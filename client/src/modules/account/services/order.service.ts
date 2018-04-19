@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 
+import 'rxjs/add/operator/toPromise';
+
 import { List } from '../models/list';
 import { Order } from '../models/order';
 

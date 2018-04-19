@@ -18,6 +18,7 @@ import OrdersController from './controllers/orders';
 import ProductsController from './controllers/products';
 import ShippingController from './controllers/shipping';
 import SubscriptionController from './controllers/subscription';
+import ValidationController from './controllers/validation';
 import WelcomeController from './controllers/welcome';
 
 import { errorHandler } from './middleware/error-handler';
@@ -65,6 +66,7 @@ app.use('/api/orders', OrdersController);
 app.use('/api/products', ProductsController);
 app.use('/api/shipping', ShippingController);
 app.use('/api/subscription', SubscriptionController);
+app.use('/api/validation', ValidationController);
 
 app.use(WelcomeController);
 

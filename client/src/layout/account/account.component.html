@@ -1,0 +1,23 @@
+<div fxHide.xs fxHide.sm>
+    <a mat-button routerLink="/account" *ngIf="!account._id"><mat-icon>person_outline</mat-icon><span>Account</span></a>
+    <a mat-button [matMenuTriggerFor]="menu" *ngIf="account._id"><mat-icon>person</mat-icon><span>{{ account.identity }}</span></a>
+</div>
+
+<div fxHide.gt-sm>
+    <a mat-icon-button routerLink="/account" *ngIf="!account._id"><mat-icon>person_outline</mat-icon></a>
+    <a mat-icon-button [matMenuTriggerFor]="menu" *ngIf="account._id"><mat-icon>person</mat-icon></a>
+</div>
+
+
+<mat-menu #menu="matMenu" [overlapTrigger]="false">
+    <a mat-menu-item routerLink="/account/profile" routerLinkActive="selected"><mat-icon>account_circle</mat-icon> Your account</a>
+    <a mat-menu-item routerLink="/account/orders" routerLinkActive="selected"><mat-icon>local_shipping</mat-icon> Order history</a>
+
+    <mat-divider></mat-divider>
+
+    <a mat-menu-item routerLink="/account/password" routerLinkActive="selected"><mat-icon>vpn_key</mat-icon> Change password</a>
+
+    <mat-divider></mat-divider>
+
+    <a mat-menu-item (click)="logout()"><mat-icon>exit_to_app</mat-icon> Logout</a>
+</mat-menu>

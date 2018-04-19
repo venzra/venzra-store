@@ -2,31 +2,10 @@
 
 @include mat-core();
 
-html, body{
-    margin: 0;
-    height: 100%;
-}
-
-body {
-    color: rgba(0, 0, 0, 0.67);
-}
-
-venzra-public {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-}
-
-article, p {
-    margin: 0 0 12px;
-}
-
 .mat-button, .mat-raised-button {
     text-transform: uppercase;
 }
 
 .mat-paginator {
-    background: transparent;
+    background: inherit;
 }

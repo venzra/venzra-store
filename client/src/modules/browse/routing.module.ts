@@ -1,24 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { BrowseLayoutComponent } from './layout/browse.layout';
 import { ProductComponent } from './fragments/product/product.component';
 
 import { ProductRetrieveResolve, ProductService } from './services/product.service';
 
 const routes: Routes = [
     {
-        path: '',
-        component: BrowseLayoutComponent,
-        children: [
-            {
-                path: 'product/:productSlug',
-                component: ProductComponent,
-                resolve: {
-                    productData: ProductRetrieveResolve
-                }
-            }
-        ]
+        path: 'product/:productSlug',
+        component: ProductComponent,
+        resolve: {
+            productData: ProductRetrieveResolve
+        }
     }
 ];
 

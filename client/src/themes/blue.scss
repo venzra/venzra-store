@@ -1,7 +1,7 @@
 @import '../../themes';
 
 $primary: mat-palette($mat-blue);
-$accent:  mat-palette($mat-blue, 100);
+$accent:  mat-palette($mat-blue, 200);
 $warn:    mat-palette($mat-red);
 
 $theme:   mat-light-theme($primary, $accent, $warn);

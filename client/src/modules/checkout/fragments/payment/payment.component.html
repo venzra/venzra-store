@@ -1,205 +1,173 @@
-<div fxLayout="row" fxLayoutAlign="center center">
-    <div fxFlex="90" fxFlex.gt-md="70" fxFlex.xl="60">
-        <section>
-            <h1>Payment details</h1>
+<venzra-title>
+    <h2 class="mat-display-2" [ngPlural]="cart.items.length">
+        <ng-template ngPluralCase="=0">Checkout (No items)</ng-template>
+        <ng-template ngPluralCase="=1">Checkout (1 item)</ng-template>
+        <ng-template ngPluralCase="other">Checkout ({{ cart.items.length }} items)</ng-template>
+    </h2>
+</venzra-title>
 
-            <mat-card>
-                <mat-horizontal-stepper linear #stepper>
-                    <mat-step [editable]="!completed" label="Order details">
-                        <div class="step-spacer" fxLayout="row" fxLayoutAlign="center">
-                            <div fxFlex="90" fxFlex.gt-md="70" fxFlex.xl="60">
-                                <h2>Order details</h2>
+<venzra-centered>
+    <mat-card>
+        <mat-vertical-stepper linear #stepper>
+            <mat-step [editable]="!completed" label="Order details">
+                <mat-list>
+                    <mat-list-item *ngFor="let item of cart.items">
+                        <h3 matLine>{{ item.product.displayName }}</h3>
+                        <div fxLayout="row" matLine>{{ item.quantity }} @ {{ item.product.currentPrice | price }}</div>
+                        <div class="payment-price" fxLayout="row" fxLayoutAlign="end center">{{ item.quantity * item.product.currentPrice | price }}</div>
+                    </mat-list-item>
+                </mat-list>
 
-                                <mat-list>
-                                    <mat-list-item *ngFor="let item of cart.items">
-                                        <h3 matLine>{{ item.product.displayName }}</h3>
-                                        <div fxLayout="row" matLine>{{ item.quantity }} @ {{ item.product.currentPrice | price }}</div>
-                                        <div class="payment-price" fxLayout="row" fxLayoutAlign="end center">{{ item.quantity * item.product.currentPrice | price }}</div>
-                                    </mat-list-item>
-                                </mat-list>
+                <div class="mat-title" *ngIf="cart.shipping">Shipping ({{ cart.shipping.name }}): {{ cart.shipping.price | price }}</div>
+                <div class="mat-headline">Total: {{ cart.value + (cart.shipping ? cart.shipping.price : 0) | price }}</div>
 
-                                <div class="mat-title" *ngIf="cart.shipping" fxLayoutAlign="end end">Shipping ({{ cart.shipping.name }}): {{ cart.shipping.price | price }}</div>
-                                <div class="mat-headline" fxLayoutAlign="end end">Total: {{ cart.value + (cart.shipping ? cart.shipping.price : 0) | price }}</div>
+                <div fxLayoutGap="20px" fxLayoutAlign="start center">
+                    <button mat-raised-button color="primary" matStepperNext>Continue</button>
+                </div>
+            </mat-step>
 
-                                <div fxLayoutGap="20px" fxLayoutAlign="end center">
-                                    <button mat-raised-button color="primary" matStepperNext>Continue</button>
-                                </div>
-                            </div>
-                        </div>
-                    </mat-step>
+            <mat-step [editable]="!completed" [stepControl]="billingForm" label="Billing address">
+                <form fxLayout="column" fxLayoutGap="20px" [formGroup]="billingForm">
+                    <mat-form-field>
+                        <input matInput required placeholder="Addressee" formControlName="addressee" />
+                        <mat-error *ngIf="billingForm.get(['addressee']).hasError('required')">This field is required.</mat-error>
+                        <mat-error *ngIf="billingForm.get(['addressee']).hasError('maxlength')">Entered text is too long.</mat-error>
+                    </mat-form-field>
 
-                    <mat-step [editable]="!completed" [stepControl]="shippingForm" label="Shipping Address">
-                        <div class="step-spacer" fxLayout="row" fxLayoutAlign="center">
-                            <div fxFlex="90" fxFlex.gt-md="70" fxFlex.xl="60">
-                                <form fxLayout="column" fxLayoutGap="20px" [formGroup]="shippingForm">
-                                    <h2>Shipping address</h2>
+                    <mat-form-field>
+                        <input matInput required placeholder="Address Line 1" formControlName="street" />
+                        <mat-hint>Street address, P.O. box, etc</mat-hint>
+                        <mat-error *ngIf="billingForm.get(['street']).hasError('required')">This field is required.</mat-error>
+                        <mat-error *ngIf="billingForm.get(['street']).hasError('maxlength')">Entered text is too long.</mat-error>
+                    </mat-form-field>
 
-                                    <mat-form-field>
-                                        <input matInput required placeholder="Addressee" formControlName="addressee" />
-                                        <mat-error *ngIf="shippingForm.get(['addressee']).hasError('required')">This field is required.</mat-error>
-                                        <mat-error *ngIf="shippingForm.get(['addressee']).hasError('maxlength')">Entered text is too long.</mat-error>
-                                    </mat-form-field>
+                    <mat-form-field>
+                        <input matInput placeholder="Address Line 2" formControlName="building" />
+                        <mat-hint>Building, Floor, Suite, Apartment, etc</mat-hint>
+                        <mat-error *ngIf="billingForm.get(['building']).hasError('maxlength')">Entered text is too long.</mat-error>
+                    </mat-form-field>
 
-                                    <mat-form-field>
-                                        <input matInput required placeholder="Address Line 1" formControlName="street" />
-                                        <mat-hint>Street address, P.O. box, etc</mat-hint>
-                                        <mat-error *ngIf="shippingForm.get(['street']).hasError('required')">This field is required.</mat-error>
-                                        <mat-error *ngIf="shippingForm.get(['street']).hasError('maxlength')">Entered text is too long.</mat-error>
-                                    </mat-form-field>
+                    <mat-form-field>
+                        <input matInput placeholder="Town or City" formControlName="city" />
+                        <mat-error *ngIf="billingForm.get(['city']).hasError('maxlength')">Entered text is too long.</mat-error>
+                    </mat-form-field>
 
-                                    <mat-form-field>
-                                        <input matInput placeholder="Address Line 2" formControlName="building" />
-                                        <mat-hint>Building, Floor, Suite, Apartment, etc</mat-hint>
-                                        <mat-error *ngIf="shippingForm.get(['building']).hasError('maxlength')">Entered text is too long.</mat-error>
-                                    </mat-form-field>
+                    <mat-form-field>
+                        <input matInput required placeholder="County" formControlName="county" />
+                        <mat-error *ngIf="billingForm.get(['county']).hasError('required')">This field is required.</mat-error>
+                        <mat-error *ngIf="billingForm.get(['county']).hasError('maxlength')">Entered text is too long.</mat-error>
+                    </mat-form-field>
 
-                                    <mat-form-field>
-                                        <input matInput placeholder="Town or City" formControlName="city" />
-                                        <mat-error *ngIf="shippingForm.get(['city']).hasError('maxlength')">Entered text is too long.</mat-error>
-                                    </mat-form-field>
+                    <mat-form-field>
+                        <input matInput required placeholder="Postal code" formControlName="postalCode" />
+                        <mat-error *ngIf="billingForm.get(['postalCode']).hasError('required')">This field is required.</mat-error>
+                        <mat-error *ngIf="billingForm.get(['postalCode']).hasError('maxlength')">Entered text is too long.</mat-error>
+                    </mat-form-field>
 
-                                    <mat-form-field>
-                                        <input matInput required placeholder="County" formControlName="county" />
-                                        <mat-error *ngIf="shippingForm.get(['county']).hasError('required')">This field is required.</mat-error>
-                                        <mat-error *ngIf="shippingForm.get(['county']).hasError('maxlength')">Entered text is too long.</mat-error>
-                                    </mat-form-field>
+                    <div fxLayoutGap="20px" fxLayoutAlign="start center">
+                        <button mat-button type="button" matStepperPrevious>Back</button>
+                        <button mat-raised-button color="primary" matStepperNext [disabled]="billingForm.pristine || billingForm.invalid">Continue</button>
+                    </div>
+                </form>
+            </mat-step>
 
-                                    <mat-form-field>
-                                        <input matInput required placeholder="Postal code" formControlName="postalCode" />
-                                        <mat-error *ngIf="shippingForm.get(['postalCode']).hasError('required')">This field is required.</mat-error>
-                                        <mat-error *ngIf="shippingForm.get(['postalCode']).hasError('maxlength')">Entered text is too long.</mat-error>
-                                    </mat-form-field>
+            <mat-step [editable]="!completed" [stepControl]="shippingForm" label="Shipping address">
+                <form fxLayout="column" fxLayoutGap="20px" [formGroup]="shippingForm">
+                    <mat-slide-toggle labelPosition="before" (change)="toggleShipping($event)">Deliver to same address as used for billing</mat-slide-toggle>
 
-                                    <div fxLayoutGap="20px" fxLayoutAlign="end center">
-                                        <button mat-button type="button" matStepperPrevious>Back</button>
-                                        <button mat-raised-button color="primary" matStepperNext [disabled]="shippingForm.pristine || shippingForm.invalid">Continue</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </mat-step>
+                    <mat-form-field>
+                        <input matInput required placeholder="Addressee" formControlName="addressee" />
+                        <mat-error *ngIf="shippingForm.get(['addressee']).hasError('required')">This field is required.</mat-error>
+                        <mat-error *ngIf="shippingForm.get(['addressee']).hasError('maxlength')">Entered text is too long.</mat-error>
+                    </mat-form-field>
 
-                    <mat-step [editable]="!completed" [stepControl]="billingForm" label="Billing Address">
-                        <div class="step-spacer" fxLayout="row" fxLayoutAlign="center">
-                            <div fxFlex="90" fxFlex.gt-md="70" fxFlex.xl="60">
-                                <form fxLayout="column" fxLayoutGap="20px" [formGroup]="billingForm">
-                                    <div fxLayout="row">
-                                        <h2 fxFlex>Billing address</h2>
-                                        <mat-slide-toggle labelPosition="before" (change)="toggleBilling($event)">Same as shipping</mat-slide-toggle>
-                                    </div>
+                    <mat-form-field>
+                        <input matInput required placeholder="Address Line 1" formControlName="street" />
+                        <mat-hint>Street address, P.O. box, etc</mat-hint>
+                        <mat-error *ngIf="shippingForm.get(['street']).hasError('required')">This field is required.</mat-error>
+                        <mat-error *ngIf="shippingForm.get(['street']).hasError('maxlength')">Entered text is too long.</mat-error>
+                    </mat-form-field>
 
-                                    <mat-form-field>
-                                        <input matInput required placeholder="Addressee" formControlName="addressee" />
-                                        <mat-error *ngIf="billingForm.get(['addressee']).hasError('required')">This field is required.</mat-error>
-                                        <mat-error *ngIf="billingForm.get(['addressee']).hasError('maxlength')">Entered text is too long.</mat-error>
-                                    </mat-form-field>
+                    <mat-form-field>
+                        <input matInput placeholder="Address Line 2" formControlName="building" />
+                        <mat-hint>Building, Floor, Suite, Apartment, etc</mat-hint>
+                        <mat-error *ngIf="shippingForm.get(['building']).hasError('maxlength')">Entered text is too long.</mat-error>
+                    </mat-form-field>
 
-                                    <mat-form-field>
-                                        <input matInput required placeholder="Address Line 1" formControlName="street" />
-                                        <mat-hint>Street address, P.O. box, etc</mat-hint>
-                                        <mat-error *ngIf="billingForm.get(['street']).hasError('required')">This field is required.</mat-error>
-                                        <mat-error *ngIf="billingForm.get(['street']).hasError('maxlength')">Entered text is too long.</mat-error>
-                                    </mat-form-field>
+                    <mat-form-field>
+                        <input matInput placeholder="Town or City" formControlName="city" />
+                        <mat-error *ngIf="shippingForm.get(['city']).hasError('maxlength')">Entered text is too long.</mat-error>
+                    </mat-form-field>
 
-                                    <mat-form-field>
-                                        <input matInput placeholder="Address Line 2" formControlName="building" />
-                                        <mat-hint>Building, Floor, Suite, Apartment, etc</mat-hint>
-                                        <mat-error *ngIf="billingForm.get(['building']).hasError('maxlength')">Entered text is too long.</mat-error>
-                                    </mat-form-field>
+                    <mat-form-field>
+                        <input matInput required placeholder="County" formControlName="county" />
+                        <mat-error *ngIf="shippingForm.get(['county']).hasError('required')">This field is required.</mat-error>
+                        <mat-error *ngIf="shippingForm.get(['county']).hasError('maxlength')">Entered text is too long.</mat-error>
+                    </mat-form-field>
 
-                                    <mat-form-field>
-                                        <input matInput placeholder="Town or City" formControlName="city" />
-                                        <mat-error *ngIf="billingForm.get(['city']).hasError('maxlength')">Entered text is too long.</mat-error>
-                                    </mat-form-field>
+                    <mat-form-field>
+                        <input matInput required placeholder="Postal code" formControlName="postalCode" />
+                        <mat-error *ngIf="shippingForm.get(['postalCode']).hasError('required')">This field is required.</mat-error>
+                        <mat-error *ngIf="shippingForm.get(['postalCode']).hasError('maxlength')">Entered text is too long.</mat-error>
+                    </mat-form-field>
 
-                                    <mat-form-field>
-                                        <input matInput required placeholder="County" formControlName="county" />
-                                        <mat-error *ngIf="billingForm.get(['county']).hasError('required')">This field is required.</mat-error>
-                                        <mat-error *ngIf="billingForm.get(['county']).hasError('maxlength')">Entered text is too long.</mat-error>
-                                    </mat-form-field>
+                    <div fxLayoutGap="20px" fxLayoutAlign="start center">
+                        <button mat-button type="button" matStepperPrevious>Back</button>
+                        <button mat-raised-button color="primary" matStepperNext [disabled]="shippingForm.invalid">Continue</button>
+                    </div>
+                </form>
+            </mat-step>
 
-                                    <mat-form-field>
-                                        <input matInput required placeholder="Postal code" formControlName="postalCode" />
-                                        <mat-error *ngIf="billingForm.get(['postalCode']).hasError('required')">This field is required.</mat-error>
-                                        <mat-error *ngIf="billingForm.get(['postalCode']).hasError('maxlength')">Entered text is too long.</mat-error>
-                                    </mat-form-field>
+            <mat-step [editable]="!completed" [stepControl]="paymentForm" label="Payment details">
+                <form fxLayout="column" fxLayoutGap="20px" [formGroup]="paymentForm" (submit)="performCheckout(stepper)">
+                    <mat-form-field>
+                        <input matInput required placeholder="Card holders name" formControlName="holder" />
+                        <mat-error *ngIf="paymentForm.get(['holder']).hasError('required')">This field is required.</mat-error>
+                        <mat-error *ngIf="paymentForm.get(['holder']).hasError('maxlength')">Entered text is too long.</mat-error>
+                    </mat-form-field>
 
-                                    <div fxLayoutGap="20px" fxLayoutAlign="end center">
-                                        <button mat-button type="button" matStepperPrevious>Back</button>
-                                        <button mat-raised-button color="primary" matStepperNext [disabled]="billingForm.invalid">Continue</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </mat-step>
+                    <mat-form-field>
+                        <input matInput required placeholder="Card number" formControlName="number" />
+                        <mat-error *ngIf="paymentForm.get(['number']).hasError('required')">This field is required.</mat-error>
+                    </mat-form-field>
 
-                    <mat-step [editable]="!completed" [stepControl]="paymentForm" label="Payment">
-                        <div class="step-spacer" fxLayout="row" fxLayoutAlign="center">
-                            <div fxFlex="90" fxFlex.gt-md="70" fxFlex.xl="60">
-                                <form fxLayout="column" fxLayoutGap="20px" [formGroup]="paymentForm" (submit)="performCheckout(stepper)">
-                                    <h2>Card payment details</h2>
+                    <div fxLayout="row" fxLayoutGap="20px">
+                        <mat-form-field fxFlex="25%">
+                            <mat-select required placeholder="Expiry month" formControlName="expiryMonth">
+                                <mat-option *ngFor="let month of months; let i = index" [value]="i + 1">{{ month.name }}</mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="paymentForm.get(['expiryMonth']).hasError('required')">Required.</mat-error>
+                        </mat-form-field>
 
-                                    <mat-form-field>
-                                        <input matInput required placeholder="Card holders name" formControlName="holder" />
-                                        <mat-error *ngIf="paymentForm.get(['holder']).hasError('required')">This field is required.</mat-error>
-                                        <mat-error *ngIf="paymentForm.get(['holder']).hasError('maxlength')">Entered text is too long.</mat-error>
-                                    </mat-form-field>
+                        <mat-form-field fxFlex="25%">
+                            <mat-select required placeholder="Expiry year" formControlName="expiryYear">
+                                <mat-option *ngFor="let year of years" [value]="year">{{ year }}</mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="paymentForm.get(['expiryYear']).hasError('required')">Required.</mat-error>
+                        </mat-form-field>
 
-                                    <mat-form-field>
-                                        <input matInput required placeholder="Card number" formControlName="number" />
-                                        <mat-error *ngIf="paymentForm.get(['number']).hasError('required')">This field is required.</mat-error>
-                                    </mat-form-field>
+                        <mat-form-field fxFlex="25%">
+                            <input matInput required placeholder="Card verification code (CVC)" formControlName="verificationCheck" />
+                            <mat-error *ngIf="paymentForm.get(['verificationCheck']).hasError('required')">This field is required.</mat-error>
+                        </mat-form-field>
+                    </div>
 
-                                    <div>
-                                        <h4>Card Expiry</h4>
-                                        <div fxLayout="row" fxLayoutGap="20px">
-                                            <mat-form-field fxFlex="25%">
-                                                <mat-select required placeholder="Month" formControlName="expiryMonth">
-                                                    <mat-option *ngFor="let month of months; let i = index" [value]="i + 1">{{ month.name }}</mat-option>
-                                                </mat-select>
-                                                <mat-error *ngIf="paymentForm.get(['expiryMonth']).hasError('required')">Required.</mat-error>
-                                            </mat-form-field>
+                    <div fxLayoutGap="20px" fxLayoutAlign="start center">
+                        <button mat-button type="button" matStepperPrevious>Back</button>
+                        <button mat-raised-button color="primary" [disabled]="paymentForm.pristine || paymentForm.invalid || saving">Place order</button>
+                    </div>
+                </form>
+            </mat-step>
 
-                                            <mat-form-field fxFlex="25%">
-                                                <mat-select required placeholder="Year" formControlName="expiryYear">
-                                                    <mat-option *ngFor="let year of years" [value]="year">{{ year }}</mat-option>
-                                                </mat-select>
-                                                <mat-error *ngIf="paymentForm.get(['expiryYear']).hasError('required')">Required.</mat-error>
-                                            </mat-form-field>
-                                        </div>
-                                    </div>
+            <mat-step [editable]="!completed" label="Order confirmation">
+                <p>Your order has been placed successfully, a confirmation email will be sent shortly, please take note of your order confirmation number for future reference.</p>
 
-                                    <mat-form-field>
-                                        <input matInput required placeholder="Card verification code (CVC)" formControlName="verificationCheck" />
-                                        <mat-error *ngIf="paymentForm.get(['verificationCheck']).hasError('required')">This field is required.</mat-error>
-                                    </mat-form-field>
+                <div class="mat-headline">{{ order.reference }}</div>
 
-                                    <div fxLayoutGap="20px" fxLayoutAlign="end center">
-                                        <button mat-button type="button" matStepperPrevious>Back</button>
-                                        <button mat-raised-button color="primary" [disabled]="paymentForm.pristine || paymentForm.invalid || saving">Place order</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </mat-step>
+                <p>You can also view all orders placed on this site via your <a routerLink="/account/orders">account order history</a>.</p>
 
-                    <mat-step [editable]="!completed" label="Confirmation">
-                        <div class="step-spacer" fxLayout="row" fxLayoutAlign="center">
-                            <div fxFlex="90" fxFlex.gt-md="70" fxFlex.xl="60">
-                                <h2>Order confirmation</h2>
-
-                                <p>Your order has been placed successfully, a confirmation email will be sent shortly, please take note of your order confirmation number for future reference.</p>
-
-                                <div class="mat-headline">{{ order.reference }}</div>
-
-                                <p>You can also view all orders placed on this site via your <a routerLink="/account/orders">account order history</a>.</p>
-
-                                <p>Thank you for your order, we hope to see you again soon.</p>
-                            </div>
-                        </div>
-                    </mat-step>
-                </mat-horizontal-stepper>
-            </mat-card>
-        </section>
-    </div>
-</div>
+                <p>Thank you for your order, we hope to see you again soon.</p>
+            </mat-step>
+        </mat-vertical-stepper>
+    </mat-card>
+</venzra-centered>

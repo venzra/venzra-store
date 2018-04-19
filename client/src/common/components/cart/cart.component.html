@@ -1,5 +1,0 @@
-<a mat-button routerLink="/checkout">
-    <mat-icon>shopping_cart</mat-icon>
-    <span *ngIf="cart.items.length">{{ cart.items.length }} ({{ cart.value | price }})</span>
-    <span *ngIf="!cart.items.length">Empty</span>
-</a>

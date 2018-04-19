@@ -1,76 +1,82 @@
-<h1>Order history</h1>
+<venzra-title>
+    <h2 class="mat-display-2">Account management</h2>
+</venzra-title>
 
-<div fxLayout="column" fxLayoutGap="20px">
+<venzra-centered>
+    <mat-card>
+        <mat-card-title>Order history</mat-card-title>
+        <mat-card-subtitle>Your outstanding and past orders are listed here.</mat-card-subtitle>
 
-    <div class="mat-subheading-1">No orders have yet been placed.</div>
+        <div class="mat-subheading-1" *ngIf="!orders.total">No orders have yet been placed.</div>
 
-    <mat-card *ngFor="let order of orders.list" fxLayout="column" fxLayoutGap="10px">
-        <div fxLayout="row" fxLayoutAlign="space-between">
-            <div fxLayout="column" fxFlex="33%" fxLayoutAlign="center start">
-                <div class="mat-caption">Order Placed</div>
-                <div>{{ order.created | date: 'medium' }}</div>
-            </div>
-            <div fxLayout="column" fxFlex="33%" fxLayoutAlign="center center">
-                <div class="mat-caption">Total</div>
-                <div>{{ order.payment.value | price }}</div>
-            </div>
-            <div fxLayout="column" fxFlex="33%" fxLayoutAlign="center end">
-                <div class="mat-caption">Order #</div>
-                <div>{{ order.reference }}</div>
-            </div>
-        </div>
-
-        <mat-list dense>
-            <mat-list-item>
-                <div fxLayout="row" matLine>
-                    <div class="mat-body-2" fxFlex="40%">Product</div>
-                    <div class="mat-body-2" fxFlex="20%">Quantity</div>
-                    <div class="mat-body-2" fxFlex="20%">Price</div>
-                    <div class="mat-body-2" fxFlex="20%">Sub-Total</div>
+        <mat-card-content *ngFor="let order of orders.list" fxLayout="column" fxLayoutGap="10px">
+            <div fxLayout="row" fxLayoutAlign="space-between">
+                <div fxLayout="column" fxFlex="33%" fxLayoutAlign="center start">
+                    <div class="mat-caption">Order Placed</div>
+                    <div>{{ order.created | date: 'medium' }}</div>
                 </div>
-            </mat-list-item>
-            <mat-list-item *ngFor="let item of order.items">
-                <div fxLayout="row" matLine>
-                    <div fxFlex="40%">{{ item.product.displayName }}</div>
-                    <div fxFlex="20%">{{ item.quantity }}</div>
-                    <div fxFlex="20%">{{ item.price | price }}</div>
-                    <div fxFlex="20%">{{ item.quantity * item.price | price }}</div>
+                <div fxLayout="column" fxFlex="33%" fxLayoutAlign="center center">
+                    <div class="mat-caption">Total</div>
+                    <div>{{ order.payment.value | price }}</div>
                 </div>
-            </mat-list-item>
-        </mat-list>
-
-        <div class="mat-title">{{ order.status }}</div>
-
-        <div fxLayout="row" fxLayoutGap="10px">
-            <div fxFlex="50%">
-                <div class="mat-body-2">Delivery Address</div>
-                <div>{{ order.destination.addressee }}</div>
-                <div>{{ order.destination.street }}</div>
-                <div>{{ order.destination.building }}</div>
-                <div>{{ order.destination.city }}</div>
-                <div>{{ order.destination.county }}</div>
-                <div>{{ order.destination.postalCode }}</div>
-            </div>
-
-            <div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="space-between" fxFlex="50%">
-                <div>
-                    <div class="mat-body-2">Shipping</div>
-                    <div>{{ order.shipping.price | price }}</div>
-                </div>
-                <div>
-                    <div class="mat-body-2">Payment</div>
-                    <div>{{ order.payment.name }}</div>
-                    <div>{{ 'xxxx xxxx xxxx ' + order.payment.card }}</div>
-                    <div>{{ order.payment.brand }}</div>
+                <div fxLayout="column" fxFlex="33%" fxLayoutAlign="center end">
+                    <div class="mat-caption">Order #</div>
+                    <div>{{ order.reference }}</div>
                 </div>
             </div>
-        </div>
+
+            <mat-list dense>
+                <mat-list-item>
+                    <div fxLayout="row" matLine>
+                        <div class="mat-body-2" fxFlex="40%">Product</div>
+                        <div class="mat-body-2" fxFlex="20%">Quantity</div>
+                        <div class="mat-body-2" fxFlex="20%">Price</div>
+                        <div class="mat-body-2" fxFlex="20%">Sub-Total</div>
+                    </div>
+                </mat-list-item>
+                <mat-list-item *ngFor="let item of order.items">
+                    <div fxLayout="row" matLine>
+                        <div fxFlex="40%">{{ item.product.displayName }}</div>
+                        <div fxFlex="20%">{{ item.quantity }}</div>
+                        <div fxFlex="20%">{{ item.price | price }}</div>
+                        <div fxFlex="20%">{{ item.quantity * item.price | price }}</div>
+                    </div>
+                </mat-list-item>
+            </mat-list>
+
+            <div class="mat-title">{{ order.status }}</div>
+
+            <div fxLayout="row" fxLayoutGap="10px">
+                <div fxFlex="50%">
+                    <div class="mat-body-2">Delivery Address</div>
+                    <div>{{ order.destination.addressee }}</div>
+                    <div>{{ order.destination.street }}</div>
+                    <div>{{ order.destination.building }}</div>
+                    <div>{{ order.destination.city }}</div>
+                    <div>{{ order.destination.county }}</div>
+                    <div>{{ order.destination.postalCode }}</div>
+                </div>
+
+                <div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="space-between" fxFlex="50%">
+                    <div>
+                        <div class="mat-body-2">Shipping</div>
+                        <div>{{ order.shipping.price | price }}</div>
+                    </div>
+                    <div>
+                        <div class="mat-body-2">Payment</div>
+                        <div>{{ order.payment.name }}</div>
+                        <div>{{ 'xxxx xxxx xxxx ' + order.payment.card }}</div>
+                        <div>{{ order.payment.brand }}</div>
+                    </div>
+                </div>
+            </div>
+        </mat-card-content>
+
+        <mat-paginator [length]="orders.total"
+                       [pageIndex]="orders.skip / orders.limit"
+                       [pageSize]="orders.limit"
+                       [pageSizeOptions]="[5,10,20,50]"
+                       (page)="updatePage($event)">
+        </mat-paginator>
     </mat-card>
-
-    <mat-paginator [length]="orders.total"
-                   [pageIndex]="orders.skip / orders.limit"
-                   [pageSize]="orders.limit"
-                   [pageSizeOptions]="[5,10,20,50]"
-                   (page)="updatePage($event)">
-    </mat-paginator>
-</div>
+</venzra-centered>

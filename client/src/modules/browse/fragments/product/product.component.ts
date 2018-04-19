@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 
-import { LayoutService } from '@venzra/services/layout.service';
+import { LayoutService } from '@venzra/layout/services/layout.service';
 import { CartService } from '@venzra/services/cart.service';
 
 import { Product } from '../../models/product';
@@ -24,10 +24,9 @@ export class ProductComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
-        this.layout.title = 'Products';
-
         this.route.data.subscribe((data: { productData: Product }) => {
             this.product = data.productData;
+            this.layout.title = this.product.displayName;
 
             if (data.productData.featureImage) {
                 this.featureImage = this.sanitizer.bypassSecurityTrustStyle(`url(/api/images/${data.productData.featureImage})`);

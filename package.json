@@ -34,7 +34,8 @@
         "morgan": "1.9.0",
         "stripe": "5.5.0",
         "uuid": "3.2.1",
-        "winston": "2.4.0"
+        "winston": "2.4.0",
+        "zxcvbn": "4.4.2"
     },
     "devDependencies": {
         "@angular/animations": "5.2.7",
@@ -65,6 +66,7 @@
         "@types/stripe-node": "4.7.1",
         "@types/uuid": "3.4.3",
         "@types/winston": "2.3.8",
+        "@types/zxcvbn": "4.4.0",
         "chai": "4.1.2",
         "cheerio": "1.0.0-rc.2",
         "classlist.js": "1.1.20150312",

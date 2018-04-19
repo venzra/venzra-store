@@ -4,13 +4,11 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AuthGuard } from '@venzra/services/guard.service';
 
-import { AuthLayoutComponent } from './layout/auth.layout';
-import { AccountLayoutComponent } from './layout/account.layout';
-
 import { AuthenticationComponent } from './fragments/authentication/authentication.component';
+import { PasswordComponent } from './fragments/password/password.component';
+import { PasswordConfirmationComponent } from './fragments/password/confirmation/confirmation.component';
 import { ProfileComponent } from './fragments/profile/profile.component';
 import { OrdersComponent } from './fragments/orders/orders.component';
-import { LogoutComponent } from './fragments/logout/logout.component';
 
 import { OrderListResolve, OrderService } from './services/order.service';
 
@@ -22,36 +20,31 @@ const routes: Routes = [
         canActivate: [AuthGuard]
     },
     {
-        path: '',
-        component: AuthLayoutComponent,
-        children: [
-            {
-                path: 'authenticate',
-                component: AuthenticationComponent
-            }
-        ]
+        path: 'authenticate',
+        component: AuthenticationComponent
     },
     {
-        path: 'logout',
-        component: LogoutComponent
+        path: 'password',
+        component: PasswordComponent,
+        canActivate: [AuthGuard]
     },
     {
-        path: '',
-        component: AccountLayoutComponent,
-        canActivate: [AuthGuard],
-        children: [
-            {
-                path: 'profile',
-                component: ProfileComponent
-            },
-            {
-                path: 'orders',
-                component: OrdersComponent,
-                resolve: {
-                    orders: OrderListResolve
-                }
-            }
-        ]
+        path: 'password/confirmation',
+        component: PasswordConfirmationComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'profile',
+        component: ProfileComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'orders',
+        component: OrdersComponent,
+        resolve: {
+            orders: OrderListResolve
+        },
+        canActivate: [AuthGuard]
     }
 ];
 

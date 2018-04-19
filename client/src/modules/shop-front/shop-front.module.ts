@@ -1,21 +1,23 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
-import { VenzraCommonModule } from '@venzra/common/common.module';
-import { ShopFrontRoutingModule } from './routing.module';
-
-import { StoreLayoutComponent } from './layout/store.layout';
+import { MaterialDesignModule } from '@venzra/material.module';
+import { VenzraContentModule } from '@venzra/components/content/content.module';
+import { VenzraProductModule } from '@venzra/components/product/product.module';
 
 import { LandingComponent } from './fragments/landing/landing.component';
 
+import { ShopFrontRoutingModule } from './routing.module';
+
 @NgModule({
     declarations: [
-        StoreLayoutComponent,
         LandingComponent
     ],
     imports: [
         CommonModule,
-        VenzraCommonModule,
+        MaterialDesignModule,
+        VenzraContentModule,
+        VenzraProductModule,
         ShopFrontRoutingModule
     ]
 })

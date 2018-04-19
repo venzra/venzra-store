@@ -3,7 +3,7 @@
     $accent: map-get($theme, accent);
     $warn: map-get($theme, warn);
 
-    .hero {
-        background-color: mat-color($primary);
+    .hero-banner {
+        background-color: mat-color($accent);
     }
 }

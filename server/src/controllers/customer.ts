@@ -1,10 +1,15 @@
 import * as parser from 'body-parser';
+import * as zxcvbn from 'zxcvbn';
+import { createHash, pbkdf2Sync } from 'crypto';
+import { v4 } from 'uuid';
 
-import { Router } from 'express';
+import { NextFunction, Request, Response, Router } from 'express';
 
 import { AuthenticationController } from './authentication';
 
+import { ICustomerPassword } from '../models/customer';
 import { SubscriptionService } from '../services/subscription';
+import { ValidationError } from '../middleware/error-handler';
 
 export class CustomerController extends AuthenticationController {
 
@@ -20,6 +25,48 @@ export class CustomerController extends AuthenticationController {
         this.router.use(parser.json({ type: 'application/json' }));
 
         this.router.get('/', this.checkSubscription.bind(this), this.validate.bind(this), this.getCustomer.bind(this));
+        this.router.post('/password', this.checkSubscription.bind(this), this.validate.bind(this), this.changePassword.bind(this));
+    }
+
+    changePassword(req: Request, res: Response, next: NextFunction) {
+        const errors = [];
+
+        if (!req.body.password) {
+            errors.push({ path: 'password', kind: 'required' });
+        } else {
+            const { score } = zxcvbn(req.body.password);
+            if (score < 3) {
+                errors.push({ path: 'password', kind: 'strength' });
+            }
+        }
+
+        if (req.body.password !== req.body.confirmation) {
+            errors.push({ path: 'confirmation', kind: 'invalid' });
+        }
+
+        if (errors.length) {
+            return next(new ValidationError(errors));
+        }
+
+        const passwordCheck = pbkdf2Sync(req.body.current, this.customer.password.salt, 10000, 256, 'sha512').toString('base64');
+
+        if (passwordCheck === this.customer.password.secure) {
+            const salt = createHash('sha1').update(v4()).digest('hex');
+
+            const password: ICustomerPassword = {
+                salt: salt,
+                secure: pbkdf2Sync(req.body.password, salt, 10000, 256, 'sha512').toString('base64'),
+                created: new Date()
+            };
+
+            this.customer.set('password', password);
+
+            this.customer.save()
+                .then(() => res.status(202).send())
+                .catch((error) => next(error));
+        } else {
+            next(new ValidationError([{ path: 'current', kind: 'invalid' }]));
+        }
     }
 
 }

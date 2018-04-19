@@ -1,0 +1,52 @@
+<venzra-title>
+    <h2 class="mat-display-2">Contact us</h2>
+</venzra-title>
+
+<venzra-centered>
+    <p [venzraMarkdown]="content.content" [headers]="'full'"></p>
+
+    <form (ngSubmit)="sendMessage()" [formGroup]="contactForm" fxLayout="column" fxLayoutGap="20px">
+        <mat-card fxLayout="column" fxLayoutGap="20px">
+            <mat-card-title>Send us a message</mat-card-title>
+            <mat-card-subtitle>Please complete the form below and hit the send button to ask us a question.</mat-card-subtitle>
+
+            <mat-form-field *ngIf="hasField('NAME')">
+                <input matInput placeholder="Your name" formControlName="fullName" required>
+                <mat-error *ngIf="contactForm.get(['fullName']).hasError('required')">This field is required.</mat-error>
+            </mat-form-field>
+
+            <mat-form-field *ngIf="hasField('COMPANY')">
+                <input matInput placeholder="Your company name" formControlName="companyName">
+            </mat-form-field>
+
+            <mat-form-field *ngIf="hasField('EMAIL')">
+                <input matInput type="email" placeholder="Your email address for correspondence" formControlName="email" required>
+                <mat-error *ngIf="contactForm.get(['email']).hasError('required')">This field is required.</mat-error>
+                <mat-error *ngIf="contactForm.get(['email']).hasError('pattern')">A valid email address is required.</mat-error>
+            </mat-form-field>
+
+            <mat-form-field *ngIf="hasField('PHONE')">
+                <input matInput type="tel" placeholder="Your contact phone number" formControlName="phoneNumber">
+            </mat-form-field>
+
+            <mat-form-field *ngIf="hasField('SUBJECT')">
+                <input matInput placeholder="Message subject" formControlName="subject">
+            </mat-form-field>
+
+            <mat-form-field *ngIf="hasField('REASON')">
+                <mat-select placeholder="Reason for your message" formControlName="reason">
+                    <mat-option *ngFor="let reason of reasons" [value]="reason">{{ reason }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field *ngIf="hasField('MESSAGE')">
+                <textarea matInput matTextareaAutosize matAutosizeMinRows="10" matAutosizeMaxRows="18" placeholder="Your message" formControlName="message" required></textarea>
+                <mat-error *ngIf="contactForm.get(['message']).hasError('required')">This field is required.</mat-error>
+            </mat-form-field>
+        </mat-card>
+
+        <div fxLayout="row" fxLayoutAlign="end center">
+            <button mat-raised-button type="submit" color="primary" [disabled]="contactForm.pristine || contactForm.invalid">Send message</button>
+        </div>
+    </form>
+</venzra-centered>

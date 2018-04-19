@@ -5,7 +5,7 @@ import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/r
 import { Observable } from 'rxjs/Observable';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 
-import 'rxjs/add/operator/toPromise';
+import 'rxjs/add/operator/first';
 import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/do';
 
@@ -28,10 +28,12 @@ export class SubscriptionService {
     getSubscription(): ReplaySubject<Subscription> {
         return this.subscription;
     }
+
 }
 
 @Injectable()
 export class SubscriptionRetrieveResolve implements Resolve<Subscription> {
+
     constructor(
         private subscriptionService: SubscriptionService
     ) { }
@@ -39,4 +41,5 @@ export class SubscriptionRetrieveResolve implements Resolve<Subscription> {
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Subscription> {
         return this.subscriptionService.loadSubscription().first();
     }
+
 }

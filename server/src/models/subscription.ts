@@ -22,6 +22,7 @@ interface ISubscriptionModel extends Document {
     transactions: IFeeModel;
     contact: IContactModel;
     status?: string;
+    created?: Date;
 }
 
 const SubscriptionSchema: Schema = new Schema({

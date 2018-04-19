@@ -6,7 +6,7 @@ import { Subscription } from '@venzra/models/subscription';
 
 import { Cart } from '@venzra/models/cart';
 import { CartService } from '@venzra/services/cart.service';
-import { LayoutService } from '@venzra/services/layout.service';
+import { LayoutService } from '@venzra/layout/services/layout.service';
 import { SubscriptionService } from '@venzra/services/subscription.service';
 
 import { Address } from '../../models/address';
@@ -81,11 +81,11 @@ export class PaymentComponent implements OnInit {
         this.cartService.getCart().subscribe((cart) => this.cart = cart);
     }
 
-    toggleBilling(event) {
-        const controls = this.billingForm.controls;
+    toggleShipping(event) {
+        const controls = this.shippingForm.controls;
 
         Object.keys(controls).forEach((key) => {
-            controls[key].reset(event.checked ? this.shippingForm.get(key).value : '');
+            controls[key].reset(event.checked ? this.billingForm.get(key).value : '');
             controls[key][event.checked ? 'disable' : 'enable']();
         });
     }

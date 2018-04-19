@@ -1,0 +1,11 @@
+<mat-toolbar class="mat-elevation-z2">
+    <a mat-button *ngIf="hasFeature('ABOUT')" routerLink="/about">About us</a>
+    <span fxFlex></span>
+    <div class="mat-caption" fxLayout="column" fxLayoutAlign="center center">
+        <div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="center center">
+            <span>powered by</span>
+            <a href="http://www.venzra.com" target="_blank" fxLayout="column"><img src="/assets/logo/black/venzra-logo-xxs.png" title="Powered By Venzra"></a>
+        </div>
+        <div>&copy; Copyright <strong>{{ subscription.storeName }}</strong> since {{ subscription.created | date: 'yyyy' }}</div>
+    </div>
+</mat-toolbar>

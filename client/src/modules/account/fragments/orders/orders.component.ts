@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PageEvent } from '@angular/material';
 
-import { LayoutService } from '@venzra/services/layout.service';
+import { LayoutService } from '@venzra/layout/services/layout.service';
 import { ListModel } from '@venzra/services/restful.service';
 
 import { Order } from '../../models/order';
@@ -24,7 +24,7 @@ export class OrdersComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
-        this.layout.title = 'Account Profile';
+        this.layout.title = 'Order history';
         this.orders = this.route.snapshot.data.orders;
 
         this.route.queryParams.subscribe((params) => this.orderService.getAllOrders(params).then((orders) => this.orders = orders));

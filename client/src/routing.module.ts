@@ -1,14 +1,16 @@
 import { NgModule } from '@angular/core';
-
 import { RouterModule, Routes } from '@angular/router';
 
-import { PublicComponent } from './public.component';
-import { SubscriptionRetrieveResolve, SubscriptionService } from './services/subscription.service';
+import { AccountService } from '@venzra/services/account.service';
+import { CartService } from '@venzra/services/cart.service';
+import { SubscriptionRetrieveResolve, SubscriptionService } from '@venzra/services/subscription.service';
+
+import { StoreComponent } from '@venzra/layout/store.component';
 
 const routes: Routes = [
     {
         path: '',
-        component: PublicComponent,
+        component: StoreComponent,
         resolve: {
             subscription: SubscriptionRetrieveResolve
         },
@@ -17,6 +19,10 @@ const routes: Routes = [
                 path: '',
                 loadChildren: './modules/shop-front/shop-front.module#ShopFrontModule',
                 pathMatch: 'full'
+            },
+            {
+                path: 'about',
+                loadChildren: './modules/about/about.module#AboutModule'
             },
             {
                 path: 'browse',
@@ -35,8 +41,12 @@ const routes: Routes = [
                 loadChildren: './modules/contact/contact.module#ContactModule'
             },
             {
+                path: 'errors',
+                loadChildren: './modules/errors/errors.module#ErrorsModule'
+            },
+            {
                 path: '**',
-                redirectTo: '/errors/404'
+                redirectTo: '/errors/not-found'
             }
         ]
     }
@@ -50,9 +60,11 @@ const routes: Routes = [
         RouterModule
     ],
     providers: [
+        AccountService,
+        CartService,
         SubscriptionService,
         SubscriptionRetrieveResolve
     ]
 })
-export class StoreRoutingModule {
+export class VenzraRoutingModule {
 }

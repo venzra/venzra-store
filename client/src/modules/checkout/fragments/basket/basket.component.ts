@@ -4,7 +4,7 @@ import { MatRadioChange } from '@angular/material';
 
 import { Cart } from '@venzra/models/cart';
 import { CartService } from '@venzra/services/cart.service';
-import { LayoutService } from '@venzra/services/layout.service';
+import { LayoutService } from '@venzra/layout/services/layout.service';
 
 import { List } from '../../models/list';
 import { Shipping } from '../../models/shipping';
@@ -26,7 +26,7 @@ export class BasketComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
-        this.layout.title = 'Cart';
+        this.layout.title = 'Shopping basket';
 
         this.shippingData = this.route.snapshot.data.shippingData;
         this.cartService.getCart().subscribe((cart) => this.cart = cart);

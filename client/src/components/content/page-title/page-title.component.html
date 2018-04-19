@@ -1,0 +1,13 @@
+<div class="venzra-title" fxLayout="row" fxLayoutAlign="center start">
+    <div fxLayout="column" [fxFlex.xs]="getSize('xs')" [fxFlex.sm]="getSize('sm')" [fxFlex.md]="getSize('md')" [fxFlex.lg]="getSize('lg')" [fxFlex.xl]="getSize('xl')">
+        <div fxLayout="row" fxLayoutAlign="space-between">
+            <ng-content select="h2"></ng-content>
+
+            <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center center">
+                <ng-content select="button"></ng-content>
+            </div>
+        </div>
+
+        <ng-content></ng-content>
+    </div>
+</div>
