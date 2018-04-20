@@ -23,7 +23,14 @@ Feature: Retrieval of content for a particular page
       | _id                  | content                |
       | {{ content[1]._id }} | Automated page content |
 
-  Scenario: Successful retrieval of a record will give a result
+  Scenario: A subscription without the requested content page will return a 404 error
     Given the request origin headers are set to "content-retrieve-two.venzra-test.io"
     When I make a GET request to the API endpoint "/api/content/contact" as "response"
     Then the status returned from the "response" request should be a 404 error
+
+  Scenario: There is a default terms and conditions page returned even when not in the database
+    Given the request origin headers are set to "content-retrieve-two.venzra-test.io"
+    When I make a GET request to the API endpoint "/api/content/terms" as "response"
+    Then there should be a 200 response from the "response" request that contains:
+      | content |
+      | STRING  |

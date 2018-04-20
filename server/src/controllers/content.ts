@@ -8,6 +8,8 @@ import { ContentModel } from '../models/content';
 import { SubscriptionService } from '../services/subscription';
 import { AuthenticationController } from './authentication';
 
+import { defaultTerms } from '../default-terms';
+
 export class ContentController extends AuthenticationController {
 
     public router: Router;
@@ -32,6 +34,10 @@ export class ContentController extends AuthenticationController {
             .select('content')
             .then((content) => {
                 if (!content) {
+                    if (usage === 'terms') {
+                        return res.status(200).send({ content: defaultTerms });
+                    }
+
                     throw new NotFoundError();
                 }
 

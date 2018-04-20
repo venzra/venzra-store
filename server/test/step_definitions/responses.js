@@ -27,6 +27,9 @@ const checkValues = (expected, actual, exact = true) => {
             case 'DATE_TIME':
                 expect(actual[key]).to.match(/^\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z)$/);
                 break;
+            case 'STRING':
+                expect(actual[key]).to.be.a('string');
+                break;
             case 'ARRAY':
                 expect(actual[key]).to.be.an.instanceof(Array);
                 expect(actual[key]).to.have.length(check[1]);
