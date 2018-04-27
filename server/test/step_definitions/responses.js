@@ -36,7 +36,6 @@ const checkValues = (expected, actual, exact = true) => {
                 break;
             case 'OBJECT':
                 expect(actual[key]).to.be.an('object');
-                expect(actual[key]).to.have.keys(check[1].split(','));
                 break;
             case 'REGEX':
                 expect(actual[key]).to.match(new RegExp(check[1]));
@@ -52,7 +51,7 @@ Then(/^the status returned from the "([^"]*)" request should be (201|202)$/, fun
         .then((history) => expect(history.status).to.equal(parseInt(statusCode)));
 });
 
-Then(/^the status returned from the "([^"]*)" request should be a (401|403|404) error$/, function (historyName, statusCode) {
+Then(/^the status returned from the "([^"]*)" request should be a (401|403|404|502) error$/, function (historyName, statusCode) {
     return Promise.resolve(this.getHistory(historyName))
         .then((history) => expect(history.status).to.equal(parseInt(statusCode)));
 });

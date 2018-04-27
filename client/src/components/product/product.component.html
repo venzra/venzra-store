@@ -1,9 +1,10 @@
-<mat-card>
-    <img matCardImage (click)="show(product)" [src]="'/api/images/' + product.promotionalImage" />
+<mat-card [venzraNavCard]="['/browse/product', product.slug]">
+    <img matCardImage [src]="'/api/images/' + product.promotionalImage" />
     <mat-card-content>
         <h2>{{ product.displayName }}</h2>
+        <div><span *ngIf="product.previousPrice" class="strike">{{ product.previousPrice | price }}</span> <strong>{{ product.currentPrice | price }}</strong></div>
     </mat-card-content>
-    <mat-card-actions fxLayoutAlign="end">
-        <button mat-button (click)="show(product)"><mat-icon>shopping_cart</mat-icon>{{ product.currentPrice | price }}</button>
+    <mat-card-actions align="end">
+        <mat-icon>arrow_forward</mat-icon>
     </mat-card-actions>
 </mat-card>

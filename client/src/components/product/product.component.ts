@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { Router } from '@angular/router';
 
 @Component({
     selector: 'venzra-product',
@@ -8,13 +7,6 @@ import { Router } from '@angular/router';
 })
 export class ProductComponent {
 
-    @Input() product;
+    @Input() public product;
 
-    constructor(
-        private router: Router
-    ) { }
-
-    show(product) {
-        this.router.navigate([`browse/product/${product.slug}`]);
-    }
 }

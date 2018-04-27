@@ -9,6 +9,7 @@ import * as path from 'path';
 import { venzraSession } from './middleware/venzra-session';
 
 import CartController from './controllers/cart';
+import CategoryController from './controllers/category';
 import ContentController from './controllers/content';
 import ContactController from './controllers/contact';
 import CustomerController from './controllers/customer';
@@ -57,6 +58,7 @@ app.use(venzraSession);
 app.use('/api', morgan(':remote-addr - BASIC LOG - [:date[iso]] - ":method :url" :status :res[content-length] ":referrer" ":user-agent" - :response-time ms'));
 
 app.use('/api/cart', CartController);
+app.use('/api/categories', CategoryController);
 app.use('/api/content', ContentController);
 app.use('/api/contact', ContactController);
 app.use('/api/customer', CustomerController);

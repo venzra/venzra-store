@@ -5,5 +5,20 @@
 
     .venzra-title {
         background-color: mat-color($accent);
+
+        h2 {
+            a {
+                color: inherit;
+                text-decoration: none;
+
+                &:visited {
+                    color: inherit;
+                }
+
+                &:hover {
+                    color: mat-color($primary, 700);
+                }
+            }
+        }
     }
 }

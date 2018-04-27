@@ -1,9 +1,13 @@
-@mixin account-theme($theme) {
+@mixin layout-theme($theme) {
     $primary: map-get($theme, primary);
     $accent: map-get($theme, accent);
     $warn: map-get($theme, warn);
 
     .mat-nav-list .mat-list-item.active {
-        color: mat-color($primary);
+        background-color: mat-color($accent, 50);
+    }
+
+    .venzra-footer {
+        background-color: mat-color($accent);
     }
 }

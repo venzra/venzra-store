@@ -1,11 +1,30 @@
-<div class="venzra-container">
-    <venzra-header></venzra-header>
+<venzra-header [navigationToggle]="sidenav"></venzra-header>
 
-    <div class="venzra-content" fxLayout="column" fxLayoutGap="40px">
+<mat-sidenav-container>
+    <mat-sidenav #sidenav
+                 class="mat-elevation-z4"
+                 [mode]="mobileQuery.matches ? 'over' : 'side'"
+                 [fixedInViewport]="true"
+                 [style.paddingTop.px]="mobileQuery.matches ? 112 : 128"
+                 [style.paddingBottom.vh]="70"
+    >
+        <mat-nav-list dense>
+            <ng-container *ngFor="let section of navigationItems">
+                <a mat-list-item [routerLink]="section.link" routerLinkActive="active"><mat-icon>{{ section.icon }}</mat-icon><span>{{ section.name }}</span></a>
+                <ng-container *ngFor="let filter of section.items">
+                    <a mat-list-item [routerLink]="filter.link" routerLinkActive="active"><mat-icon></mat-icon><span>{{ filter.name }}</span></a>
+                </ng-container>
+            </ng-container>
+        </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content fxLayout="column" [style.paddingTop.px]="mobileQuery.matches ? 112 : 128">
+
         <div fxFlex="grow">
             <router-outlet></router-outlet>
         </div>
 
-        <venzra-footer></venzra-footer>
-    </div>
-</div>
+    </mat-sidenav-content>
+</mat-sidenav-container>
+
+<venzra-footer></venzra-footer>

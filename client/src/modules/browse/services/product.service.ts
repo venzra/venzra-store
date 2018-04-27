@@ -13,8 +13,12 @@ export class ProductService {
         private http: HttpClient
     ) { }
 
-    getProduct(productSlug: string): Promise<Product> {
+    findOne(productSlug: string): Promise<Product> {
         return this.http.get<Product>(`/api/products/${productSlug}`).toPromise();
+    }
+
+    findAll(): Promise<Product> {
+        return this.http.get<Product>(`/api/products`).toPromise();
     }
 }
 
@@ -25,6 +29,17 @@ export class ProductRetrieveResolve implements Resolve<Product> {
     ) { }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<Product> {
-        return this.productService.getProduct(route.params.productSlug);
+        return this.productService.findOne(route.params.productSlug);
+    }
+}
+
+@Injectable()
+export class ProductListResolve implements Resolve<Product> {
+    constructor(
+        private productService: ProductService
+    ) { }
+
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<Product> {
+        return this.productService.findAll();
     }
 }

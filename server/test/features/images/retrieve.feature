@@ -35,3 +35,8 @@ Feature: Retrieval of images stored on S3
     Then there should be a 200 response from the "image" request with an "image/jpeg" binary containing:
       | width | height | format |
       | 400   | 100    | jpeg   |
+
+  Scenario: Requesting an invalid image reference
+    Given the request origin headers are set to "images-retrieve-one.venzra-test.io"
+    When I make a GET request to the API endpoint "/api/images/fake-image" as "image" with "application/octet-steam" content type
+    Then the status returned from the "image" request should be a 404 error

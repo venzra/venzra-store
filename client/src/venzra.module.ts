@@ -10,6 +10,7 @@ import { VenzraDirectivesModule } from '@venzra/directives/directives.module';
 import { VenzraFiltersModule } from '@venzra/filters/filters.module';
 import { AuthGuard } from '@venzra/services/guard.service';
 import { LayoutService } from '@venzra/layout/services/layout.service';
+import { NavigationService } from '@venzra/services/navigation.service';
 import { ErrorInterceptorModule } from '@venzra/services/http.interceptor';
 
 import { AccountComponent } from '@venzra/layout/account/account.component';
@@ -46,7 +47,8 @@ import { VenzraComponent } from '@venzra/venzra.component';
     ],
     providers: [
         AuthGuard,
-        LayoutService
+        LayoutService,
+        NavigationService
     ],
     bootstrap: [VenzraComponent]
 })

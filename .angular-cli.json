@@ -16,7 +16,8 @@
             "tsconfig": "tsconfig.json",
             "prefix": "src",
             "styles": [
-                "styles.scss"
+                "styles.scss",
+                "../node_modules/normalize.css/normalize.css"
             ],
             "scripts": [
                 "../node_modules/marked/lib/marked.js"

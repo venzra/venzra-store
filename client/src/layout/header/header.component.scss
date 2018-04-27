@@ -1,8 +1,9 @@
 @import '~@angular/material/theming';
+
 @include mat-core();
 
 .mat-toolbar {
-    position: relative;
+    position: fixed;
     z-index: 2;
 
     img {
@@ -11,5 +12,22 @@
         @media ($mat-xsmall) {
             height: 34px;
         }
+    }
+
+    > .mat-toolbar-row:first-child {
+        padding: 0;
+
+        .mat-button:first-child {
+            height: 100%;
+        }
+    }
+}
+
+.menu-toggle {
+    margin: 0 24px 0 -88px;
+    transition: margin cubic-bezier(0.25, 0.8, 0.25, 1) 0.4s;
+
+    &.shown {
+        margin: 0;
     }
 }

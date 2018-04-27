@@ -78,6 +78,7 @@
         "marked": "0.3.19",
         "nock": "9.2.5",
         "nodemon": "1.17.3",
+        "normalize.css": "8.0.0",
         "nyc": "11.7.1",
         "protractor": "5.3.1",
         "protractor-cucumber-framework": "5.0.0",

@@ -53,7 +53,7 @@ const AddressSchema: Schema = new Schema({
     }
 }, { _id: false });
 
-AddressSchema.pre('validate', function (next) {
+AddressSchema.pre('validate', function (this: IAddressModel, next: any) {
     this.postalCode = this.postalCode.trim().replace(/\s+/g, '');
     next();
 });

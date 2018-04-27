@@ -22,7 +22,8 @@ interface ISubscriptionModel extends Document {
     transactions: IFeeModel;
     contact: IContactModel;
     status?: string;
-    created?: Date;
+    created: Date;
+    updated: Date;
 }
 
 const SubscriptionSchema: Schema = new Schema({
@@ -92,14 +93,14 @@ const SubscriptionSchema: Schema = new Schema({
 SubscriptionSchema.index({ storeName: 1 }, { unique: true });
 SubscriptionSchema.index({ domainName: 1 }, { unique: true });
 
-SubscriptionSchema.pre('validate', function (next) {
+SubscriptionSchema.pre('validate', function (this: ISubscriptionModel, next: any) {
     this.storeName = this.storeName || `store ${v4().substr(0, 8)}`;
     this.domainName = (this.storeName).replace(/[^a-z|0-9\-\s]/gi, ' ').trim().replace(/\s+/g, '-');
     next();
 });
 
-SubscriptionSchema.pre('save', function (next) {
-    this.updated = Date.now();
+SubscriptionSchema.pre('save', function (this: ISubscriptionModel, next: any) {
+    this.updated = new Date();
     next();
 });
 

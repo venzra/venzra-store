@@ -91,11 +91,16 @@ export const errorHandler = (err: IVenzraError, req: Request, res: Response, nex
             break;
         case 'NotFound':
         case 'NotFoundError':
+        case 'CastError':
             res.status(404).send();
             break;
         case 'StripeInvalidRequestError':
             logger.error(`${err.name} - ${err.reason}`);
             res.status(500).send({ message: err.message });
+            break;
+        case 'MessageRejected':
+            logger.error(`${err.name} - ${err.message}`);
+            res.status(502).send();
             break;
         default:
             console.log(err);

@@ -1,9 +1,14 @@
 <mat-toolbar class="mat-elevation-z6" color="primary">
-    <mat-toolbar-row fxLayout="row" fxLayoutGap="10px">
-        <a fxLayoutAlign="center cetner" routerLink="/"><img [src]="'/api/images/' + subscription.icon" [title]="'Welcome to ' + subscription.storeName" /></a>
+    <mat-toolbar-row fxLayout="row" fxLayoutGap="16px">
+        <button mat-button class="menu-toggle" [class.shown]="hasNavigation" (click)="toggleNavigation()"><mat-icon>menu</mat-icon></button>
+        <a *ngIf="subscription.icon" fxLayoutAlign="start center" routerLink="/">
+            <img *ngIf="subscription.icon" [src]="'/api/images/' + subscription.icon" [title]="'Welcome to ' + subscription.storeName" />
+        </a>
+        <a mat-icon-button *ngIf="!subscription.icon" routerLink="/"><mat-icon>home</mat-icon></a>
     </mat-toolbar-row>
 
     <mat-toolbar-row fxLayout="row" fxLayoutGap="5px">
+        <a mat-button routerLink="/browse">Our products</a>
         <span fxFlex></span>
         <venzra-account></venzra-account>
         <venzra-cart></venzra-cart>

@@ -1,5 +1,8 @@
 <div class="hero-banner" fxLayout="column" fxLayoutAlign="center center">
-    <h1><img [src]="'/api/images/' + subscription.logo" [alt]="subscription.storeName" /></h1>
+    <h1 class="mat-display-2">
+        <img *ngIf="subscription.logo" [src]="'/api/images/' + subscription.logo" [alt]="subscription.storeName" />
+        <span *ngIf="!subscription.logo">Welcome to {{ subscription.storeName }}</span>
+    </h1>
     <h2>{{ subscription.strapline }}</h2>
 </div>
 

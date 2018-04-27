@@ -1,12 +1,15 @@
-<mat-toolbar class="mat-elevation-z2" fxLayout="row" fxLayoutGap="20px">
-    <a mat-button *ngIf="hasFeature('ABOUT')" routerLink="/about">About us</a>
-    <span fxFlex></span>
-    <a mat-button routerLink="/terms">Terms and Conditions</a>
-    <div class="mat-caption" fxLayout="column" fxLayoutAlign="center center">
-        <div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="center center">
-            <span>powered by</span>
-            <a href="http://www.venzra.com" target="_blank" fxLayout="column"><img src="/assets/logo/black/venzra-logo-xxs.png" title="Powered By Venzra"></a>
-        </div>
-        <div>&copy; Copyright <strong>{{ subscription.storeName }}</strong> since {{ subscription.created | date: 'yyyy' }}</div>
+<div class="venzra-footer" fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="start center">
+    <div fxLayout="row" fxLayoutGap="40px">
+        <mat-nav-list fxLayout="column" dense>
+            <h4 matSubheader>Resources</h4>
+            <a mat-list-item *ngIf="hasFeature('ABOUT')" routerLink="/about">About us</a>
+            <a mat-list-item *ngIf="hasFeature('CONTACT')" routerLink="/contact">Contact us</a>
+        </mat-nav-list>
+        <mat-nav-list fxLayout="column" dense>
+            <h4 matSubheader>Legal</h4>
+            <a mat-list-item routerLink="/terms">Terms and Conditions</a>
+        </mat-nav-list>
     </div>
-</mat-toolbar>
+    <p class="mat-caption">&copy; Copyright <strong>{{ subscription.storeName }}</strong> since {{ subscription.created | date: 'yyyy' }}</p>
+    <p class="mat-caption">Powered by <a href="http://www.venzra.com" target="_blank">Venzra</a></p>
+</div>

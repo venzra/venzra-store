@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Location } from '@angular/common';
 
 @Component({
     selector: 'venzra-title',
@@ -7,7 +8,15 @@ import { Component, Input } from '@angular/core';
 })
 export class PageTitleComponent {
 
-    @Input() size: 'narrow' | 'wide' = 'wide';
+    @Input() hasBackButton: Boolean = false;
+
+    @Input() align: 'start' | 'center' | 'end' = 'center';
+
+    @Input() size: 'narrow' | 'standard' | 'wide' = 'standard';
+
+    constructor(
+        private location: Location
+    ) { }
 
     getSize(viewport: 'xs' | 'sm' | 'md' | 'lg' | 'xl'): string {
         let width = 80;
@@ -29,11 +38,24 @@ export class PageTitleComponent {
                 width = 50;
         }
 
-        if (this.size === 'narrow') {
-            width -= 20;
+        switch (this.size) {
+            case 'narrow':
+                width -= 20;
+                break;
+            case 'wide':
+                if (width <= 75) {
+                    width += 20;
+                } else {
+                    width = 95;
+                }
+                break;
         }
 
         return `${width}%`;
+    }
+
+    goBack() {
+        this.location.back();
     }
 
 }

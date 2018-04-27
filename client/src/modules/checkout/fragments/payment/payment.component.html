@@ -1,5 +1,5 @@
 <venzra-title>
-    <h2 class="mat-display-2" [ngPlural]="cart.items.length">
+    <h2 class="mat-display-1" [ngPlural]="cart.items.length">
         <ng-template ngPluralCase="=0">Checkout (No items)</ng-template>
         <ng-template ngPluralCase="=1">Checkout (1 item)</ng-template>
         <ng-template ngPluralCase="other">Checkout ({{ cart.items.length }} items)</ng-template>

@@ -31,6 +31,8 @@ interface ICustomerModel extends Document {
     access?: ICustomerLogin;
     lock?: ICustomerFailure;
     status?: string;
+    created: Date;
+    updated: Date;
 }
 
 const CustomerSchema: Schema = new Schema({
@@ -78,8 +80,8 @@ const CustomerSchema: Schema = new Schema({
 
 CustomerSchema.index({ subscription: 1, identity: 1 }, { unique: true });
 
-CustomerSchema.pre('save', function (next) {
-    this.updated = Date.now();
+CustomerSchema.pre('save', function (this: ICustomerModel, next: any) {
+    this.updated = new Date();
     next();
 });
 
