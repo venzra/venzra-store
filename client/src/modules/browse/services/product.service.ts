@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 
 import 'rxjs/add/operator/toPromise';
+
+import { ListModel } from '@venzra/services/restful.service';
 
 import { Product } from '../models/product';
 
@@ -17,8 +19,9 @@ export class ProductService {
         return this.http.get<Product>(`/api/products/${productSlug}`).toPromise();
     }
 
-    findAll(): Promise<Product> {
-        return this.http.get<Product>(`/api/products`).toPromise();
+    findAll(query: any = {}): Promise<ListModel<Product>> {
+        const params = Object.keys(query).reduce((httpParams, key) => httpParams.set(key, query[key]), new HttpParams());
+        return this.http.get<ListModel<Product>>(`/api/products`, { params }).toPromise();
     }
 }
 
@@ -34,12 +37,12 @@ export class ProductRetrieveResolve implements Resolve<Product> {
 }
 
 @Injectable()
-export class ProductListResolve implements Resolve<Product> {
+export class ProductListResolve implements Resolve<ListModel<Product>> {
     constructor(
         private productService: ProductService
     ) { }
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<Product> {
-        return this.productService.findAll();
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<ListModel<Product>> {
+        return this.productService.findAll(route.queryParams);
     }
 }

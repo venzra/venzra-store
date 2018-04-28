@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { CatalogueComponent } from './fragments/catalogue/catalogue.component';
 import { CategoryComponent } from './fragments/category/category.component';
 import { ProductComponent } from './fragments/product/product.component';
+import { SearchComponent } from './fragments/search/search.component';
 
 import { CategoryListResolve, CategoryRetrieveResolve, CategoryService } from './services/category.service';
 import { ProductListResolve, ProductRetrieveResolve, ProductService } from './services/product.service';
@@ -18,6 +19,15 @@ const routes: Routes = [
         }
     },
     {
+        path: 'category/:categorySlug',
+        component: CategoryComponent,
+        resolve: {
+            catalogueData: CategoryListResolve,
+            categoryData: CategoryRetrieveResolve,
+            productData: ProductListResolve
+        }
+    },
+    {
         path: 'product/:productSlug',
         component: ProductComponent,
         resolve: {
@@ -25,11 +35,9 @@ const routes: Routes = [
         }
     },
     {
-        path: ':categorySlug',
-        component: CategoryComponent,
+        path: 'search',
+        component: SearchComponent,
         resolve: {
-            catalogueData: CategoryListResolve,
-            categoryData: CategoryRetrieveResolve,
             productData: ProductListResolve
         }
     }

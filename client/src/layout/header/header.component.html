@@ -5,6 +5,8 @@
             <img *ngIf="subscription.icon" [src]="'/api/images/' + subscription.icon" [title]="'Welcome to ' + subscription.storeName" />
         </a>
         <a mat-icon-button *ngIf="!subscription.icon" routerLink="/"><mat-icon>home</mat-icon></a>
+        <span fxFlex></span>
+        <venzra-search></venzra-search>
     </mat-toolbar-row>
 
     <mat-toolbar-row fxLayout="row" fxLayoutGap="5px">

@@ -40,11 +40,13 @@ export class ProductsController extends AuthenticationController {
     findAll(req: Request, res: Response, next: NextFunction) {
         const searchParams: any = { subscription: this.subscription._id, status: 'ACTIVE' };
         const skip = parseInt(req.query.skip, 10) || 0;
-        const limit = parseInt(req.query.limit, 10) || 25;
-        const order = { displayName: 1 };
+        const limit = parseInt(req.query.limit, 10) || 24;
+
+        let order: any = { displayName: 1 };
 
         if (req.query.search) {
-            searchParams.displayName = new RegExp(req.query.search, 'i');
+            searchParams.$text = { $search: req.query.search };
+            order = { score: { $meta: 'textScore' } };
         }
 
         ProductModel

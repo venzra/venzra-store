@@ -7,7 +7,7 @@ import { Component, Input } from '@angular/core';
 })
 export class CenteredComponent {
 
-    @Input() size: 'narrow' | 'wide' = 'wide';
+    @Input() size: 'narrow' | 'standard' | 'wide' = 'standard';
 
     getSize(viewport: 'xs' | 'sm' | 'md' | 'lg' | 'xl'): string {
         let width = 80;
@@ -29,8 +29,17 @@ export class CenteredComponent {
                 width = 50;
         }
 
-        if (this.size === 'narrow') {
-            width -= 20;
+        switch (this.size) {
+            case 'narrow':
+                width -= 20;
+                break;
+            case 'wide':
+                if (width <= 75) {
+                    width += 20;
+                } else {
+                    width = 95;
+                }
+                break;
         }
 
         return `${width}%`;

@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { VenzraRoutingModule } from '@venzra/routing.module';
@@ -17,6 +18,7 @@ import { AccountComponent } from '@venzra/layout/account/account.component';
 import { CartComponent } from '@venzra/layout/cart/cart.component';
 import { FooterComponent } from '@venzra/layout/footer/footer.component';
 import { HeaderComponent } from '@venzra/layout/header/header.component';
+import { SearchComponent } from '@venzra/layout/search/search.component';
 import { StoreComponent } from '@venzra/layout/store.component';
 
 import { VenzraComponent } from '@venzra/venzra.component';
@@ -27,12 +29,14 @@ import { VenzraComponent } from '@venzra/venzra.component';
         CartComponent,
         FooterComponent,
         HeaderComponent,
+        SearchComponent,
         StoreComponent,
         VenzraComponent
     ],
     imports: [
         CommonModule,
         HttpClientModule,
+        ReactiveFormsModule,
         BrowserAnimationsModule,
         MaterialDesignModule,
         VenzraDirectivesModule,
@@ -43,6 +47,7 @@ import { VenzraComponent } from '@venzra/venzra.component';
     exports: [
         AccountComponent,
         HttpClientModule,
+        ReactiveFormsModule,
         BrowserAnimationsModule
     ],
     providers: [

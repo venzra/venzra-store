@@ -1,6 +1,6 @@
 <venzra-title align="start" size="wide">
     <h2 class="mat-display-1" *ngIf="!category.parent"><a routerLink="/browse">Categories</a> / {{ category.name }}</h2>
-    <h2 class="mat-display-1" *ngIf="category.parent"><a routerLink="/browse">Categories</a> / <a [routerLink]="'/browse/' + category.parent.slug">{{ category.parent.name }}</a> / {{ category.name }}</h2>
+    <h2 class="mat-display-1" *ngIf="category.parent"><a routerLink="/browse">Categories</a> / <a [routerLink]="['/browse/category', category.parent.slug]">{{ category.parent.name }}</a> / {{ category.name }}</h2>
 </venzra-title>
 
 <venzra-aligned size="wide">
@@ -16,7 +16,7 @@
 
         <div fxLayout="column" fxLayout.gt-xs="row wrap" fxLayoutGap="20px">
             <div *ngFor="let child of category.children" fxLayout="column" fxFlex="initial" fxFlex.sm="0 0 calc(50%-20px)" fxFlex.gt-sm="0 0 calc(33%-20px)" fxFlex.gt-lg="0 0 calc(25%-20px)">
-                <mat-card [venzraNavCard]="['/browse', child.slug]" fxLayout="column" fxFlex>
+                <mat-card [venzraNavCard]="['/browse/category', child.slug]" fxLayout="column" fxFlex>
                     <img matCardImage *ngIf="child.featureImage" [src]="'/api/images/' + child.featureImage" [alt]="child.name">
                     <mat-card-content fxFlex>{{ child.name }}</mat-card-content>
                     <mat-card-actions align="end">

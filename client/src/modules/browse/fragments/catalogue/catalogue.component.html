@@ -5,7 +5,7 @@
 
 <venzra-aligned size="wide">
     <div fxLayout="column" fxLayout.gt-xs="row wrap" fxLayoutGap="20px">
-        <mat-card venzraNavCard *ngFor="let catalogue of catalogues.list" fxLayout="column" fxFlex="initial" fxFlex.sm="0 0 calc(50%-20px)" fxFlex.gt-sm="0 0 calc(33%-20px)" fxFlex.gt-lg="0 0 calc(25%-20px)" [routerLink]="['/browse', catalogue.slug]">
+        <mat-card venzraNavCard *ngFor="let catalogue of catalogues.list" fxLayout="column" fxFlex="initial" fxFlex.sm="0 0 calc(50%-20px)" fxFlex.gt-sm="0 0 calc(33%-20px)" fxFlex.gt-lg="0 0 calc(25%-20px)" [routerLink]="['/browse/category', catalogue.slug]">
             <img matCardImage [src]="catalogue.featureImage ? '/api/images/' + catalogue.featureImage : ''" [alt]="catalogue.name">
             <mat-card-content fxFlex>{{ catalogue.name }}</mat-card-content>
             <mat-card-actions align="end">

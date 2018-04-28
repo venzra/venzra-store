@@ -1,0 +1,14 @@
+<venzra-title size="wide">
+    <h2 class="mat-display-1">Search results</h2>
+</venzra-title>
+
+<venzra-centered size="wide">
+    <div *ngIf="!products.total">
+        <p class="mat-title">No results found, please try searching with another word or phrase.</p>
+        <p>Note, common words such as; "and", "then" and "or" will not be included in search results.</p>
+    </div>
+
+    <div *ngIf="products.total" fxLayout="row wrap" fxLayoutGap="20px">
+        <venzra-product *ngFor="let product of products.list" [product]="product" fxFlex="0 0 calc(50%-20px)" fxFlex.md="0 0 calc(33%-20px)" fxFlex.gt-md="0 0 calc(25%-20px)"></venzra-product>
+    </div>
+</venzra-centered>

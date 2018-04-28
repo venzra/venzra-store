@@ -88,6 +88,8 @@ ProductSchema.index({ displayName: 1 });
 ProductSchema.index({ currentPrice: 1 });
 ProductSchema.index({ status: 1 });
 
+ProductSchema.index({ code: 'text', displayName: 'text', description: 'text' }, { weights: { displayName: 10, description: 2 } });
+
 ProductSchema.pre('validate', function (this: IProductModel, next: any) {
     this.slug = (this.displayName || '').replace(/[^a-z|0-9\-\s]/gi, ' ').trim().replace(/\s+/g, '-');
     this.previousPrice = this.previousPrice ? Math.floor(this.previousPrice) : this.previousPrice;

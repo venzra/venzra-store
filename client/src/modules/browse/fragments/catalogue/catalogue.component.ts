@@ -25,7 +25,7 @@ export class CatalogueComponent implements OnInit, OnDestroy {
 
         this.navigationService.displayNavigation.next(true);
 
-        this.navigationService.setFilter(this.catalogues.list.map((category) => ({ name: category.name, icon: 'apps', link: `/browse/${category.slug}`, items: category.children.map((child) => ({ name: child.name, link: `/browse/${child.slug}` })) })));
+        this.navigationService.setFilter(this.catalogues.list.map((category) => ({ name: category.name, icon: 'apps', link: `/browse/category/${category.slug}`, items: category.children.map((child) => ({ name: child.name, link: `/browse/category/${child.slug}` })) })));
     }
 
     ngOnDestroy(): void {
