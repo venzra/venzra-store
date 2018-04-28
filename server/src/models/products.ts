@@ -1,5 +1,7 @@
 import { Schema, Document, Model, model } from 'mongoose';
 
+import { ICategoryModel } from './category';
+
 interface IProductModel extends Document {
     subscription?: string;
     slug: string;
@@ -7,6 +9,7 @@ interface IProductModel extends Document {
     displayName: string;
     previousPrice: number;
     currentPrice: number;
+    categories: ICategoryModel[];
     status?: string;
     created: Date;
     updated: Date;
@@ -61,6 +64,13 @@ const ProductSchema: Schema = new Schema({
         required: true,
         min: 0,
         max: 1000000
+    },
+    categories: {
+        type: [{
+            type: Schema.Types.ObjectId,
+            ref: 'categories'
+        }],
+        default: []
     },
     status: {
         type: String,

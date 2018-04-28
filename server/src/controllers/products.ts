@@ -8,6 +8,7 @@ import { SubscriptionService } from '../services/subscription';
 import { NotFoundError } from '../middleware/error-handler';
 
 import { ProductModel } from '../models/products';
+import { CategoryModel } from '../models/category';
 
 export class ProductsController extends AuthenticationController {
 
@@ -22,8 +23,28 @@ export class ProductsController extends AuthenticationController {
         this.router = Router();
         this.router.use(parser.json({ type: 'application/json' }));
 
-        this.router.get('/', this.checkSubscription.bind(this), this.findAll.bind(this));
+        this.router.get('/', this.checkSubscription.bind(this), this.checkCategory.bind(this), this.findAll.bind(this));
         this.router.get('/:productSlug', this.checkSubscription.bind(this), this.findOne.bind(this));
+    }
+
+    checkCategory(req: Request, res: Response, next: NextFunction) {
+        if (!req.query.category) {
+            return next();
+        }
+
+        const slug = req.query.category;
+        const subscription = this.subscription._id;
+
+        CategoryModel
+            .find({ subscription, slug })
+            .select('_id')
+            .populate({
+                path: 'children',
+                select: '_id'
+            })
+            .then((categories) => req.params.categories = categories.reduce((categoryList, category) => categoryList.concat(category.get('_id'), ...category.children.map((child) => child.get('_id'))), []))
+            .then(() => next())
+            .catch((error) => next(error));
     }
 
     findOne(req: Request, res: Response, next: NextFunction) {
@@ -43,6 +64,10 @@ export class ProductsController extends AuthenticationController {
         const limit = parseInt(req.query.limit, 10) || 24;
 
         let order: any = { displayName: 1 };
+
+        if (req.params.categories) {
+            searchParams.categories = { $in: req.params.categories };
+        }
 
         if (req.query.search) {
             searchParams.$text = { $search: req.query.search };
@@ -68,3 +93,4 @@ export class ProductsController extends AuthenticationController {
 }
 
 export default new ProductsController().router;
+

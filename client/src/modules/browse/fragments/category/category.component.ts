@@ -7,6 +7,7 @@ import { ListModel } from '@venzra/services/restful.service';
 import { Category } from '../../models/category';
 import { Product } from '../../models/product';
 import { CategoryService } from '../../services/category.service';
+import { ProductService } from '../../services/product.service';
 
 @Component({
     templateUrl: './category.component.html'
@@ -19,6 +20,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
     constructor(
         private route: ActivatedRoute,
         private categoryService: CategoryService,
+        private productService: ProductService,
         private navigationService: NavigationService
     ) { }
 
@@ -27,7 +29,10 @@ export class CategoryComponent implements OnInit, OnDestroy {
         this.category = this.route.snapshot.data.categoryData;
         this.products = this.route.snapshot.data.productData;
 
-        this.route.params.subscribe((params) => this.categoryService.findOne(params.categorySlug).then((category) => this.category = category));
+        this.route.params.subscribe((params) => {
+            this.categoryService.findOne(params.category).then((category) => this.category = category);
+            this.productService.findAll(params).then((products) => this.products = products);
+        });
 
         this.navigationService.displayNavigation.next(true);
 

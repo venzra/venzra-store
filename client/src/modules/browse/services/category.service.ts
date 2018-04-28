@@ -31,7 +31,7 @@ export class CategoryRetrieveResolve implements Resolve<Category> {
     ) { }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<Category> {
-        return this.categoryService.findOne(route.params.categorySlug);
+        return this.categoryService.findOne(route.params.category);
     }
 }
 

@@ -32,7 +32,7 @@ export class ProductRetrieveResolve implements Resolve<Product> {
     ) { }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<Product> {
-        return this.productService.findOne(route.params.productSlug);
+        return this.productService.findOne(route.params.product);
     }
 }
 
@@ -43,6 +43,7 @@ export class ProductListResolve implements Resolve<ListModel<Product>> {
     ) { }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<ListModel<Product>> {
-        return this.productService.findAll(route.queryParams);
+        const query = Object.assign({}, route.params, route.queryParams);
+        return this.productService.findAll(query);
     }
 }

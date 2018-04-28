@@ -19,7 +19,7 @@ const routes: Routes = [
         }
     },
     {
-        path: 'category/:categorySlug',
+        path: 'category/:category',
         component: CategoryComponent,
         resolve: {
             catalogueData: CategoryListResolve,
@@ -28,7 +28,7 @@ const routes: Routes = [
         }
     },
     {
-        path: 'product/:productSlug',
+        path: 'product/:product',
         component: ProductComponent,
         resolve: {
             productData: ProductRetrieveResolve
