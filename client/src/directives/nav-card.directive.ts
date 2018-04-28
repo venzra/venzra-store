@@ -18,6 +18,7 @@ export class NavCardDirective {
         private renderer: Renderer2,
         private elementRef: ElementRef
     ) {
+        this.renderer.addClass(this.elementRef.nativeElement, 'venzra-nav-card');
         this.renderer.setStyle(this.elementRef.nativeElement, 'transition', 'transform 0.4s');
     }
 

@@ -16,7 +16,7 @@
         background-color: mat-color($accent, 50);
     }
 
-    .mat-card[ng-reflect-venzra-nav-card] {
+    .venzra-nav-card {
         &:hover {
             .mat-card-actions {
                 color: mat-color($primary);
