@@ -7,14 +7,17 @@ import {
     MatCheckboxModule,
     MatIconModule,
     MatInputModule,
-    MatListModule, MatMenuModule, MatPaginatorModule,
+    MatListModule,
+    MatMenuModule,
+    MatPaginatorModule,
     MatRadioModule,
     MatSelectModule,
     MatSidenavModule,
     MatSlideToggleModule,
     MatSnackBarModule,
     MatStepperModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatTooltipModule
 } from '@angular/material';
 
 @NgModule({
@@ -34,6 +37,7 @@ import {
         MatSnackBarModule,
         MatStepperModule,
         MatToolbarModule,
+        MatTooltipModule,
         FlexLayoutModule
     ],
     exports: [
@@ -52,6 +56,7 @@ import {
         MatSnackBarModule,
         MatStepperModule,
         MatToolbarModule,
+        MatTooltipModule,
         FlexLayoutModule
     ]
 })

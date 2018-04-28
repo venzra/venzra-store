@@ -1,7 +1,7 @@
 <venzra-title [hasBackButton]="true">
     <h2 class="mat-display-1">{{ product.displayName }}</h2>
 
-    <button mat-raised-button mat-icon-button (click)="purchase(product)" color="primary"><mat-icon>add_shopping_cart</mat-icon></button>
+    <button mat-raised-button mat-icon-button (click)="purchase(product)" color="primary" matTooltip="Add to cart" matTooltipPosition="before"><mat-icon>add_shopping_cart</mat-icon></button>
 </venzra-title>
 
 <div class="feature-image" [style.background-image]="featureImage"></div>
