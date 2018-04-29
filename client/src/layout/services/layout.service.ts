@@ -4,7 +4,7 @@ import { Title } from '@angular/platform-browser';
 @Injectable()
 export class LayoutService {
 
-    private _name = 'Venzra';
+    private _name: string;
     private _title: string;
 
     constructor(

@@ -1,12 +1,15 @@
 import { NgModule } from '@angular/core';
 
-import { PricePipe } from '@venzra/filters/price.pipe';
+import { AddressPipe } from './address.pipe';
+import { PricePipe } from './price.pipe';
 
 @NgModule({
     declarations: [
+        AddressPipe,
         PricePipe
     ],
     exports: [
+        AddressPipe,
         PricePipe
     ]
 })

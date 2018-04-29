@@ -23,11 +23,11 @@ export class TermsService {
 export class TermsPageResolve implements Resolve<Terms> {
 
     constructor(
-        private termsSerivce: TermsService
+        private termsService: TermsService
     ) { }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<Terms> {
-        return this.termsSerivce.find();
+        return this.termsService.find();
     }
 
 }

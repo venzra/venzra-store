@@ -41,6 +41,10 @@ const routes: Routes = [
                 loadChildren: './modules/contact/contact.module#ContactModule'
             },
             {
+                path: 'locations',
+                loadChildren: './modules/locations/locations.module#LocationsModule'
+            },
+            {
                 path: 'terms',
                 loadChildren: './modules/terms/terms.module#TermsModule'
             },

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { LayoutService } from 'src/layout/services/layout.service';
+import { LayoutService } from '@venzra/layout/services/layout.service';
 
 import { About } from '../../models/about';
 

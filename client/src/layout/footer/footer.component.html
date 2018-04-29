@@ -3,6 +3,7 @@
         <mat-nav-list fxLayout="column" dense>
             <h4 matSubheader>Resources</h4>
             <a mat-list-item *ngIf="hasFeature('ABOUT')" routerLink="/about">About us</a>
+            <a mat-list-item *ngIf="hasFeature('LOCATION')" routerLink="/locations">Our locations</a>
             <a mat-list-item *ngIf="hasFeature('CONTACT')" routerLink="/contact">Contact us</a>
         </mat-nav-list>
         <mat-nav-list fxLayout="column" dense>

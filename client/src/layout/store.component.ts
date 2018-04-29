@@ -6,6 +6,7 @@ import { MatSidenav } from '@angular/material';
 import { Subscription } from '@venzra/models/subscription';
 import { NavigationSection } from '@venzra/models/navigation-section';
 
+import { LayoutService } from '@venzra/layout/services/layout.service';
 import { SubscriptionService } from '@venzra/services/subscription.service';
 import { NavigationService } from '@venzra/services/navigation.service';
 
@@ -32,6 +33,7 @@ export class StoreComponent implements OnInit, OnDestroy {
         private router: Router,
         private changeDetectorRef: ChangeDetectorRef,
         private media: MediaMatcher,
+        private layoutService: LayoutService,
         private subscriptionService: SubscriptionService,
         private navigationService: NavigationService
     ) {
@@ -41,7 +43,10 @@ export class StoreComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.subscriptionService.getSubscription().subscribe((subscription) => this.subscription = subscription);
+        this.subscriptionService.getSubscription().subscribe((subscription) => {
+            this.layoutService.name = subscription.storeName;
+            this.subscription = subscription;
+        });
 
         this.router.events.subscribe((event: NavigationEnd) => {
             if (event instanceof NavigationEnd) {

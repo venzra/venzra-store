@@ -22,11 +22,11 @@ export class AboutService {
 export class AboutPageResolve implements Resolve<About> {
 
     constructor(
-        private aboutSerivce: AboutService
+        private aboutService: AboutService
     ) { }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<About> {
-        return this.aboutSerivce.find();
+        return this.aboutService.find();
     }
 
 }
