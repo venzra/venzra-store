@@ -1,5 +1,5 @@
-<div class="content-container" fxLayout="row" fxLayoutAlign="start center">
-    <div fxLayout="column" fxLayoutGap="20px" [fxFlex.xs]="getSize('xs')" [fxFlex.sm]="getSize('sm')" [fxFlex.md]="getSize('md')" [fxFlex.lg]="getSize('lg')" [fxFlex.xl]="getSize('xl')">
+<div class="content-container" fxLayout="row" fxLayoutAlign="start center" fxFlex>
+    <div [fxFlex.xs]="getSize('xs')" [fxFlex.sm]="getSize('sm')" [fxFlex.md]="getSize('md')" [fxFlex.lg]="getSize('lg')" [fxFlex.xl]="getSize('xl')">
         <ng-content></ng-content>
     </div>
 </div>

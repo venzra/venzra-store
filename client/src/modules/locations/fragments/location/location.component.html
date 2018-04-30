@@ -10,10 +10,10 @@
             <mat-card-title>{{ location.displayName }}</mat-card-title>
             <mat-card-subtitle>{{ location.address | address }}</mat-card-subtitle>
             <mat-card-content fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="20px">
-                <div *ngIf="location.featureImage" fxFlex fxFlex.sm="200px" fxFlex.gt-sm="280px" fxFlexOrder="1" fxFlexOrder.gt-xs="2">
+                <div *ngIf="location.featureImage" fxFlex="initial" fxFlex.sm="200px" fxFlex.gt-sm="280px" fxFlexOrder="1" fxFlexOrder.gt-xs="2">
                     <img [src]="'/api/images/' + location.featureImage" [style.width.%]="100" />
                 </div>
-                <div [venzraMarkdown]="location.description" fxFlex="grow" fxFlexOrder="2" fxFlexOrder.gt-xs="1"></div>
+                <div [venzraMarkdown]="location.description" fxFlex="initial" fxFlex.gt-xs="grow" fxFlexOrder="2" fxFlexOrder.gt-xs="1"></div>
             </mat-card-content>
         </mat-card>
     </div>

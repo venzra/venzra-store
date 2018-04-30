@@ -1,17 +1,5 @@
 @import '../../../../../styles';
 
-.feature-image {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-size: cover;
-    background-position: center center;
-    opacity: 0.2;
-    z-index: -1;
-}
-
 .product-detail {
     .mat-list .mat-line.pricing {
         font-size: 24px;

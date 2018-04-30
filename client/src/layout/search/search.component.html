@@ -1,4 +1,4 @@
 <form (submit)="performSearch()" [formGroup]="searchForm">
     <input type="text" placeholder="Search" formControlName="search" required />
-    <button mat-icon-button type="submit" [disabled]="searchForm.pristine || searchForm.invalid"><mat-icon>search</mat-icon></button>
+    <button mat-icon-button type="submit" [disabled]="searchForm.pristine || searchForm.invalid" fxHide.xs><mat-icon>search</mat-icon></button>
 </form>

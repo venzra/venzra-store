@@ -18,13 +18,14 @@
         padding: 0 16px 0 0;
 
         .mat-button:first-child {
+            min-width: 64px;
             height: 100%;
         }
     }
 }
 
 .menu-toggle {
-    margin: 0 24px 0 -88px;
+    margin: 0 24px 0 -64px;
     transition: margin cubic-bezier(0.25, 0.8, 0.25, 1) 0.4s;
 
     &.shown {

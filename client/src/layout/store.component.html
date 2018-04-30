@@ -18,12 +18,8 @@
         </mat-nav-list>
     </mat-sidenav>
 
-    <mat-sidenav-content fxLayout="column" [style.paddingTop.px]="mobileQuery.matches ? 112 : 128">
-
-        <div fxFlex="grow">
-            <router-outlet></router-outlet>
-        </div>
-
+    <mat-sidenav-content [style.paddingTop.px]="mobileQuery.matches ? 112 : 128">
+        <router-outlet></router-outlet>
     </mat-sidenav-content>
 </mat-sidenav-container>
 

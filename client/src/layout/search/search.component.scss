@@ -1,3 +1,7 @@
+@import '~@angular/material/theming';
+
+@include mat-core();
+
 input {
     color: #333;
     border: none;
@@ -9,7 +13,7 @@ input {
     margin-left: 8px;
     width: 160px;
     max-width: 240px;
-    height: 50%;
+    height: 28px;
     -webkit-appearance: none;
 
     &:focus {
@@ -22,5 +26,9 @@ input {
         &:focus {
             width: 240px;
         }
+    }
+
+    @media($mat-xsmall) {
+        height: 24px;
     }
 }

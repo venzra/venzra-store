@@ -4,8 +4,6 @@
     <button mat-raised-button mat-icon-button (click)="purchase(product)" color="primary" matTooltip="Add to cart" matTooltipPosition="before"><mat-icon>add_shopping_cart</mat-icon></button>
 </venzra-title>
 
-<div class="feature-image" [style.background-image]="featureImage"></div>
-
 <venzra-centered class="product-detail">
     <mat-card>
         <mat-card-title>Product description</mat-card-title>
@@ -13,7 +11,7 @@
 
         <mat-card-content fxLayout="column">
             <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="20px">
-                <div fxFlex="initial" fxFlex.gt-xs="50%" fxLayoutAlign="center start">
+                <div fxFlex="initial" fxFlex.gt-xs="50%">
                     <img [src]="'/api/images/' + product.promotionalImage" />
                 </div>
                 <div fxLayout="column" fxFlex="initial" fxFlex.gt-xs="50%" fxLayoutGap="20px">

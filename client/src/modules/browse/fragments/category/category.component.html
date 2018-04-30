@@ -4,9 +4,9 @@
 </venzra-title>
 
 <venzra-aligned size="wide">
-    <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="20px">
-        <div [venzraMarkdown]="category.description" fxFlex="grow" fxFlexOrder="2" fxFlexOrder.gt-sm="1"></div>
-        <div *ngIf="category.featureImage" fxFlex="grow" fxFlex.gt-sm="240px" fxFlexOrder="1" fxFlexOrder.gt-sm="2">
+    <div fxLayout="row wrap" fxLayoutGap="20px">
+        <div [venzraMarkdown]="category.description" fxFlex fxFlexOrder="2" fxFlexOrder.gt-sm="1"></div>
+        <div *ngIf="category.featureImage" fxFlex="100%" fxFlex.gt-sm="240px" fxFlexOrder="1" fxFlexOrder.gt-sm="2">
             <img [src]="'/api/images/' + category.featureImage" [style.width.%]="100" />
         </div>
     </div>
@@ -14,11 +14,11 @@
     <ng-container *ngIf="category.children.length">
         <h3>View by category</h3>
 
-        <div fxLayout="column" fxLayout.gt-xs="row wrap" fxLayoutGap="20px">
-            <div *ngFor="let child of category.children" fxLayout="column" fxFlex="initial" fxFlex.sm="0 0 calc(50%-20px)" fxFlex.gt-sm="0 0 calc(33%-20px)" fxFlex.gt-lg="0 0 calc(25%-20px)">
-                <mat-card [venzraNavCard]="['/browse/category', child.slug]" fxLayout="column" fxFlex>
+        <div fxLayout="row wrap" fxLayoutGap="20px">
+            <div *ngFor="let child of category.children" fxFlex="100%" fxFlex.sm="0 0 calc(50%-20px)" fxFlex.gt-sm="0 0 calc(33%-20px)" fxFlex.gt-lg="0 0 calc(25%-20px)">
+                <mat-card [venzraNavCard]="['/browse/category', child.slug]">
                     <img matCardImage *ngIf="child.featureImage" [src]="'/api/images/' + child.featureImage" [alt]="child.name">
-                    <mat-card-content fxFlex>{{ child.name }}</mat-card-content>
+                    <mat-card-content>{{ child.name }}</mat-card-content>
                     <mat-card-actions align="end">
                         <mat-icon>chevron_right</mat-icon>
                     </mat-card-actions>
