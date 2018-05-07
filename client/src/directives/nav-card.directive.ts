@@ -9,8 +9,6 @@ export class NavCardDirective {
 
     @Input('venzraNavCard') private venzraNavCard: Array<string>;
 
-    @HostBinding('style.margin-bottom.px') private marginBottom = 20;
-
     @HostBinding('style.cursor') private cursor = 'pointer';
 
     constructor(

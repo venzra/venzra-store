@@ -11,15 +11,15 @@
 
         <mat-card-content *ngFor="let order of orders.list" fxLayout="column" fxLayoutGap="10px">
             <div fxLayout="row" fxLayoutAlign="space-between">
-                <div fxLayout="column" fxFlex="33%" fxLayoutAlign="center start">
+                <div fxLayout="column" fxFlex="33.33%" fxLayoutAlign="center start">
                     <div class="mat-caption">Order Placed</div>
                     <div>{{ order.created | date: 'medium' }}</div>
                 </div>
-                <div fxLayout="column" fxFlex="33%" fxLayoutAlign="center center">
+                <div fxLayout="column" fxFlex="33.33%" fxLayoutAlign="center center">
                     <div class="mat-caption">Total</div>
                     <div>{{ order.payment.value | price }}</div>
                 </div>
-                <div fxLayout="column" fxFlex="33%" fxLayoutAlign="center end">
+                <div fxLayout="column" fxFlex="33.33%" fxLayoutAlign="center end">
                     <div class="mat-caption">Order #</div>
                     <div>{{ order.reference }}</div>
                 </div>

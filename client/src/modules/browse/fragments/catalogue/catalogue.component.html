@@ -4,13 +4,15 @@
 </venzra-title>
 
 <venzra-aligned size="wide">
-    <div fxLayout="column" fxLayout.gt-xs="row wrap" fxLayoutGap="20px">
-        <mat-card venzraNavCard *ngFor="let catalogue of catalogues.list" fxLayout="column" fxFlex="initial" fxFlex.sm="0 0 calc(50%-20px)" fxFlex.gt-sm="0 0 calc(33%-20px)" fxFlex.gt-lg="0 0 calc(25%-20px)" [routerLink]="['/browse/category', catalogue.slug]">
-            <img matCardImage [src]="catalogue.featureImage ? '/api/images/' + catalogue.featureImage : ''" [alt]="catalogue.name">
-            <mat-card-content fxFlex>{{ catalogue.name }}</mat-card-content>
-            <mat-card-actions align="end">
-                <mat-icon>chevron_right</mat-icon>
-            </mat-card-actions>
-        </mat-card>
+    <div fxLayout="row wrap" fxLayoutGap="20px grid">
+        <div *ngFor="let catalogue of catalogues.list" fxFlex="100%" fxFlex.sm="50%" fxFlex.gt-sm="33.33%" fxFlex.gt-lg="25%">
+            <mat-card [venzraNavCard]="['/browse/category', catalogue.slug]">
+                <img matCardImage [src]="catalogue.featureImage ? '/api/images/' + catalogue.featureImage : ''" [alt]="catalogue.name">
+                <mat-card-content>{{ catalogue.name }}</mat-card-content>
+                <mat-card-actions align="end">
+                    <mat-icon>chevron_right</mat-icon>
+                </mat-card-actions>
+            </mat-card>
+        </div>
     </div>
 </venzra-aligned>

@@ -8,7 +8,7 @@
         <p>Note, common words such as; "and", "then" and "or" will not be included in search results.</p>
     </div>
 
-    <div *ngIf="products.total" fxLayout="row wrap" fxLayoutGap="20px">
-        <venzra-product *ngFor="let product of products.list" [product]="product" fxFlex="0 0 calc(50%-20px)" fxFlex.md="0 0 calc(33%-20px)" fxFlex.gt-md="0 0 calc(25%-20px)"></venzra-product>
+    <div *ngIf="products.total" fxLayout="row wrap" fxLayoutGap="20px grid">
+        <venzra-product *ngFor="let product of products.list" [product]="product" fxFlex="50%" fxFlex.md="33.33%" fxFlex.gt-md="25%"></venzra-product>
     </div>
 </venzra-centered>

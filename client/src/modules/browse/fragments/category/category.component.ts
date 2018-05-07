@@ -10,7 +10,8 @@ import { CategoryService } from '../../services/category.service';
 import { ProductService } from '../../services/product.service';
 
 @Component({
-    templateUrl: './category.component.html'
+    templateUrl: './category.component.html',
+    styleUrls: ['./category.component.scss']
 })
 export class CategoryComponent implements OnInit, OnDestroy {
 
