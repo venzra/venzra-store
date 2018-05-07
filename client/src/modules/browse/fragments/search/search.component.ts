@@ -22,7 +22,7 @@ export class SearchComponent implements OnInit {
     ngOnInit(): void {
         this.products = this.route.snapshot.data.productData;
 
-        this.route.queryParams.subscribe((params) => this.productService.findAll(params).then((products) => this.products = products));
+        this.route.queryParams.subscribe((params) => this.productService.findAll(params).subscribe((products) => this.products = products));
     }
 
 }

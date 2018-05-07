@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
+import { Observable } from 'rxjs';
+
 import { Terms } from '../models/terms';
 
-import 'rxjs/add/operator/toPromise';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 
 @Injectable()
@@ -13,8 +14,8 @@ export class TermsService {
         private http: HttpClient
     ) { }
 
-    find(): Promise<Terms> {
-        return this.http.get<Terms>('/api/content/terms').toPromise();
+    find(): Observable<Terms> {
+        return this.http.get<Terms>('/api/content/terms');
     }
 
 }
@@ -26,7 +27,7 @@ export class TermsPageResolve implements Resolve<Terms> {
         private termsService: TermsService
     ) { }
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<Terms> {
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Terms> {
         return this.termsService.find();
     }
 

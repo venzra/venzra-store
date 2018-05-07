@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 
-import { ListModel } from '@venzra/services/restful.service';
+import { Observable } from 'rxjs';
 
-import 'rxjs/add/operator/toPromise';
+import { ListModel } from '@venzra/services/restful.service';
 
 import { Location } from '../models/location';
 
@@ -15,8 +15,8 @@ export class LocationService {
         private http: HttpClient
     ) { }
 
-    findAll(): Promise<ListModel<Location>> {
-        return this.http.get<ListModel<Location>>('/api/locations').toPromise();
+    findAll(): Observable<ListModel<Location>> {
+        return this.http.get<ListModel<Location>>('/api/locations');
     }
 
 }
@@ -28,7 +28,7 @@ export class LocationListResolve implements Resolve<ListModel<Location>> {
         private locationService: LocationService
     ) { }
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<ListModel<Location>> {
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ListModel<Location>> {
         return this.locationService.findAll();
     }
 

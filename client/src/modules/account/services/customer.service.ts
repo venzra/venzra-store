@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import 'rxjs/add/operator/toPromise';
+import { Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { of as ObservableOf } from 'rxjs/internal/observable/of';
 
 import { PasswordStrength } from '../models/password-strength';
 
@@ -12,15 +14,13 @@ export class CustomerService {
         private http: HttpClient
     ) { }
 
-    validatePassword(password: string): Promise<PasswordStrength> {
-        return this.http.post('/api/validation/password', { password })
-            .toPromise()
-            .then((result) => result as PasswordStrength)
-            .catch(() => ({ score: 0, message: 'Validation not currently available, try again later.' }));
+    validatePassword(password: string): Observable<PasswordStrength> {
+        return this.http.post<PasswordStrength>('/api/validation/password', { password })
+            .pipe(catchError(() => ObservableOf({ score: 0, message: 'Validation not currently available, try again later.' })));
     }
 
-    changePassword(password): Promise<boolean> {
-        return this.http.post<boolean>('/api/customer/password', password).toPromise();
+    changePassword(password): Observable<boolean> {
+        return this.http.post<boolean>('/api/customer/password', password);
     }
 
 }

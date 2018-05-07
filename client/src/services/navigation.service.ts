@@ -1,11 +1,8 @@
 import { Injectable } from '@angular/core';
 
+import { Subject } from 'rxjs';
+
 import { NavigationSection } from '@venzra/models/navigation-section';
-
-import { Subject } from 'rxjs/Subject';
-
-import 'rxjs/add/operator/concat';
-import 'rxjs/add/operator/do';
 
 @Injectable()
 export class NavigationService {

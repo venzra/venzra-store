@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { About } from '@venzra/modules/about/models/about';
-
-import 'rxjs/add/operator/toPromise';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
+
+import { Observable } from 'rxjs';
+
+import { About } from '@venzra/modules/about/models/about';
 
 @Injectable()
 export class AboutService {
@@ -12,8 +13,8 @@ export class AboutService {
         private http: HttpClient
     ) { }
 
-    find(): Promise<About> {
-        return this.http.get<About>('/api/content/about').toPromise();
+    find(): Observable<About> {
+        return this.http.get<About>('/api/content/about');
     }
 
 }
@@ -25,7 +26,7 @@ export class AboutPageResolve implements Resolve<About> {
         private aboutService: AboutService
     ) { }
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<About> {
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<About> {
         return this.aboutService.find();
     }
 

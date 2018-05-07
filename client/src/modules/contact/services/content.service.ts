@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
-import 'rxjs/add/operator/toPromise';
+import { Observable } from 'rxjs';
 
 import { Content } from '../models/content';
 
@@ -13,8 +13,8 @@ export class ContentService {
         private http: HttpClient
     ) { }
 
-    get(): Promise<Content> {
-        return this.http.get<Content>('/api/content/contact').toPromise();
+    get(): Observable<Content> {
+        return this.http.get<Content>('/api/content/contact');
     }
 
 }
@@ -26,7 +26,7 @@ export class ContentRetrieveResolve implements Resolve<Content> {
         private contentService: ContentService
     ) { }
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<Content> {
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Content> {
         return this.contentService.get();
     }
 

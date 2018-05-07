@@ -30,8 +30,8 @@ export class CategoryComponent implements OnInit, OnDestroy {
         this.products = this.route.snapshot.data.productData;
 
         this.route.params.subscribe((params) => {
-            this.categoryService.findOne(params.category).then((category) => this.category = category);
-            this.productService.findAll(params).then((products) => this.products = products);
+            this.categoryService.findOne(params.category).subscribe((category) => this.category = category);
+            this.productService.findAll(params).subscribe((products) => this.products = products);
         });
 
         this.navigationService.displayNavigation.next(true);

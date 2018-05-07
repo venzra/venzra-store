@@ -2,11 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 
-import { Subscription } from '@venzra/models/subscription';
-
 import { Cart } from '@venzra/models/cart';
 import { CartService } from '@venzra/services/cart.service';
 import { LayoutService } from '@venzra/layout/services/layout.service';
+import { Subscription } from '@venzra/models/subscription';
 import { SubscriptionService } from '@venzra/services/subscription.service';
 
 import { Address } from '../../models/address';
@@ -102,12 +101,16 @@ export class PaymentComponent implements OnInit {
 
         this.paymentService
             .checkout(this.subscription.gateway, payment)
-            .then((order) => this.order = order)
-            .then(() => this.cartService.loadCart())
-            .then(() => stepper.selectedIndex++)
-            .then(() => this.completed = true)
-            .catch((error) => this.snackbar.open(error.message || 'Payment failed', 'OK', { duration: 5000 }))
-            .then(() => this.saving = false);
+            .then((order) => order.subscribe((result) => {
+                this.order = result;
+                this.cartService.loadCart();
+                stepper.selectedIndex++;
+                this.completed = true;
+            }))
+            .catch((error) => {
+                this.snackbar.open(error.message || 'Payment failed', 'OK', { duration: 5000 });
+                this.saving = false;
+            });
     }
 
 }

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
+import { debounceTime } from 'rxjs/operators';
+
 import { AccountCredentials } from '@venzra/models/credentials';
 
 import { LayoutService } from '@venzra/layout/services/layout.service';
@@ -39,12 +41,12 @@ export class AuthenticationComponent implements OnInit {
             password: [null, [Validators.required, Validators.minLength(8)]]
         });
 
-        this.authenticationForm.get('password').valueChanges.debounceTime(500).subscribe((password) => {
+        this.authenticationForm.get('password').valueChanges.pipe(debounceTime(500)).subscribe((password) => {
             if (this.authenticationForm.get('password').invalid) {
                 return;
             }
 
-            this.customerService.validatePassword(password).then((validation) => {
+            this.customerService.validatePassword(password).subscribe((validation) => {
                 if (validation.score < 3) {
                     this.authenticationForm.get('password').setErrors({ strength: true });
                 }

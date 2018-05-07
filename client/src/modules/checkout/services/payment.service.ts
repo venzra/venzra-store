@@ -1,7 +1,9 @@
+import StripeStatic = stripe.StripeStatic;
+
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import 'rxjs/add/operator/toPromise';
+import { Observable } from 'rxjs';
 
 import { Order } from '../models/order';
 import { Payment } from '../models/payment';
@@ -13,7 +15,7 @@ export class PaymentService {
         private http: HttpClient
     ) { }
 
-    checkout(stripeToken: string, paymentData: Payment): Promise<Order> {
+    checkout(stripeToken: string, paymentData: Payment): Promise<Observable<Order>> {
         const cart = paymentData.cart;
         const card = paymentData.card;
         const shipping = { value: 500 };
@@ -22,11 +24,11 @@ export class PaymentService {
 
         return Promise
             .resolve((<any>window).Stripe)
-            .then((stripe) => {
+            .then((stripe: StripeStatic) => {
                 stripe.setPublishableKey(stripeToken);
                 return stripe;
             })
-            .then((stripe) => new Promise((resolve, reject) => stripe.card.createToken({
+            .then((stripe: StripeStatic) => new Promise((resolve, reject) => stripe.card.createToken({
                     name: card.holder,
                     number: card.number,
                     exp_month: card.expiryMonth,
@@ -48,13 +50,7 @@ export class PaymentService {
                     }
                 })
             )))
-            .then((token) =>
-                this.http.post<Order>('/api/orders', { cart, shipping, token, destination, billing })
-                    .toPromise()
-                    .catch(() => {
-                        throw new Error('Unable to place order, please contact us or try again later');
-                    })
-            );
+            .then((token) => this.http.post<Order>('/api/orders', { cart, shipping, token, destination, billing }));
     }
 
 }

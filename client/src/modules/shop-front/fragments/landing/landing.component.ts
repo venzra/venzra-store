@@ -1,13 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { List } from '../../models/list';
-import { Product } from '../../models/product';
+import { Subscription as RxjsSubscription } from 'rxjs';
 
 import { LayoutService } from '@venzra/layout/services/layout.service';
 import { SubscriptionService } from '@venzra/services/subscription.service';
 import { Subscription } from '@venzra/models/subscription';
-import { Subscription as RxjsSubscription } from 'rxjs/Subscription';
+
+import { List } from '../../models/list';
+import { Product } from '../../models/product';
 
 @Component({
     templateUrl: './landing.component.html',

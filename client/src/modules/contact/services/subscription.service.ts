@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 
-import 'rxjs/add/operator/toPromise';
+import { Observable } from 'rxjs';
 
 import { Subscription } from '../models/subscription';
 
@@ -13,8 +13,8 @@ export class SubscriptionService {
         private http: HttpClient
     ) { }
 
-    find(): Promise<Subscription> {
-        return this.http.get<Subscription>('/api/subscription').toPromise();
+    find(): Observable<Subscription> {
+        return this.http.get<Subscription>('/api/subscription');
     }
 
 }
@@ -26,7 +26,7 @@ export class SubscriptionRetrieveResolve implements Resolve<Subscription> {
         private subscriptionService: SubscriptionService
     ) { }
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<Subscription> {
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Subscription> {
         return this.subscriptionService.find();
     }
 

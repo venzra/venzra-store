@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 
-import 'rxjs/add/operator/toPromise';
+import { Observable } from 'rxjs';
 
 import { List } from '../models/list';
 import { Order } from '../models/order';
@@ -14,9 +14,9 @@ export class OrderService {
         private http: HttpClient
     ) { }
 
-    getAllOrders(query): Promise<List<Order>> {
+    getAllOrders(query): Observable<List<Order>> {
         const params = Object.keys(query).reduce((httpParams, key) => httpParams.set(key, query[key]), new HttpParams());
-        return this.http.get<List<Order>>('/api/orders', { params }).toPromise();
+        return this.http.get<List<Order>>('/api/orders', { params });
     }
 
 }
@@ -27,7 +27,7 @@ export class OrderListResolve implements Resolve<List<Order>> {
         private orderService: OrderService
     ) { }
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<List<Order>> {
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<List<Order>> {
         return this.orderService.getAllOrders(route.queryParams);
     }
 }

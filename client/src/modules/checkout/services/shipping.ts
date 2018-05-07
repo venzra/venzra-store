@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
-import 'rxjs/add/operator/toPromise';
+import { Observable } from 'rxjs';
 
-import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { ListModel } from '@venzra/services/restful.service';
 
 import { Shipping } from '../models/shipping';
@@ -15,9 +15,9 @@ export class ShippingService {
         private http: HttpClient
     ) { }
 
-    getAllShipping(query = {}): Promise<ListModel<Shipping>> {
+    getAllShipping(query = {}): Observable<ListModel<Shipping>> {
         const params = Object.keys(query).reduce((httpParams, key) => httpParams.set(key, query[key]), new HttpParams());
-        return this.http.get<ListModel<Shipping>>('/api/shipping', { params }).toPromise();
+        return this.http.get<ListModel<Shipping>>('/api/shipping', { params });
     }
 }
 
@@ -27,7 +27,7 @@ export class ShippingListResolve implements Resolve<ListModel<Shipping>> {
         private shippingService: ShippingService
     ) { }
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<ListModel<Shipping>> {
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ListModel<Shipping>> {
         return this.shippingService.getAllShipping();
     }
 }

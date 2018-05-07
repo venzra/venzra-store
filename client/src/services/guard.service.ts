@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, CanLoad, Route, Router, RouterStateSnapshot } from '@angular/router';
 
-import 'rxjs/add/operator/first';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-
-import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { first } from 'rxjs/operators';
 
 import { AccountService } from './account.service';
 
@@ -43,6 +41,6 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
             subject.next(res);
         });
 
-        return subject.asObservable().first();
+        return subject.asObservable().pipe(first());
     }
 }

@@ -24,7 +24,7 @@ export class WelcomeController extends AuthenticationController {
     }
 
     retrieve(req: Request, res: Response, next: NextFunction) {
-        if (req.url.startsWith('/assets') || req.url.endsWith('.js') || req.url.endsWith('.css')) {
+        if (req.url.startsWith('/assets') || req.url.endsWith('.js') || req.url.endsWith('.css') || req.url.endsWith('.map')) {
             return next();
         }
 

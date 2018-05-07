@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatRadioChange } from '@angular/material';
+import { MatRadioChange, MatSnackBar } from '@angular/material';
 
 import { Cart } from '@venzra/models/cart';
 import { CartService } from '@venzra/services/cart.service';
@@ -21,6 +21,7 @@ export class BasketComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private router: Router,
+        private snackbar: MatSnackBar,
         private layout: LayoutService,
         private cartService: CartService
     ) { }
@@ -62,7 +63,7 @@ export class BasketComponent implements OnInit {
     }
 
     updateShipping(event: MatRadioChange) {
-        this.cartService.allocateShipping(event.value);
+        this.cartService.allocateShipping(event.value).subscribe(null, () => this.snackbar.open(`Failed to allocate shipping option`, null, { duration: 2000 }));
     }
 
     checkout(): void {

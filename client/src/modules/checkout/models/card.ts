@@ -1,7 +1,7 @@
 export interface Card {
     holder: string;
-    number: number;
+    number: string;
     expiryMonth: number;
     expiryYear: number;
-    verificationCheck: number;
+    verificationCheck: string;
 }

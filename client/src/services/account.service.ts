@@ -3,10 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
-
-import 'rxjs/add/operator/toPromise';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 import { Account } from '../models/account';
 import { AccountCredentials } from '../models/credentials';

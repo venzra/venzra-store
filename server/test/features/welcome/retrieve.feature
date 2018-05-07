@@ -13,19 +13,19 @@ Feature: Retrieve the welcome page to load the store front
     Given the request origin headers are set to "welcome-retrieve-a.venzra-test.io"
     And I make a GET request to the API endpoint "/" as "welcome"
     Then there should be a 200 response from the "welcome" request that contains the html:
-      | title                         | description   | theme                     |
-      | Welcome Retrieve A \| Welcome | Strapline One | /assets/themes/orange.css |
+      | title              | description   | theme                     |
+      | Welcome Retrieve A | Strapline One | /assets/themes/orange.css |
 
   Scenario: Retrival of the welcome index.html page contains the correct head tags
     Given the request origin headers are set to "welcome-retrieve-b.venzra-test.io"
     And I make a GET request to the API endpoint "/" as "welcome"
     Then there should be a 200 response from the "welcome" request that contains the html:
-      | title                         | description   | theme                   |
-      | Welcome Retrieve B \| Welcome | Strapline Two | /assets/themes/pink.css |
+      | title              | description   | theme                   |
+      | Welcome Retrieve B | Strapline Two | /assets/themes/pink.css |
 
   Scenario: Retrival of the welcome index.html page contains the correct head tags
     Given the request origin headers are set to "welcome-retrieve-c.venzra-test.io"
     And I make a GET request to the API endpoint "/" as "welcome"
     Then there should be a 200 response from the "welcome" request that contains the html:
-      | title                         | description                 | theme                     |
-      | Welcome Retrieve C \| Welcome | Welcome to our online store | /assets/themes/indigo.css |
+      | title              | description                 | theme                     |
+      | Welcome Retrieve C | Welcome to our online store | /assets/themes/indigo.css |

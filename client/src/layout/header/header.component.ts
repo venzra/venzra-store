@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 
-import { Subscription as RxjsSubscription } from 'rxjs/Subscription';
+import { Subscription as RxjsSubscription } from 'rxjs';
 
 import { Subscription } from '@venzra/models/subscription';
 import { SubscriptionService } from '@venzra/services/subscription.service';
@@ -18,7 +18,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     private observable: Array<RxjsSubscription> = [];
 
-    @Input('navigationToggle') public navigationToggle;
+    @Input() public navigationToggle;
 
     constructor(
         private subscriptionService: SubscriptionService,

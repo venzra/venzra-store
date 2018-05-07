@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 
-import 'rxjs/add/operator/toPromise';
+import { Observable } from 'rxjs';
+
+import { ListModel } from '@venzra/services/restful.service';
 
 import { Category } from '../models/category';
-import { ListModel } from '@venzra/services/restful.service';
 
 @Injectable()
 export class CategoryService {
@@ -14,12 +15,12 @@ export class CategoryService {
         private http: HttpClient
     ) { }
 
-    findOne(categorySlug: string): Promise<Category> {
-        return this.http.get<Category>(`/api/categories/${categorySlug}`).toPromise();
+    findOne(categorySlug: string): Observable<Category> {
+        return this.http.get<Category>(`/api/categories/${categorySlug}`);
     }
 
-    findAll(): Promise<ListModel<Category>> {
-        return this.http.get<ListModel<Category>>('/api/categories').toPromise();
+    findAll(): Observable<ListModel<Category>> {
+        return this.http.get<ListModel<Category>>('/api/categories');
     }
 
 }
@@ -30,7 +31,7 @@ export class CategoryRetrieveResolve implements Resolve<Category> {
         private categoryService: CategoryService
     ) { }
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<Category> {
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Category> {
         return this.categoryService.findOne(route.params.category);
     }
 }
@@ -41,7 +42,7 @@ export class CategoryListResolve implements Resolve<ListModel<Category>> {
         private categoryService: CategoryService
     ) { }
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<ListModel<Category>> {
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ListModel<Category>> {
         return this.categoryService.findAll();
     }
 }

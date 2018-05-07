@@ -2,8 +2,8 @@ import { Injectable, NgModule } from '@angular/core';
 import { HTTP_INTERCEPTORS, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 
-import 'rxjs/add/operator/do';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
@@ -13,7 +13,7 @@ export class ErrorInterceptor implements HttpInterceptor {
     ) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        return next.handle(req).do(null, (err) => {
+        return next.handle(req).pipe(tap(null, (err) => {
             if (err instanceof HttpErrorResponse) {
                 switch (err.status) {
                     case 401:
@@ -21,7 +21,7 @@ export class ErrorInterceptor implements HttpInterceptor {
                         break;
                 }
             }
-        });
+        }));
     }
 }
 

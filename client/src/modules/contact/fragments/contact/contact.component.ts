@@ -62,9 +62,13 @@ export class ContactComponent implements OnInit {
 
     sendMessage(): void {
         const contact: Contact = this.contactForm.getRawValue();
-        this.contactService.sendMessage(contact)
-            .then(() => this.router.navigateByUrl('/contact/confirmation'))
-            .catch(() => this.snackbar.open(`Failed to send message, please try again later`, null, { duration: 5000 }));
+
+        this.contactService
+            .sendMessage(contact)
+            .subscribe(
+                () => this.router.navigateByUrl('/contact/confirmation'),
+                () => this.snackbar.open(`Failed to send message, please try again later`, null, { duration: 5000 })
+            );
     }
 
 }

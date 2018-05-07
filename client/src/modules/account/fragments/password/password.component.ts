@@ -3,12 +3,11 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 
-import { Account } from '@venzra/models/account';
+import { debounceTime } from 'rxjs/operators';
 
+import { Account } from '@venzra/models/account';
 import { AccountService } from '@venzra/services/account.service';
 import { LayoutService } from '@venzra/layout/services/layout.service';
-
-import 'rxjs/add/operator/debounceTime';
 
 import { CustomerService } from '../../services/customer.service';
 
@@ -40,12 +39,12 @@ export class PasswordComponent implements OnInit {
             confirmation: [null, [Validators.required]]
         }, { validator: this.passwordMatch });
 
-        this.passwordForm.get('password').valueChanges.debounceTime(500).subscribe((password) => {
+        this.passwordForm.get('password').valueChanges.pipe(debounceTime(500)).subscribe((password) => {
             if (this.passwordForm.get('password').invalid) {
                 return;
             }
 
-            this.customerService.validatePassword(password).then((validation) => {
+            this.customerService.validatePassword(password).subscribe((validation) => {
                 if (validation.score < 3) {
                     this.passwordForm.get('password').setErrors({ strength: true });
                     this.suggestion = validation.message;
@@ -67,7 +66,9 @@ export class PasswordComponent implements OnInit {
     changePassword() {
         this.customerService
             .changePassword(this.passwordForm.getRawValue())
-            .then(() => this.router.navigate(['/account/password/confirmation']))
-            .catch(() => this.snackbar.open('Change of password failed', 'OK', { duration: 5000 }));
+            .subscribe(
+                () => this.router.navigate(['/account/password/confirmation']),
+                () => this.snackbar.open('Change of password failed', 'OK', { duration: 5000 })
+            );
     }
 }

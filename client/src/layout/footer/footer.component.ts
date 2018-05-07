@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
-import { Subscription as RxjsSubscription } from 'rxjs/Subscription';
+import { Subscription as RxjsSubscription } from 'rxjs';
 
 import { Subscription } from '@venzra/models/subscription';
 import { SubscriptionService } from '@venzra/services/subscription.service';

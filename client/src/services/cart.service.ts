@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
 import { MatSnackBar } from '@angular/material';
 
-import 'rxjs/add/operator/toPromise';
-
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 import { Cart } from '../models/cart';
 import { Product } from '../models/product';
@@ -20,28 +18,25 @@ export class CartService {
         private snackbar: MatSnackBar
     ) { }
 
-    addProduct(product: Product): any {
-        return this.http.patch('/api/cart', [{ op: 'add', path: 'product', value: product._id }])
-            .toPromise()
-            .then((response: any) => response as Cart)
-            .then((cart) => this.cart.next(cart))
-            .then(() => this.snackbar.open(`${product.displayName} added to cart`, null, { duration: 2000 }));
+    addProduct(product: Product): void {
+        this.http.patch<Cart>('/api/cart', [{ op: 'add', path: 'product', value: product._id }])
+            .subscribe((cart) => {
+                this.cart.next(cart);
+                this.snackbar.open(`${product.displayName} added to cart`, null, { duration: 2000 });
+            });
     }
 
-    removeProduct(product: Product): any {
-        return this.http.patch('/api/cart', [{ op: 'remove', path: 'product', value: product._id }])
-            .toPromise()
-            .then((response: any) => response as Cart)
-            .then((cart) => this.cart.next(cart))
-            .then(() => this.snackbar.open(`${product.displayName} removed from cart`, null, { duration: 2000 }));
+    removeProduct(product: Product): void {
+        this.http.patch<Cart>('/api/cart', [{ op: 'remove', path: 'product', value: product._id }])
+            .subscribe((cart) => {
+                this.cart.next(cart);
+                this.snackbar.open(`${product.displayName} removed from cart`, null, { duration: 2000 });
+            });
     }
 
-    allocateShipping(shippingId) {
-        this.http.patch('/api/cart', [{ op: 'replace', path: 'shipping', value: shippingId }])
-            .toPromise()
-            .then((response: any) => response as Cart)
-            .then((cart) => this.cart.next(cart))
-            .catch(() => this.snackbar.open(`Failed to allocate shipping option`, null, { duration: 2000 }));
+    allocateShipping(shippingId): Observable<Cart> {
+        return this.http.patch<Cart>('/api/cart', [{ op: 'replace', path: 'shipping', value: shippingId }])
+            .pipe(tap((cart) => this.cart.next(cart)));
     }
 
     getCart(): BehaviorSubject<Cart> {
@@ -49,10 +44,7 @@ export class CartService {
     }
 
     loadCart(): void {
-        this.http.get('/api/cart')
-            .toPromise()
-            .then((response: any) => response as Cart)
-            .then((cart) => this.cart.next(cart));
+        this.http.get<Cart>('/api/cart').subscribe((cart) => this.cart.next(cart));
     }
 
 }

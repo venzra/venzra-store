@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 
-import 'rxjs/add/operator/toPromise';
+import { Observable } from 'rxjs';
 
 import { Content } from '../models/content';
 
@@ -13,8 +13,8 @@ export class ContentService {
         private http: HttpClient
     ) { }
 
-    find(page: string): Promise<Content> {
-        return this.http.get<Content>(`/api/content/${page}`).toPromise();
+    find(page: string): Observable<Content> {
+        return this.http.get<Content>(`/api/content/${page}`);
     }
 
 }
@@ -26,7 +26,7 @@ export class LocationPageResolve implements Resolve<Content> {
         private contentService: ContentService
     ) { }
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<Content> {
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Content> {
         return this.contentService.find('location');
     }
 

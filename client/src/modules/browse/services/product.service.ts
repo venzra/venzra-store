@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 
-import 'rxjs/add/operator/toPromise';
+import { Observable } from 'rxjs';
 
 import { ListModel } from '@venzra/services/restful.service';
 
@@ -15,13 +15,13 @@ export class ProductService {
         private http: HttpClient
     ) { }
 
-    findOne(productSlug: string): Promise<Product> {
-        return this.http.get<Product>(`/api/products/${productSlug}`).toPromise();
+    findOne(productSlug: string): Observable<Product> {
+        return this.http.get<Product>(`/api/products/${productSlug}`);
     }
 
-    findAll(query: any = {}): Promise<ListModel<Product>> {
+    findAll(query: any = {}): Observable<ListModel<Product>> {
         const params = Object.keys(query).reduce((httpParams, key) => httpParams.set(key, query[key]), new HttpParams());
-        return this.http.get<ListModel<Product>>(`/api/products`, { params }).toPromise();
+        return this.http.get<ListModel<Product>>(`/api/products`, { params });
     }
 }
 
@@ -31,7 +31,7 @@ export class ProductRetrieveResolve implements Resolve<Product> {
         private productService: ProductService
     ) { }
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<Product> {
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Product> {
         return this.productService.findOne(route.params.product);
     }
 }
@@ -42,7 +42,7 @@ export class ProductListResolve implements Resolve<ListModel<Product>> {
         private productService: ProductService
     ) { }
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<ListModel<Product>> {
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ListModel<Product>> {
         const query = Object.assign({}, route.params, route.queryParams);
         return this.productService.findAll(query);
     }

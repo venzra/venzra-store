@@ -27,7 +27,7 @@ export class OrdersComponent implements OnInit {
         this.layout.title = 'Order history';
         this.orders = this.route.snapshot.data.orders;
 
-        this.route.queryParams.subscribe((params) => this.orderService.getAllOrders(params).then((orders) => this.orders = orders));
+        this.route.queryParams.subscribe((params) => this.orderService.getAllOrders(params).subscribe((orders) => this.orders = orders));
     }
 
     updatePage(pageEvent: PageEvent) {
