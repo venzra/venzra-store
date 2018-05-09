@@ -6,6 +6,7 @@ import * as mongoose from 'mongoose';
 import * as morgan from 'morgan';
 import * as path from 'path';
 
+import { AddressInfo } from 'net';
 import { venzraSession } from './middleware/venzra-session';
 
 import CartController from './controllers/cart';
@@ -88,7 +89,7 @@ server.listen(port);
 server.on('listening', listening);
 
 function listening() {
-    const addr = server.address();
+    const addr = <AddressInfo>server.address();
     console.log(`Listening on ${addr.address}:${addr.port}`);
 }
 

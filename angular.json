@@ -82,11 +82,11 @@
         "@schematics/angular:component": {
             "inlineStyle": true,
             "inlineTemplate": true,
-            "prefix": "src",
+            "prefix": "venzra",
             "styleext": "scss"
         },
         "@schematics/angular:directive": {
-            "prefix": "src"
+            "prefix": "venzra"
         }
     }
 }
