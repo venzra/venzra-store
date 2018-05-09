@@ -5,10 +5,14 @@
 <venzra-centered>
     <p [venzraMarkdown]="content.content" [headers]="'full'"></p>
 
+    <mat-divider></mat-divider>
+
     <form (ngSubmit)="sendMessage()" [formGroup]="contactForm" fxLayout="column" fxLayoutGap="20px">
-        <mat-card fxLayout="column" fxLayoutGap="20px">
-            <mat-card-title>Send us a message</mat-card-title>
-            <mat-card-subtitle>Please complete the form below and hit the send button to ask us a question.</mat-card-subtitle>
+        <div fxLayout="column" fxLayoutGap="20px">
+            <div>
+                <h2>Send us a message</h2>
+                <p class="mat-caption">Please complete the form below and hit the send button to ask us a question.</p>
+            </div>
 
             <mat-form-field *ngIf="hasField('NAME')">
                 <input matInput placeholder="Your name" formControlName="fullName" required>
@@ -43,7 +47,7 @@
                 <textarea matInput matTextareaAutosize matAutosizeMinRows="10" matAutosizeMaxRows="18" placeholder="Your message" formControlName="message" required></textarea>
                 <mat-error *ngIf="contactForm.get(['message']).hasError('required')">This field is required.</mat-error>
             </mat-form-field>
-        </mat-card>
+        </div>
 
         <div fxLayout="row" fxLayoutAlign="end center">
             <button mat-raised-button type="submit" color="primary" [disabled]="contactForm.pristine || contactForm.invalid">Send message</button>

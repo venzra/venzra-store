@@ -5,9 +5,11 @@ import { ListModel } from '@venzra/services/restful.service';
 import { LayoutService } from '@venzra/layout/services/layout.service';
 
 import { Content } from '../../models/content';
+import { Location } from '../../models/location';
 
 @Component({
-    templateUrl: './location.component.html'
+    templateUrl: './location.component.html',
+    styleUrls: ['./location.component.scss']
 })
 export class LocationComponent implements OnInit {
 

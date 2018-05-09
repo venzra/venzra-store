@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LayoutService } from '@venzra/layout/services/layout.service';
 
 @Component({
-    templateUrl: './confirmation.component.html',
-    styleUrls: ['./confirmation.component.scss']
+    templateUrl: './confirmation.component.html'
 })
 export class ConfirmationComponent implements OnInit {
 

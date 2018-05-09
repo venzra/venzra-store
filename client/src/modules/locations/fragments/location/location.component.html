@@ -5,16 +5,18 @@
 <venzra-centered>
     <div [venzraMarkdown]="page.content" [headers]="'full'"></div>
 
-    <div *ngIf="locations.total" fxLayout="column" fxLayoutGap="20px">
-        <mat-card *ngFor="let location of locations.list">
-            <mat-card-title>{{ location.displayName }}</mat-card-title>
-            <mat-card-subtitle>{{ location.address | address }}</mat-card-subtitle>
-            <mat-card-content fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="20px">
-                <div *ngIf="location.featureImage" fxFlex="initial" fxFlex.sm="200px" fxFlex.gt-sm="280px" fxFlexOrder="1" fxFlexOrder.gt-xs="2">
+    <div *ngIf="locations.total" fxLayout="column">
+        <section *ngFor="let location of locations.list">
+            <mat-divider></mat-divider>
+            <h2>{{ location.displayName }}</h2>
+            <p>{{ location.address | address }}</p>
+
+            <div fxLayout="column" fxLayout.gt-xs="row-reverse" fxLayoutGap="20px">
+                <div *ngIf="location.featureImage" fxFlex="grow" fxFlex.sm="200px" fxFlex.gt-sm="280px">
                     <img [src]="'/api/images/' + location.featureImage" [style.width.%]="100" />
                 </div>
-                <div [venzraMarkdown]="location.description" fxFlex="initial" fxFlex.gt-xs="grow" fxFlexOrder="2" fxFlexOrder.gt-xs="1"></div>
-            </mat-card-content>
-        </mat-card>
+                <div [venzraMarkdown]="location.description" fxFlex="initial" fxFlex.gt-xs="grow"></div>
+            </div>
+        </section>
     </div>
 </venzra-centered>
