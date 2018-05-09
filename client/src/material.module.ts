@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import {
+    MatBadgeModule,
     MatButtonModule,
     MatCardModule,
     MatCheckboxModule,
@@ -22,6 +23,7 @@ import {
 
 @NgModule({
     imports: [
+        MatBadgeModule,
         MatButtonModule,
         MatCardModule,
         MatCheckboxModule,
@@ -41,6 +43,7 @@ import {
         FlexLayoutModule
     ],
     exports: [
+        MatBadgeModule,
         MatButtonModule,
         MatCardModule,
         MatCheckboxModule,

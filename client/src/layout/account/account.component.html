@@ -8,7 +8,6 @@
     <a mat-icon-button [matMenuTriggerFor]="menu" *ngIf="account._id"><mat-icon>person</mat-icon></a>
 </div>
 
-
 <mat-menu #menu="matMenu" [overlapTrigger]="false">
     <a mat-menu-item routerLink="/account/profile" routerLinkActive="selected"><mat-icon>account_circle</mat-icon> Your account</a>
     <a mat-menu-item routerLink="/account/orders" routerLinkActive="selected"><mat-icon>local_shipping</mat-icon> Order history</a>

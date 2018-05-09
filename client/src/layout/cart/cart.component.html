@@ -1,7 +1,9 @@
 <a fxHide.xs mat-button routerLink="/checkout">
-    <mat-icon>shopping_cart</mat-icon>
-    <span *ngIf="cart.items.length">{{ cart.items.length }} ({{ cart.value | price }})</span>
-    <span *ngIf="!cart.items.length">Empty</span>
+    <mat-icon [matBadge]="cart.items.length" matBadgeColor="accent">shopping_cart</mat-icon>
+    <span *ngIf="cart.items.length">{{ cart.value | price }}</span>
+    <span *ngIf="!cart.items.length">Basket</span>
 </a>
 
-<a fxHide.gt-xs mat-icon-button routerLink="/checkout"><mat-icon>shopping_cart</mat-icon></a>
+<a fxHide.gt-xs mat-icon-button routerLink="/checkout">
+    <mat-icon [matBadge]="cart.items.length" matBadgeColor="accent">shopping_cart</mat-icon>
+</a>
