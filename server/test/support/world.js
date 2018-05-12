@@ -1,11 +1,12 @@
+const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
-const { defineSupportCode } = require('cucumber');
 
-const crypto = require('crypto');
+const moment = require('moment');
 const supertest = require('supertest');
 const uuid = require('uuid');
-const nock = require('nock');
+
+const { setWorldConstructor, setDefaultTimeout } = require('cucumber');
 
 let history = {};
 
@@ -73,8 +74,12 @@ class World {
                 const keyword = keywords ? keywords[1] : row[hash];
 
                 switch (keyword) {
+                    case 'DATE':
+                        row[hash] = moment().add(keywords[2], 'hours').toISOString();
+                        break;
                     case 'DATETIME':
-                        row[hash] = Date.now();
+                        const date = new Date();
+                        row[hash] = date.toISOString();
                         break;
                     case 'PASSWORD':
                         const salt = crypto.createHash('sha1').update(uuid.v4()).digest('hex');
@@ -112,7 +117,7 @@ class World {
                 if (this.mocks.length > 0) {
                     this.mocks.forEach((mock) => {
                         mock.done();
-                    })
+                    });
                 }
 
                 let data = {
@@ -136,7 +141,7 @@ class World {
                     return reject(err);
                 }
                 resolve(res);
-            })
+            });
         });
     }
 
@@ -154,7 +159,7 @@ class World {
                 if (this.mocks.length > 0) {
                     this.mocks.forEach((mock) => {
                         mock.done();
-                    })
+                    });
                 }
 
                 let data = {
@@ -178,7 +183,7 @@ class World {
                     return reject(err);
                 }
                 resolve(res);
-            })
+            });
         });
     }
 
@@ -196,7 +201,7 @@ class World {
                 if (this.mocks.length > 0) {
                     this.mocks.forEach((mock) => {
                         mock.done();
-                    })
+                    });
                 }
 
                 let data = {
@@ -220,11 +225,11 @@ class World {
                     return reject(err);
                 }
                 resolve(res);
-            })
+            });
         });
     }
 
 }
 
-defineSupportCode(({ setWorldConstructor }) => setWorldConstructor(World));
-defineSupportCode(({ setDefaultTimeout }) => setDefaultTimeout(10 * 1000));
+setWorldConstructor(World);
+setDefaultTimeout(2 * 1000);

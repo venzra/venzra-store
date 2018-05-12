@@ -3,6 +3,7 @@
         <mat-nav-list fxLayout="column" dense>
             <h4 matSubheader>Resources</h4>
             <a mat-list-item *ngIf="hasFeature('ABOUT')" routerLink="/about">About us</a>
+            <a mat-list-item *ngIf="hasFeature('CAREERS')" routerLink="/careers">Career opportunities</a>
             <a mat-list-item *ngIf="hasFeature('LOCATION')" routerLink="/locations">Our locations</a>
             <a mat-list-item *ngIf="hasFeature('CONTACT')" routerLink="/contact">Contact us</a>
         </mat-nav-list>
@@ -11,6 +12,8 @@
             <a mat-list-item routerLink="/terms">Terms and Conditions</a>
         </mat-nav-list>
     </div>
-    <p class="mat-caption">&copy; Copyright <strong>{{ subscription.storeName }}</strong> since {{ subscription.created | date: 'yyyy' }}</p>
-    <p class="mat-caption">Powered by <a href="http://www.venzra.com" target="_blank">Venzra</a></p>
+    <div class="mat-caption" fxLayout="column" fxLayoutAlign="start center">
+        <div>&copy; Copyright <strong>{{ subscription.storeName }}</strong> since {{ subscription.created | date: 'yyyy' }}</div>
+        <div>Powered by <a href="http://www.venzra.com" target="_blank">Venzra</a> commerce platforms</div>
+    </div>
 </div>

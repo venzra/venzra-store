@@ -33,6 +33,10 @@ const routes: Routes = [
                 loadChildren: './modules/browse/browse.module#BrowseModule'
             },
             {
+                path: 'careers',
+                loadChildren: './modules/careers/careers.module#CareersModule'
+            },
+            {
                 path: 'checkout',
                 loadChildren: './modules/checkout/checkout.module#CheckoutModule'
             },

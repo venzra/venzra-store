@@ -1,0 +1,22 @@
+<venzra-title>
+    <h2 class="mat-display-1">Career opportunities</h2>
+</venzra-title>
+
+<venzra-centered>
+    <div [venzraMarkdown]="page.content" [headers]="'full'"></div>
+
+    <mat-divider></mat-divider>
+
+    <div *ngIf="careers.total" fxLayout="column">
+        <section *ngFor="let career of careers.list">
+            <h2>{{ career.position }}</h2>
+            <p [class]="checkExpiry(career) ? 'venzra-primary' : 'venzra-warn'">Application deadline - {{ career.expires | date: 'fullDate' }}</p>
+
+            <div [venzraMarkdown]="career.description" [headers]="'full'" fxFlex="initial" fxFlex.gt-xs="grow"></div>
+        </section>
+    </div>
+
+    <div *ngIf="!careers.total">
+        <p>There are no currently advertised careers. If you would like to make an enquiry then please contact us.</p>
+    </div>
+</venzra-centered>

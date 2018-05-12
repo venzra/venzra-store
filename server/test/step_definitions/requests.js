@@ -1,5 +1,3 @@
-const { defineSupportCode } = require('cucumber');
-
 const { Given, When, Then } = require('cucumber');
 
 Given(/^the request origin headers are set to "([^"]*)"$/, function (requestOrigin) {

@@ -1,5 +1,6 @@
 const cookieParser = require('cookie');
 const cheerio = require('cheerio');
+const moment = require('moment');
 const sharp = require('sharp');
 
 const { Given, When, Then } = require('cucumber');
@@ -20,7 +21,25 @@ const checkValues = (expected, actual, exact = true) => {
             }
         }
 
+        let date = new Date();
+
         switch (expected[key]) {
+            case 'YEAR':
+                date = moment().add(check[1], 'hours').toDate();
+                expect(actual[key]).to.equal(date.getFullYear());
+                break;
+            case 'MONTH':
+                date = moment().add(check[1], 'hours').toDate();
+                expect(actual[key]).to.equal(date.getMonth() + 1);
+                break;
+            case 'DAY':
+                date = moment().add(check[1], 'hours').toDate();
+                expect(actual[key]).to.equal(date.getDate());
+                break;
+            case 'DATE':
+                date = moment().endOf('day').add(check[1], 'hours').toDate();
+                expect(actual[key]).to.equal(date.toISOString());
+                break;
             case 'OBJECT_ID':
                 expect(actual[key]).to.match(/^[0-9A-F]{24}$/i);
                 break;

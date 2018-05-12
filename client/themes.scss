@@ -24,6 +24,19 @@
         }
     }
 
+    .venzra-primary {
+        padding: 5px 0 5px 10px;
+        color: mat-color($primary);
+        border-left: 2px mat-color($primary) solid;
+    }
+
+    .venzra-warn {
+        padding: 5px 0 5px 10px;
+        color: mat-color($warn);
+        border-left: 2px mat-color($warn) solid;
+    }
+
+
     @include layout-theme($theme);
     @include content-theme($theme);
 
