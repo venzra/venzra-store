@@ -26,7 +26,7 @@ export class CareerController extends AuthenticationController {
 
     findAll(req: Request, res: Response, next: NextFunction) {
         const searchParams = { subscription: this.subscription._id, expires: { $gte: moment().startOf('day').toDate() } };
-        const order = { expires: 1 };
+        const order = { expires: 1, position: 1 };
 
         CareerModel
             .count(searchParams).exec()
