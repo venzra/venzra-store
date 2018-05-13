@@ -15,24 +15,9 @@ export class ProductService {
         private http: HttpClient
     ) { }
 
-    findOne(productSlug: string): Observable<Product> {
-        return this.http.get<Product>(`/api/products/${productSlug}`);
-    }
-
     findAll(query: any = {}): Observable<ListModel<Product>> {
         const params = Object.keys(query).reduce((httpParams, key) => httpParams.set(key, query[key]), new HttpParams());
         return this.http.get<ListModel<Product>>(`/api/products`, { params });
-    }
-}
-
-@Injectable()
-export class ProductRetrieveResolve implements Resolve<Product> {
-    constructor(
-        private productService: ProductService
-    ) { }
-
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Product> {
-        return this.productService.findOne(route.params.product);
     }
 }
 

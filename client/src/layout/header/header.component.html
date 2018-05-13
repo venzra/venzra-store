@@ -10,10 +10,12 @@
     </mat-toolbar-row>
 
     <mat-toolbar-row fxLayout="row" fxLayoutGap="5px">
-        <a mat-button routerLink="/browse">Our products</a>
+        <ng-container *ngFor="let category of categories.list">
+            <a mat-button [routerLink]="['/browse', category.slug]">{{ category.name }}</a>
+        </ng-container>
         <span fxFlex></span>
         <venzra-account></venzra-account>
         <venzra-cart></venzra-cart>
-        <a mat-icon-button *ngIf="hasFeature('CONTACT')" routerLink="/contact"><mat-icon>email</mat-icon></a>
+        <a mat-icon-button *ngIf="hasFeature('CONTACT')" routerLink="/contact" fxHide.xs><mat-icon>email</mat-icon></a>
     </mat-toolbar-row>
 </mat-toolbar>

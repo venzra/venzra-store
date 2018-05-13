@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AccountService } from '@venzra/services/account.service';
 import { CartService } from '@venzra/services/cart.service';
+import { CategoryListResolve, CategoryService } from '@venzra/services/category.service';
 import { SubscriptionRetrieveResolve, SubscriptionService } from '@venzra/services/subscription.service';
 
 import { StoreComponent } from '@venzra/layout/store.component';
@@ -12,7 +13,8 @@ const routes: Routes = [
         path: '',
         component: StoreComponent,
         resolve: {
-            subscription: SubscriptionRetrieveResolve
+            subscription: SubscriptionRetrieveResolve,
+            categories: CategoryListResolve
         },
         children: [
             {
@@ -49,6 +51,10 @@ const routes: Routes = [
                 loadChildren: './modules/locations/locations.module#LocationsModule'
             },
             {
+                path: 'products',
+                loadChildren: './modules/products/product.module#ProductModule'
+            },
+            {
                 path: 'terms',
                 loadChildren: './modules/terms/terms.module#TermsModule'
             },
@@ -75,7 +81,9 @@ const routes: Routes = [
         AccountService,
         CartService,
         SubscriptionService,
-        SubscriptionRetrieveResolve
+        SubscriptionRetrieveResolve,
+        CategoryService,
+        CategoryListResolve
     ]
 })
 export class VenzraRoutingModule {

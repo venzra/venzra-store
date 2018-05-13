@@ -3,14 +3,16 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { MatSidenav } from '@angular/material';
 
+import { delay } from 'rxjs/operators';
+
+import { Category } from '@venzra/models/category';
 import { Subscription } from '@venzra/models/subscription';
 import { NavigationSection } from '@venzra/models/navigation-section';
 
+import { ListModel } from '@venzra/services/restful.service';
 import { LayoutService } from '@venzra/layout/services/layout.service';
 import { SubscriptionService } from '@venzra/services/subscription.service';
 import { NavigationService } from '@venzra/services/navigation.service';
-
-import { delay } from 'rxjs/operators';
 
 @Component({
     selector: 'venzra-store',
@@ -21,6 +23,7 @@ export class StoreComponent implements OnInit, OnDestroy {
 
     public mobileQuery: MediaQueryList;
     public subscription: Subscription;
+    public categories: ListModel<Category>;
     public hasNavigation: boolean;
     public navigationItems: Array<NavigationSection>;
 
@@ -43,6 +46,7 @@ export class StoreComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
+        this.categories = this.route.snapshot.data.categories;
         this.subscriptionService.getSubscription().subscribe((subscription) => {
             this.layoutService.name = subscription.storeName;
             this.subscription = subscription;

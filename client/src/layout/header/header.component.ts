@@ -5,6 +5,8 @@ import { Subscription as RxjsSubscription } from 'rxjs';
 import { Subscription } from '@venzra/models/subscription';
 import { SubscriptionService } from '@venzra/services/subscription.service';
 import { NavigationService } from '@venzra/services/navigation.service';
+import { ListModel } from '@venzra/services/restful.service';
+import { Category } from '@venzra/models/category';
 
 @Component({
     selector: 'venzra-header',
@@ -17,6 +19,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     public hasNavigation: boolean;
 
     private observable: Array<RxjsSubscription> = [];
+
+    @Input() public categories: ListModel<Category>;
 
     @Input() public navigationToggle;
 

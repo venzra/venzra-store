@@ -3,7 +3,7 @@
 @import './src/layout/theme';
 @import './src/components/content/theme';
 
-@import './src/modules/browse/theme';
+@import './src/modules/products/theme';
 @import './src/modules/checkout/theme';
 @import './src/modules/shop-front/theme';
 
@@ -40,7 +40,7 @@
     @include layout-theme($theme);
     @include content-theme($theme);
 
-    @include browse-theme($theme);
+    @include product-theme($theme);
     @include checkout-theme($theme);
     @include shop-front-theme($theme);
 }

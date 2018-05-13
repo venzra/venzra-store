@@ -54,7 +54,13 @@ export class CategoryController extends AuthenticationController {
         const parent = { $eq: null };
         const subscription = this.subscription._id;
 
-        CategoryModel.find({ subscription, parent })
+        const query: any = { subscription, parent };
+
+        if (req.query.primary) {
+            query.primary = { $eq: true };
+        }
+
+        CategoryModel.find(query)
             .select('slug name featureImage')
             .populate({
                 path: 'children',

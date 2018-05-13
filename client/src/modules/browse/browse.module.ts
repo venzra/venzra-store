@@ -9,16 +9,12 @@ import { VenzraFiltersModule } from '@venzra/filters/filters.module';
 
 import { AccountRoutingModule } from './routing.module';
 
-import { CatalogueComponent } from './fragments/catalogue/catalogue.component';
 import { CategoryComponent } from './fragments/category/category.component';
-import { ProductComponent } from './fragments/product/product.component';
 import { SearchComponent } from './fragments/search/search.component';
 
 @NgModule({
     declarations: [
-        CatalogueComponent,
         CategoryComponent,
-        ProductComponent,
         SearchComponent
     ],
     imports: [

@@ -50,6 +50,18 @@ Feature: Summary information for all categories
       | _id       | slug               | name               | featureImage        | children |
       | OBJECT_ID | category-summary-c | Category Summary C | {{ images[2]._id }} | ARRAY[1] |
 
+  Scenario: Requesting a list of categories supports filtering by primary
+    Given the request origin headers are set to "category-summary-one.venzra-test.io"
+    When I make a GET request to the API endpoint "/api/categories?primary=true" as "summary"
+    Then there should be a 200 response from the "summary" request that contains:
+      | list     |
+      | ARRAY[3] |
+    And the response from the "summary" request has a "list" that contains rows:
+      | name                 |
+      | Category Summary A   |
+      | Category Summary AA  |
+      | Category Summary ABC |
+
   Scenario: A subscription with no categories will return empty summary data
     Given the request origin headers are set to "category-summary-three.venzra-test.io"
     When I make a GET request to the API endpoint "/api/categories" as "summary"
