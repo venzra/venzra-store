@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 
 import { BehaviorSubject, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { Account } from '../models/account';
 import { AccountCredentials } from '../models/credentials';
@@ -31,20 +32,26 @@ export class AccountService {
         const redirect = localStorage.getItem('redirect') || '/account';
 
         this.http.post('/api/identity/login', credentialData, { responseType: 'text' })
-            .toPromise()
-            .then(() => localStorage.setItem('authenticated', '1'))
-            .then(() => localStorage.removeItem('redirect'))
-            .then(() => this.router.navigate([redirect], { replaceUrl: true }))
-            .catch(() => this.snackbar.open('Login failed, please try again', 'OK', { duration: 5000 }));
+            .subscribe(
+                () => {
+                    localStorage.setItem('authenticated', '1');
+                    localStorage.removeItem('redirect');
+                    this.router.navigate([redirect], { replaceUrl: true });
+                },
+                () => this.snackbar.open('Login failed, please try again', 'OK', { duration: 5000 })
+            );
     }
 
-    performLogout(): void {
-        this.http.post('/api/identity/logout', null, { responseType: 'text' })
-            .toPromise()
-            .catch(() => null)
-            .then(() => localStorage.clear())
-            .then(() => this.router.navigate(['/'], { replaceUrl: true }))
-            .then(() => this.account.next({ identity: null }));
+    performLogout(): Observable<boolean> {
+        return this.http.post('/api/identity/logout', null, { responseType: 'text' })
+            .pipe(
+                map(() => {
+                    localStorage.clear();
+                    this.router.navigate(['/'], { replaceUrl: true });
+                    this.account.next({ identity: null });
+                    return true;
+                })
+            );
     }
 
     isAuthenticated(): Observable<boolean> {
@@ -69,3 +76,17 @@ export class AccountService {
     }
 
 }
+
+@Injectable()
+export class AccountLogoutResolve implements Resolve<boolean> {
+
+    constructor(
+        private accountService: AccountService
+    ) { }
+
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
+        return this.accountService.performLogout();
+    }
+
+}
+

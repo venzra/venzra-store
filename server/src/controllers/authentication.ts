@@ -70,7 +70,6 @@ export class AuthenticationController {
                     .populate('subscription')
                     .then((customer: ICustomerModel) => {
                         if (!customer) {
-                            res.clearCookie('jwt');
                             throw new AccessDeniedError(`Invalid customer token for ${token._id}`);
                         }
 
@@ -182,14 +181,5 @@ export class AuthenticationController {
 
         res.cookie('jwt', encoded, { httpOnly: true, secure: environment.secure });
         res.status(202).send();
-    }
-
-    logout(req: Request, res: Response, next: NextFunction) {
-        Promise.resolve()
-            .then(() => this.customer.update({ $unset: { access: 1 } }).exec())
-            .then(() => {
-                res.clearCookie('jwt');
-                res.status(202).send();
-            });
     }
 }

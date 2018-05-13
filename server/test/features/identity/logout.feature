@@ -18,3 +18,11 @@ Feature: Perform a logout command that removes any customer authentication token
       | true   |
     Then the status returned from the "logout" request should be 202
     And there is a deleted cookie called "jwt" in the "logout" response header
+
+  Scenario: Logging out when a customer is not actually logged in
+    Given the request origin headers are set to "identity-logout-one.venzra-test.io"
+    When I make a POST request to the API endpoint "/api/identity/logout" as "logout" using:
+      | logout |
+      | true   |
+    Then the status returned from the "logout" request should be 202
+    And there is a deleted cookie called "jwt" in the "logout" response header

@@ -20,7 +20,23 @@ export class IdentityController extends AuthenticationController {
         this.router.use(parser.json({ type: 'application/json' }));
 
         this.router.post('/login', this.checkSubscription.bind(this), this.authorise.bind(this), this.tokenise.bind(this));
-        this.router.post('/logout', this.validate.bind(this), this.logout.bind(this));
+        this.router.post('/logout', this.checkJwt.bind(this), this.validate.bind(this), this.logout.bind(this));
+    }
+
+    checkJwt(req: Request, res: Response, next: NextFunction) {
+        if (req.cookies.jwt) {
+            return next();
+        }
+        res.status(202).send();
+    }
+
+    logout(req: Request, res: Response, next: NextFunction) {
+        this.customer
+            .update({ $unset: { access: 1 } })
+            .then(() => {
+                res.clearCookie('jwt');
+                res.status(202).send();
+            });
     }
 
 }

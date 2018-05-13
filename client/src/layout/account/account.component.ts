@@ -21,8 +21,4 @@ export class AccountComponent {
         accountService.getAccount().subscribe((account) => this.account = account);
     }
 
-    logout(): void {
-        this.accountService.performLogout();
-    }
-
 }

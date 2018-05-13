@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AuthGuard } from '@venzra/services/guard.service';
+import { AccountLogoutResolve } from '@venzra/services/account.service';
 
 import { AuthenticationComponent } from './fragments/authentication/authentication.component';
 import { PasswordComponent } from './fragments/password/password.component';
@@ -45,6 +46,12 @@ const routes: Routes = [
             orders: OrderListResolve
         },
         canActivate: [AuthGuard]
+    },
+    {
+        path: 'logout',
+        resolve: {
+            logout: AccountLogoutResolve
+        }
     }
 ];
 
@@ -57,7 +64,8 @@ const routes: Routes = [
     ],
     providers: [
         OrderService,
-        OrderListResolve
+        OrderListResolve,
+        AccountLogoutResolve
     ]
 })
 export class AccountRoutingModule {
