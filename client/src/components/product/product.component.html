@@ -2,7 +2,10 @@
     <img matCardImage [src]="'/api/images/' + product.promotionalImage" />
     <mat-card-content>
         <h2>{{ product.displayName }}</h2>
-        <div><span *ngIf="product.previousPrice" class="strike">{{ product.previousPrice | price }}</span> <strong>{{ product.currentPrice | price }}</strong></div>
+        <div fxLayout="row" fxLayoutGap="10px">
+            <span *ngIf="product.previousPrice" class="strike">{{ product.previousPrice | price }}</span>
+            <strong>{{ product.currentPrice | price }}</strong>
+        </div>
     </mat-card-content>
     <mat-card-actions align="end">
         <mat-icon>arrow_forward</mat-icon>
