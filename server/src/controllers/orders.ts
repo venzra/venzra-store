@@ -33,19 +33,15 @@ export class OrdersController extends AuthenticationController {
     }
 
     createOrder(req: Request, res: Response, next: NextFunction) {
-
         const errors = [];
+        const destination = this.customer.addresses.find((address) => address.id === req.body.destination);
 
         if (!req.body.cart) {
             errors.push({ path: 'cart', kind: 'required' });
         }
 
-        if (!req.body.destination) {
+        if (!destination) {
             errors.push({ path: 'destination', kind: 'required' });
-        }
-
-        if (!req.body.billing) {
-            errors.push({ path: 'billing', kind: 'required' });
         }
 
         if (!req.body.token || !req.body.token.id) {
@@ -55,12 +51,8 @@ export class OrdersController extends AuthenticationController {
         if (errors.length) {
             return next(new ValidationError(errors));
         }
-
         const gatewayKey = this.subscription.gateway.privateKey;
         const stripe = new Stripe(gatewayKey);
-
-        req.body.billing.country = 'GB';
-        req.body.destination.country = 'GB';
 
         CartModel.findOne({ _id: req.body.cart, subscription: this.subscription._id })
             .populate({
@@ -82,13 +74,13 @@ export class OrdersController extends AuthenticationController {
                         application_fee: fee,
                         source: req.body.token.id,
                         shipping: {
-                            name: req.body.destination.addressee,
+                            name: destination.addressee,
                             address: {
-                                line1: req.body.destination.street,
-                                line2: req.body.destination.building,
-                                city: req.body.destination.city,
-                                state: req.body.destination.county,
-                                postal_code: req.body.destination.postalCode
+                                line1: destination.street,
+                                line2: destination.building,
+                                city: destination.city,
+                                state: destination.county,
+                                postal_code: destination.postalCode
                             }
                         },
                         statement_descriptor: this.subscription.storeName.substr(0, 22)
@@ -101,8 +93,16 @@ export class OrdersController extends AuthenticationController {
                             reference: Math.floor((Math.random() * 0.9 + 0.1) * Math.pow(10, 10)),
                             items: cart.items.map((item) => ({ product: item.product, quantity: item.quantity, price: item.product.currentPrice })),
                             shipping: cart.shipping,
-                            destination: req.body.destination,
-                            billing: req.body.billing,
+                            destination: destination,
+                            billing: {
+                                addressee: payment.source.name,
+                                street: payment.source.address_line1,
+                                building: payment.source.address_line2,
+                                city: payment.source.address_city,
+                                county: payment.source.address_state,
+                                country: payment.source.address_country,
+                                postalCode: payment.source.address_zip
+                            },
                             payment: {
                                 reference: payment.id,
                                 transaction: transaction.id,

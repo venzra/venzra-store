@@ -7,9 +7,9 @@ Feature: Place an order using cart information
       | storeName         | gateway                         | transactions                      | status |
       | Orders Create One | { "privateKey": "pk_xxxxxxxx" } | { "rate": "0.021", "base": "10" } | ACTIVE |
       | Orders Create Two | { "privateKey": "pk_xxxxxxxx" } | { "rate": "0.021", "base": "10" } | ACTIVE |
-    Given there are the following "customers" records in the database
-      | identity                         | password | status | subscription               |
-      | orders-create-one@venzra-test.io | PASSWORD | ACTIVE | {{ subscriptions[1]._id }} |
+    And there are the following "customers" records in the database
+      | identity                         | password | addresses                                                                                                          | status | subscription               |
+      | orders-create-one@venzra-test.io | PASSWORD | [{ "addressee": "Mr Address", "street": "Street", "county": "County", "postalCode": "po57 3ox", "country": "GB" }] | ACTIVE | {{ subscriptions[1]._id }} |
     And there are the following "shipping" records in the database
       | subscription               | displayName | cartMinimum | cartMaximum | currentPrice | shipmentTime |
       | {{ subscriptions[1]._id }} | Example A   | 0           | 0           | 200          | 24           |
@@ -42,16 +42,16 @@ Feature: Place an order using cart information
     And I am logged in with the "orders-create-one@venzra-test.io" account
     When I make an empty POST request to the API endpoint "/api/orders" as "order"
     Then there should be a 400 error from the "order" request that contains:
-      | message           | detail                                                                          |
-      | Validation failed | ["cart required", "destination required", "billing required", "token required"] |
+      | message           | detail                                                      |
+      | Validation failed | ["cart required", "destination required", "token required"] |
 
   Scenario: Handle a rejection from stripe occurring when attempting to place an order
     Given the request origin headers are set to "orders-create-one.venzra-test.io"
     And I am logged in with the "orders-create-one@venzra-test.io" account
     And there is a POST consumer at "https://api.stripe.com" for "/v1/charges" that will return "stripe/charges/create-invalid.json" with status 400
     When I make a POST request to the API endpoint "/api/orders" as "order" using:
-      | cart               | token                                    | destination                                                                                      | billing                                                                                             |
-      | {{ carts[2]._id }} | { "id": "tok_xxxxxxxxxxxxxxxxxxxxxxxx" } | { "addressee": "Mr Shipping", "street": "Street", "county": "County", "postalCode": "po57 3ox" } | { "addressee": "Mr Billing", "street": "P.O. Box", "county": "Province", "postalCode": "te37 3od" } |
+      | cart               | token                                    | destination                         |
+      | {{ carts[2]._id }} | { "id": "tok_xxxxxxxxxxxxxxxxxxxxxxxx" } | {{ customers[1].addresses[1]._id }} |
     Then there should be a 500 error from the "order" request that contains:
       | message                                                    |
       | An external error has occurred - StripeInvalidRequestError |
@@ -60,8 +60,8 @@ Feature: Place an order using cart information
     Given the request origin headers are set to "orders-create-one.venzra-test.io"
     And I am logged in with the "orders-create-one@venzra-test.io" account
     When I make a POST request to the API endpoint "/api/orders" as "order" using:
-      | cart               | token                                    | destination                                                                                      | billing                                                                                             |
-      | {{ carts[3]._id }} | { "id": "tok_xxxxxxxxxxxxxxxxxxxxxxxx" } | { "addressee": "Mr Shipping", "street": "Street", "county": "County", "postalCode": "po57 3ox" } | { "addressee": "Mr Billing", "street": "P.O. Box", "county": "Province", "postalCode": "te37 3od" } |
+      | cart               | token                                    | destination                         |
+      | {{ carts[3]._id }} | { "id": "tok_xxxxxxxxxxxxxxxxxxxxxxxx" } | {{ customers[1].addresses[1]._id }} |
     Then there should be a 400 error from the "order" request that contains:
       | message                |
       | Invalid cart reference |
@@ -75,8 +75,8 @@ Feature: Place an order using cart information
     And there is a GET consumer at "https://api.stripe.com" for "/v1/balance/history/txn_xxxxxxxxxxxxxxxxxxxxxxxx" that will return "stripe/balance/retrieve-history.json" with status 200
     And there is a POST consumer at "https://email.eu-west-1.amazonaws.com" that will return status 200
     When I make a POST request to the API endpoint "/api/orders" as "order" using:
-      | cart               | token                                    | destination                                                                                      | billing                                                                                             |
-      | {{ carts[2]._id }} | { "id": "tok_xxxxxxxxxxxxxxxxxxxxxxxx" } | { "addressee": "Mr Shipping", "street": "Street", "county": "County", "postalCode": "po57 3ox" } | { "addressee": "Mr Billing", "street": "P.O. Box", "county": "Province", "postalCode": "te37 3od" } |
+      | cart               | token                                    | destination                         |
+      | {{ carts[2]._id }} | { "id": "tok_xxxxxxxxxxxxxxxxxxxxxxxx" } | {{ customers[1].addresses[1]._id }} |
     Then there should be a 200 response from the "order" request that contains:
       | _id       | reference       |
       | OBJECT_ID | REGEX[^\d{10}$] |

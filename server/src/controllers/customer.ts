@@ -10,6 +10,7 @@ import { AuthenticationController } from './authentication';
 import { ICustomerPassword } from '../models/customer';
 import { SubscriptionService } from '../services/subscription';
 import { ValidationError } from '../middleware/error-handler';
+import { IAddressModel } from '../models/objects/address';
 
 export class CustomerController extends AuthenticationController {
 
@@ -26,6 +27,8 @@ export class CustomerController extends AuthenticationController {
 
         this.router.get('/', this.checkSubscription.bind(this), this.validate.bind(this), this.getCustomer.bind(this));
         this.router.post('/password', this.checkSubscription.bind(this), this.validate.bind(this), this.changePassword.bind(this));
+        this.router.post('/addresses', this.checkSubscription.bind(this), this.validate.bind(this), this.createAddress.bind(this), this.getCustomer.bind(this));
+        this.router.delete('/addresses/:addressId', this.checkSubscription.bind(this), this.validate.bind(this), this.removeAddress.bind(this));
     }
 
     changePassword(req: Request, res: Response, next: NextFunction) {
@@ -67,6 +70,31 @@ export class CustomerController extends AuthenticationController {
         } else {
             next(new ValidationError([{ path: 'current', kind: 'invalid' }]));
         }
+    }
+
+    createAddress(req: Request, res: Response, next: NextFunction) {
+        const address = {
+            addressee: req.body.addressee,
+            street: req.body.street,
+            building: req.body.building,
+            city: req.body.city,
+            county: req.body.county,
+            country: req.body.country,
+            postalCode: req.body.postalCode
+        };
+
+        this.customer.addresses.push(<IAddressModel>address);
+
+        this.customer.save()
+            .then(() => next())
+            .catch((error) => next(error));
+    }
+
+    removeAddress(req: Request, res: Response, next: NextFunction) {
+        this.customer.update({ $pull: { addresses: { _id: req.params.addressId } } })
+            .exec()
+            .then(() => res.status(202).send())
+            .catch((error) => next(error));
     }
 
 }

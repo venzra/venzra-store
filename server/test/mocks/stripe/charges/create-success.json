@@ -52,7 +52,7 @@
         "address_line2": "Test Two",
         "address_city": "Test City",
         "address_state": "Test County",
-        "address_country": null,
+        "address_country": "GB",
         "address_zip": "TE51 3OD",
         "address_zip_check": "pass",
         "brand": "Visa",

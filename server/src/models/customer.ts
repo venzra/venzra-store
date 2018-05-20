@@ -3,6 +3,7 @@ import { ISubscriptionModel } from './subscription';
 import { AccountPasswordSchema } from './objects/password';
 import { AccountAccessSchema } from './objects/account-access';
 import { AccountBlockedSchema } from './objects/account-blocked';
+import { AddressSchema, IAddressModel } from './objects/address';
 
 const EMAIL_REGEX = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/;
 
@@ -28,6 +29,7 @@ interface ICustomerModel extends Document {
     subscription?: ISubscriptionModel;
     identity?: string;
     password?: ICustomerPassword;
+    addresses: Array<IAddressModel>;
     access?: ICustomerLogin;
     lock?: ICustomerFailure;
     status?: string;
@@ -52,6 +54,10 @@ const CustomerSchema: Schema = new Schema({
     },
     password: {
         type: AccountPasswordSchema
+    },
+    addresses: {
+        type: [AddressSchema],
+        default: []
     },
     access: {
         type: AccountAccessSchema

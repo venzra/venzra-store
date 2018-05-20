@@ -2,4 +2,10 @@
     $primary: map-get($theme, primary);
     $accent: map-get($theme, accent);
     $warn: map-get($theme, warn);
+
+    .mat-card {
+        &.selected {
+            background-color: mat-color($accent, 50);
+        }
+    }
 }

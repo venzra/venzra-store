@@ -1,10 +1,10 @@
 const crypto = require('crypto');
 const fs = require('fs');
-const path = require('path');
-
 const moment = require('moment');
-const supertest = require('supertest');
+const path = require('path');
 const uuid = require('uuid');
+
+const supertest = require('supertest');
 
 const { setWorldConstructor, setDefaultTimeout } = require('cucumber');
 
@@ -49,7 +49,15 @@ class World {
             let parts = request.match(/\[(\d+)\]/);
             if (parts) {
                 let history = this.getHistory(request.replace(parts[0], ''), parts[1] - 1);
-                target.forEach((field) => history = history[field]);
+                target.forEach((field) => {
+                    let subArray = field.match(/\[(\d+)\]/);
+                    if(subArray) {
+                        field = field.replace(subArray[0], '');
+                        history = history[field][subArray[1] - 1];
+                    } else {
+                        history = history[field]
+                    }
+                });
                 string = string.replace(template[0], history);
             }
             string = this.parseTemplateString(string);
@@ -196,6 +204,46 @@ class World {
             });
 
             request.send(data);
+
+            request.expect((res) => {
+                if (this.mocks.length > 0) {
+                    this.mocks.forEach((mock) => {
+                        mock.done();
+                    });
+                }
+
+                let data = {
+                    status: res.statusCode,
+                    headers: res.headers
+                };
+
+                try {
+                    data.response = JSON.parse(res.text);
+                } catch (ex) {
+                    data.response = res.text || res.body;
+                }
+
+                if (storage) {
+                    this.history[storage] = data;
+                }
+            });
+
+            request.end((err, res) => {
+                if (err) {
+                    return reject(err);
+                }
+                resolve(res);
+            });
+        });
+    }
+
+    performDelete(endpoint, storage) {
+        return new Promise((resolve, reject) => {
+            let request = this.agent.delete(this.parseTemplateString(endpoint));
+
+            this.headers.forEach((header) => {
+                request.set(header.name, header.value);
+            });
 
             request.expect((res) => {
                 if (this.mocks.length > 0) {

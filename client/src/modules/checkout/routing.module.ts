@@ -7,6 +7,7 @@ import { AuthGuard } from '@venzra/services/guard.service';
 import { BasketComponent } from './fragments/basket/basket.component';
 import { PaymentComponent } from './fragments/payment/payment.component';
 
+import { CustomerResolve } from './services/customer.service';
 import { PaymentService } from './services/payment.service';
 import { ShippingListResolve, ShippingService } from './services/shipping';
 
@@ -26,6 +27,9 @@ const routes: Routes = [
     {
         path: 'payment',
         component: PaymentComponent,
+        resolve: {
+            customerData: CustomerResolve
+        },
         canActivate: [AuthGuard]
     }
 ];

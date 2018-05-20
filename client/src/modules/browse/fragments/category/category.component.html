@@ -4,7 +4,7 @@
 </venzra-title>
 
 <venzra-aligned size="wide">
-    <div fxLayout="column" fxLayout.gt-sm="row-reverse" fxLayoutGap="20px grid">
+    <div fxLayout="column" fxLayout.gt-sm="row-reverse" fxLayoutGap="20px">
         <div *ngIf="category.featureImage" fxFlex="grow" fxFlex.gt-sm="240px">
             <img [src]="'/api/images/' + category.featureImage" [style.width.%]="100" />
         </div>

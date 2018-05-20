@@ -10,13 +10,15 @@ import { VenzraFiltersModule } from '@venzra/filters/filters.module';
 
 import { BasketComponent } from './fragments/basket/basket.component';
 import { PaymentComponent } from './fragments/payment/payment.component';
+import { PaymentAddressDialogComponent } from './fragments/payment/address/address.component';
 
 import { CalendarService } from './services/calendar.service';
 
 @NgModule({
     declarations: [
         BasketComponent,
-        PaymentComponent
+        PaymentComponent,
+        PaymentAddressDialogComponent
     ],
     imports: [
         CommonModule,
@@ -29,6 +31,9 @@ import { CalendarService } from './services/calendar.service';
     ],
     providers: [
         CalendarService
+    ],
+    entryComponents: [
+        PaymentAddressDialogComponent
     ]
 })
 export class CheckoutModule {

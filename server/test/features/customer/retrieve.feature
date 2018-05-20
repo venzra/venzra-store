@@ -8,8 +8,9 @@ Feature: Retrieve currently logged in customer information
       | Customer Retrieve One | ACTIVE |
       | Customer Retrieve Two | ACTIVE |
     And there are the following "customers" records in the database
-      | identity                             | password | status | subscription               |
-      | customer-retrieve-one@venzra-test.io | PASSWORD | ACTIVE | {{ subscriptions[1]._id }} |
+      | identity                             | password | addresses                                                                                                          | status | subscription               |
+      | customer-retrieve-one@venzra-test.io | PASSWORD | []                                                                                                                 | ACTIVE | {{ subscriptions[1]._id }} |
+      | customer-retrieve-two@venzra-test.io | PASSWORD | [{ "addressee": "Mr Address", "street": "Street", "county": "County", "postalCode": "po57 3ox", "country": "GB" }] | ACTIVE | {{ subscriptions[1]._id }} |
 
   Scenario: When there is no logged in user there should be no response
     Given the request origin headers are set to "customer-retrieve-one.venzra-test.io"
@@ -23,10 +24,21 @@ Feature: Retrieve currently logged in customer information
     When I make a GET request to the API endpoint "/api/customer" as "customer"
     Then the status returned from the "customer" request should be a 404 error
 
-  Scenario: Retrieve customer profile information
+  Scenario: Retrieve customer profile information (without addresses)
     Given the request origin headers are set to "customer-retrieve-one.venzra-test.io"
     And I am logged in with the "customer-retrieve-one@venzra-test.io" account
     When I make a GET request to the API endpoint "/api/customer" as "customer"
     Then there should be a 200 response from the "customer" request that contains:
-      | _id       | identity                             | status |
-      | OBJECT_ID | customer-retrieve-one@venzra-test.io | ACTIVE |
+      | _id       | identity                             | addresses | status |
+      | OBJECT_ID | customer-retrieve-one@venzra-test.io | ARRAY[0]  | ACTIVE |
+
+  Scenario: Retrieve customer profile information (with addresses)
+    Given the request origin headers are set to "customer-retrieve-one.venzra-test.io"
+    And I am logged in with the "customer-retrieve-two@venzra-test.io" account
+    When I make a GET request to the API endpoint "/api/customer" as "customer"
+    Then there should be a 200 response from the "customer" request that contains:
+      | _id       | identity                             | addresses | status |
+      | OBJECT_ID | customer-retrieve-two@venzra-test.io | ARRAY[1]  | ACTIVE |
+    And the response from the "customer" request has a "addresses" that contains rows:
+      | _id       | addressee  | street | county | postalCode | country |
+      | OBJECT_ID | Mr Address | Street | County | PO573OX    | GB      |

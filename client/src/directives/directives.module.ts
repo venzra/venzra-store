@@ -2,15 +2,18 @@ import { NgModule } from '@angular/core';
 
 import { MarkdownDirective } from './markdown.directive';
 import { NavCardDirective } from './nav-card.directive';
+import { SelectionCardDirective } from './select-card.directive';
 
 @NgModule({
     declarations: [
         MarkdownDirective,
-        NavCardDirective
+        NavCardDirective,
+        SelectionCardDirective
     ],
     exports: [
         MarkdownDirective,
-        NavCardDirective
+        NavCardDirective,
+        SelectionCardDirective
     ]
 })
 export class VenzraDirectivesModule {

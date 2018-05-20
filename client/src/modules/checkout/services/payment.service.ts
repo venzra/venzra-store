@@ -1,10 +1,11 @@
 import StripeStatic = stripe.StripeStatic;
 
 import { Injectable } from '@angular/core';
+
 import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
-
+import { Card } from '../models/card';
 import { Order } from '../models/order';
 import { Payment } from '../models/payment';
 
@@ -15,13 +16,7 @@ export class PaymentService {
         private http: HttpClient
     ) { }
 
-    checkout(stripeToken: string, paymentData: Payment): Promise<Observable<Order>> {
-        const cart = paymentData.cart;
-        const card = paymentData.card;
-        const shipping = { value: 500 };
-        const destination = paymentData.destination;
-        const billing = paymentData.billing;
-
+    preparePayment(stripeToken: string, paymentData: Card): Promise<any> {
         return Promise
             .resolve((<any>window).Stripe)
             .then((stripe: StripeStatic) => {
@@ -29,16 +24,16 @@ export class PaymentService {
                 return stripe;
             })
             .then((stripe: StripeStatic) => new Promise((resolve, reject) => stripe.card.createToken({
-                    name: card.holder,
-                    number: card.number,
-                    exp_month: card.expiryMonth,
-                    exp_year: card.expiryYear,
-                    cvc: card.verificationCheck,
-                    address_line1: billing.building,
-                    address_line2: billing.street,
-                    address_city: billing.city,
-                    address_state: billing.county,
-                    address_zip: billing.postalCode,
+                    name: paymentData.holder,
+                    number: paymentData.number,
+                    exp_month: paymentData.expiryMonth,
+                    exp_year: paymentData.expiryYear,
+                    cvc: paymentData.verificationCheck,
+                    address_line1: paymentData.address.street,
+                    address_line2: paymentData.address.building,
+                    address_city: paymentData.address.city,
+                    address_state: paymentData.address.county,
+                    address_zip: paymentData.address.postalCode,
                     address_country: 'GB'
                 }, ((status, response) => {
                     switch (status) {
@@ -49,8 +44,14 @@ export class PaymentService {
                             reject(new Error(response.error.message));
                     }
                 })
-            )))
-            .then((token) => this.http.post<Order>('/api/orders', { cart, shipping, token, destination, billing }));
+            )));
+    }
+
+    checkout(token: string, paymentData: Payment): Observable<Order> {
+        const cart = paymentData.cart;
+        const destination = paymentData.destination;
+
+        return this.http.post<Order>('/api/orders', { token, cart, destination });
     }
 
 }
