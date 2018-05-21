@@ -3,9 +3,7 @@
     $accent: map-get($theme, accent);
     $warn: map-get($theme, warn);
 
-    .mat-card {
-        &.selected {
-            background-color: mat-color($accent, 50);
-        }
+    .mat-nav-list .mat-list-item.active {
+        background-color: mat-color($accent, 50);
     }
 }
