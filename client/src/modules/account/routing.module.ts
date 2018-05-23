@@ -37,6 +37,9 @@ const routes: Routes = [
     {
         path: 'profile',
         component: ProfileComponent,
+        resolve: {
+            orders: OrderListResolve
+        },
         canActivate: [AuthGuard]
     },
     {
@@ -64,8 +67,7 @@ const routes: Routes = [
     ],
     providers: [
         OrderService,
-        OrderListResolve,
-        AccountLogoutResolve
+        OrderListResolve
     ]
 })
 export class AccountRoutingModule {

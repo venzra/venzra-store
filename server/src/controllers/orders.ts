@@ -163,7 +163,7 @@ export class OrdersController extends AuthenticationController {
                         { $limit: limit },
                         { $project: { reference: 1, shipping: 1, destination: 1, payment: { name: 1, card: 1, brand: 1, value: 1 }, items: 1, status: 1, created: 1 } }
                     ])
-                    .then((result) => ProductModel.populate(result, { path: 'items.product', select: '-_id slug displayName status' }))
+                    .then((result) => ProductModel.populate(result, { path: 'items.product', select: '-_id slug displayName promotionalImage status' }))
                     .then((list) => res.status(200).send({ list, total, skip, limit }))
             )
             .catch((productError) => next(productError));

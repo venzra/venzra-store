@@ -3,21 +3,23 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog, MatSnackBar } from '@angular/material';
 
+import { Account } from '@venzra/models/account';
+import { Address } from '@venzra/models/address';
 import { Cart } from '@venzra/models/cart';
+
+import { AccountService } from '@venzra/services/account.service';
 import { CartService } from '@venzra/services/cart.service';
 import { LayoutService } from '@venzra/layout/services/layout.service';
 import { Subscription } from '@venzra/models/subscription';
 import { SubscriptionService } from '@venzra/services/subscription.service';
 
-import { Address } from '../../models/address';
-import { Customer } from '../../models/customer';
+import { AddressCreateDialogComponent } from '@venzra/components/addresses/create-dialog.component';
+
 import { Order } from '../../models/order';
 import { Payment } from '../../models/payment';
 
 import { CalendarService } from '../../services/calendar.service';
 import { PaymentService } from '../../services/payment.service';
-
-import { PaymentAddressDialogComponent } from './address/address.component';
 
 @Component({
     templateUrl: './payment.component.html',
@@ -45,6 +47,7 @@ export class PaymentComponent implements OnInit {
         private layout: LayoutService,
         private dialog: MatDialog,
         private snackbar: MatSnackBar,
+        private accountService: AccountService,
         private subscriptionService: SubscriptionService,
         private cartService: CartService,
         private paymentService: PaymentService,
@@ -56,7 +59,7 @@ export class PaymentComponent implements OnInit {
 
     ngOnInit(): void {
         this.layout.title = 'Checkout';
-        this.addresses = this.route.snapshot.data.customerData.addresses;
+        this.addresses = this.accountService.getAccount().getValue().addresses;
 
         this.shippingForm = this.forms.group({
             address: ['', [Validators.required]]
@@ -78,12 +81,14 @@ export class PaymentComponent implements OnInit {
     }
 
     createAddress() {
-        const dialogRef = this.dialog.open(PaymentAddressDialogComponent, { width: '90%', maxWidth: '640px', disableClose: true });
-        dialogRef.afterClosed().subscribe((customer: Customer) => {
-            if (customer) {
-                this.addresses = customer.addresses;
-            }
-        });
+        this.dialog
+            .open(AddressCreateDialogComponent, { width: '90%', maxWidth: '640px', disableClose: true })
+            .afterClosed()
+            .subscribe((account: Account) => {
+                if (account) {
+                    this.addresses = account.addresses;
+                }
+            });
     }
 
     selectAddress(address: Address) {

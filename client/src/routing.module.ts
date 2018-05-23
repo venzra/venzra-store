@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { AccountService } from '@venzra/services/account.service';
 import { CartService } from '@venzra/services/cart.service';
 import { CategoryListResolve, CategoryService } from '@venzra/services/category.service';
 import { SubscriptionRetrieveResolve, SubscriptionService } from '@venzra/services/subscription.service';
@@ -78,7 +77,6 @@ const routes: Routes = [
         RouterModule
     ],
     providers: [
-        AccountService,
         CartService,
         SubscriptionService,
         SubscriptionRetrieveResolve,

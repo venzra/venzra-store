@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, CanLoad, Route, Router, RouterStateSnapshot } from '@angular/router';
 
-import { BehaviorSubject, Observable } from 'rxjs';
-import { first } from 'rxjs/operators';
+import { ReplaySubject, Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
 
 import { AccountService } from './account.service';
 
@@ -31,7 +31,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
 
     private checkLogin(url: string): Observable<boolean> {
         const authenticated = this.accountService.isAuthenticated();
-        const subject = new BehaviorSubject<boolean>(false);
+        const subject = new ReplaySubject<boolean>(1);
 
         authenticated.subscribe((res) => {
             if (!res) {
@@ -41,6 +41,6 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
             subject.next(res);
         });
 
-        return subject.asObservable().pipe(first());
+        return subject.pipe(take(1));
     }
 }

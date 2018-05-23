@@ -8,17 +8,17 @@ import { VenzraContentModule } from '@venzra/components/content/content.module';
 import { VenzraDirectivesModule } from '@venzra/directives/directives.module';
 import { VenzraFiltersModule } from '@venzra/filters/filters.module';
 
+import { AddressModule } from '@venzra/components/addresses/address.module';
+
 import { BasketComponent } from './fragments/basket/basket.component';
 import { PaymentComponent } from './fragments/payment/payment.component';
-import { PaymentAddressDialogComponent } from './fragments/payment/address/address.component';
 
 import { CalendarService } from './services/calendar.service';
 
 @NgModule({
     declarations: [
         BasketComponent,
-        PaymentComponent,
-        PaymentAddressDialogComponent
+        PaymentComponent
     ],
     imports: [
         CommonModule,
@@ -27,13 +27,11 @@ import { CalendarService } from './services/calendar.service';
         VenzraContentModule,
         VenzraDirectivesModule,
         VenzraFiltersModule,
+        AddressModule,
         CheckoutRoutingModule
     ],
     providers: [
         CalendarService
-    ],
-    entryComponents: [
-        PaymentAddressDialogComponent
     ]
 })
 export class CheckoutModule {

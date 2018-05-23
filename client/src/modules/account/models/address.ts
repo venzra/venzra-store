@@ -1,9 +1,10 @@
 export interface Address {
     _id: string;
     addressee: string;
-    building: string;
     street: string;
+    building: string;
     city: string;
     county: string;
     postalCode: string;
+    country: string;
 }

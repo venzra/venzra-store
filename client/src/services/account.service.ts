@@ -4,12 +4,15 @@ import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@a
 import { MatSnackBar } from '@angular/material';
 
 import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 import { Account } from '../models/account';
+import { Address } from '../models/address';
 import { AccountCredentials } from '../models/credentials';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class AccountService {
 
     private account: BehaviorSubject<Account> = new BehaviorSubject<Account>({ identity: null });
@@ -54,6 +57,16 @@ export class AccountService {
             );
     }
 
+    createAddress(address: Address): Observable<Account> {
+        return this.http.post<Account>('/api/customer/addresses', address)
+            .pipe(tap((account) => this.account.next(account)));
+    }
+
+    removeAddress(address: Address): Observable<boolean> {
+        return this.http.delete<boolean>(`/api/customer/addresses/${address._id}`)
+            .pipe(tap(() => this.http.get<Account>('/api/customer').subscribe((account) => this.account.next(account))));
+    }
+
     isAuthenticated(): Observable<boolean> {
         const subject = new BehaviorSubject<boolean>(true);
         const account = this.account.getValue();
@@ -77,7 +90,9 @@ export class AccountService {
 
 }
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class AccountLogoutResolve implements Resolve<boolean> {
 
     constructor(

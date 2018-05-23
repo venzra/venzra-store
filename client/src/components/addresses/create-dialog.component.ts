@@ -2,19 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { CustomerService } from '../../../services/customer.service';
+import { AccountService } from '@venzra/services/account.service';
 
 @Component({
-    templateUrl: './address.component.html'
+    templateUrl: './create-dialog.component.html'
 })
-export class PaymentAddressDialogComponent implements OnInit {
+export class AddressCreateDialogComponent implements OnInit {
 
     public addressForm: FormGroup;
 
     constructor(
-        public dialogRef: MatDialogRef<PaymentAddressDialogComponent>,
+        public dialogRef: MatDialogRef<AddressCreateDialogComponent>,
         private forms: FormBuilder,
-        private customerService: CustomerService
+        private accountService: AccountService
     ) { }
 
     ngOnInit(): void {
@@ -34,7 +34,7 @@ export class PaymentAddressDialogComponent implements OnInit {
     }
 
     save(): void {
-        this.customerService
+        this.accountService
             .createAddress(this.addressForm.getRawValue())
             .subscribe((customer) => this.dialogRef.close(customer));
     }
