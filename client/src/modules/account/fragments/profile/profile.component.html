@@ -51,11 +51,12 @@
 
         <mat-card>
             <mat-card-title>Saved addresses</mat-card-title>
-            <mat-card-subtitle>These are addresses you have created to place orders.</mat-card-subtitle>
+            <mat-card-subtitle>These are addresses you have created and are available to assist when placing orders.</mat-card-subtitle>
 
             <mat-card-content>
                 <mat-list *ngIf="account.addresses.length">
                     <mat-list-item *ngFor="let address of account.addresses">
+                        <mat-icon matListIcon>{{ address._id === account.primaryAddress ? 'star' : 'star_outline' }}</mat-icon>
                         <h3 matLine>{{ address.addressee }}</h3>
                         <p matLine>{{ address | address: 'full' }}</p>
                         <button mat-icon-button (click)="removeAddress(address)" color="warn"><mat-icon>delete</mat-icon></button>

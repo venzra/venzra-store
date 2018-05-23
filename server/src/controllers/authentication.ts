@@ -30,7 +30,7 @@ export class AuthenticationController {
 
         CustomerModel
             .findOne({ _id, subscription })
-            .select('identity addresses status')
+            .select('identity addresses primaryAddress status')
             .then((customer) => {
                 if (!customer) {
                     return next(new NotFoundError());

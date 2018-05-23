@@ -59,15 +59,18 @@ export class PaymentComponent implements OnInit {
 
     ngOnInit(): void {
         this.layout.title = 'Checkout';
-        this.addresses = this.accountService.getAccount().getValue().addresses;
+
+        const account = this.accountService.getAccount().getValue();
+        const selectedAddress = account.addresses.find((address) => address._id === account.primaryAddress);
+        this.addresses = account.addresses;
 
         this.shippingForm = this.forms.group({
-            address: ['', [Validators.required]]
+            address: [selectedAddress, [Validators.required]]
         });
 
         this.paymentForm = this.forms.group({
             holder: [null, [Validators.required, Validators.maxLength(80)]],
-            address: ['', [Validators.required]],
+            address: [selectedAddress, [Validators.required]],
             number: [null, [Validators.required]],
             expiryMonth: [null, [Validators.required]],
             expiryYear: [null, [Validators.required]],

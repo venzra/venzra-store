@@ -30,6 +30,7 @@ interface ICustomerModel extends Document {
     identity?: string;
     password?: ICustomerPassword;
     addresses: Array<IAddressModel>;
+    primaryAddress: string;
     access?: ICustomerLogin;
     lock?: ICustomerFailure;
     status?: string;
@@ -58,6 +59,9 @@ const CustomerSchema: Schema = new Schema({
     addresses: {
         type: [AddressSchema],
         default: []
+    },
+    primaryAddress: {
+        type: Schema.Types.ObjectId
     },
     access: {
         type: AccountAccessSchema

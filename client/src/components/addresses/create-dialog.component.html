@@ -37,6 +37,8 @@
             <mat-error *ngIf="addressForm.get(['postalCode']).hasError('required')">This field is required.</mat-error>
             <mat-error *ngIf="addressForm.get(['postalCode']).hasError('maxlength')">Entered text is too long.</mat-error>
         </mat-form-field>
+
+        <mat-checkbox formControlName="makeDefault" color="primary">Make this my default address</mat-checkbox>
     </div>
 
     <div fxLayoutAlign="end" mat-dialog-actions>

@@ -7,7 +7,7 @@ import { NextFunction, Request, Response, Router } from 'express';
 
 import { AuthenticationController } from './authentication';
 
-import { ICustomerPassword } from '../models/customer';
+import { ICustomerModel, ICustomerPassword } from '../models/customer';
 import { SubscriptionService } from '../services/subscription';
 import { ValidationError } from '../middleware/error-handler';
 import { IAddressModel } from '../models/objects/address';
@@ -86,12 +86,30 @@ export class CustomerController extends AuthenticationController {
         this.customer.addresses.push(<IAddressModel>address);
 
         this.customer.save()
+            .then((customer: ICustomerModel) => {
+                if (customer.addresses.length === 1) {
+                    customer.primaryAddress = customer.addresses[0]._id;
+                    return customer.save();
+                } else if (!customer.primaryAddress || req.body.makeDefault) {
+                    customer.primaryAddress = customer.addresses[customer.addresses.length - 1]._id;
+                    return customer.save();
+                }
+            })
             .then(() => next())
             .catch((error) => next(error));
     }
 
     removeAddress(req: Request, res: Response, next: NextFunction) {
-        this.customer.update({ $pull: { addresses: { _id: req.params.addressId } } })
+        const addresses = this.customer.addresses.filter((address) => address.get('_id', 'string') !== req.params.addressId);
+        const changes: any = { $pull: { addresses: { _id: req.params.addressId } } };
+
+        if (addresses.length === 0) {
+            changes.$unset = { primaryAddress: 1 };
+        } else if (!this.customer.primaryAddress || this.customer.get('primaryAddress', 'string') === req.params.addressId) {
+            changes.$set = { primaryAddress: addresses[0]._id };
+        }
+
+        this.customer.update(changes)
             .exec()
             .then(() => res.status(202).send())
             .catch((error) => next(error));

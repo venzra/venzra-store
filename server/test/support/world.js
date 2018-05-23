@@ -44,22 +44,28 @@ class World {
     parseTemplateString(string) {
         let template = string.match(/{{\s?(\S*)\s?}}/);
         if (template !== null) {
+            let history;
             let target = template[1].split('.');
             let request = target.shift();
             let parts = request.match(/\[(\d+)\]/);
+
             if (parts) {
-                let history = this.getHistory(request.replace(parts[0], ''), parts[1] - 1);
-                target.forEach((field) => {
-                    let subArray = field.match(/\[(\d+)\]/);
-                    if(subArray) {
-                        field = field.replace(subArray[0], '');
-                        history = history[field][subArray[1] - 1];
-                    } else {
-                        history = history[field]
-                    }
-                });
-                string = string.replace(template[0], history);
+                history = this.getHistory(request.replace(parts[0], ''), parts[1] - 1);
+            } else {
+                history = this.getHistory(request)['response'];
             }
+
+            target.forEach((field) => {
+                let subArray = field.match(/\[(\d+)\]/);
+                if(subArray) {
+                    field = field.replace(subArray[0], '');
+                    history = history[field][subArray[1] - 1];
+                } else {
+                    history = history[field]
+                }
+            });
+
+            string = string.replace(template[0], history);
             string = this.parseTemplateString(string);
         }
         return string;

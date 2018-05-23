@@ -11,9 +11,9 @@ import { AccountService } from '@venzra/services/account.service';
 export class AddressRemoveDialogComponent {
 
     constructor(
-        public dialogRef: MatDialogRef<AddressRemoveDialogComponent>,
         private accountService: AccountService,
-        @Inject(MAT_DIALOG_DATA) private data: { address: Address },
+        public dialogRef: MatDialogRef<AddressRemoveDialogComponent>,
+        @Inject(MAT_DIALOG_DATA) public data: { address: Address }
     ) { }
 
     cancel(): void {

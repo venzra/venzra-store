@@ -25,7 +25,8 @@ export class AddressCreateDialogComponent implements OnInit {
             city: [null, [Validators.maxLength(50)]],
             county: [null, [Validators.required, Validators.maxLength(50)]],
             country: ['GB'],
-            postalCode: [null, [Validators.required, Validators.maxLength(12)]]
+            postalCode: [null, [Validators.required, Validators.maxLength(12)]],
+            makeDefault: [false, []]
         });
     }
 

@@ -34,15 +34,21 @@ export class ProfileComponent implements OnInit {
         this.layout.title = 'Your account';
 
         this.orders = this.route.snapshot.data.orders;
-        this.accountService.getAccount().subscribe((account) => this.account = account);
+        this.account = this.accountService.getAccount().getValue();
     }
 
     createAddress() {
-        this.dialog.open(AddressCreateDialogComponent, { width: '90%', maxWidth: '640px', disableClose: true });
+        this.dialog
+            .open(AddressCreateDialogComponent, { width: '90%', maxWidth: '640px', disableClose: true })
+            .afterClosed()
+            .subscribe(() => this.account = this.accountService.getAccount().getValue());
     }
 
     removeAddress(address: Address) {
-        this.dialog.open(AddressRemoveDialogComponent, { width: '90%', maxWidth: '640px', data: { address } });
+        this.dialog
+            .open(AddressRemoveDialogComponent, { width: '90%', maxWidth: '640px', data: { address } })
+            .afterClosed()
+            .subscribe(() => this.account = this.accountService.getAccount().getValue());
     }
 
 }
