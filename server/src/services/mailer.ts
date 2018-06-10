@@ -30,7 +30,7 @@ export const mailer = {
 };
 
 export const email = {
-    header: (subject: string): string => `
+    header: (subject: string, subscription: ISubscriptionModel): string => `
         <!DOCTYPE html>
         <html>
             <head>
@@ -54,18 +54,17 @@ export const email = {
                 <table>
                     <tr style="background-color:#673ab7;">
                         <td class="centered" style="padding:3em;">
-                            <img src="http://cdn.venzra.io/logo/white/venzra-logo-md.png" alt="Venzra" title="Venzra" />
+                            ${subscription.logo ?
+                                `<img src="https://${subscription.domainName}.venzra.io/api/images/${subscription.logo}" alt="${subscription.storeName}" title="${subscription.storeName}" />`
+                                :
+                                `<h2>${subscription.storeName}</h2>`
+                            }
                         </td>
                     </tr>
     `,
 
     contactMessage: (subscription: ISubscriptionModel, contact: ContactModel): string => {
         const template = `
-                    <tr>
-                        <td>
-                            <h2>Order confirmation,</h2>
-                        </td>
-                    </tr>
                     <tr>
                         <td>
                             <p>Message from <strong>${contact.fullName}</strong>.</p>
@@ -76,7 +75,7 @@ export const email = {
                     </tr>
         `;
 
-        return email.header('Web contact') + template + email.footer(subscription.storeName);
+        return email.header('Web contact', subscription) + template + email.footer(subscription.storeName);
     },
 
     orderConfirmation: (subscription: ISubscriptionModel, order: IOrderModel): string => {
@@ -116,7 +115,7 @@ export const email = {
                     </tr>
         `;
 
-        return email.header('Order confirmation') + template + email.footer(subscription.storeName);
+        return email.header('Order confirmation', subscription) + template + email.footer(subscription.storeName);
     },
 
     footer: (storeName: string): string => `
