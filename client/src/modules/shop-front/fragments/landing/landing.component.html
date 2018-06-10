@@ -1,13 +1,16 @@
-<div class="hero-banner" fxLayout="column" fxLayoutAlign="center center">
-    <h1 class="mat-display-2">
-        <img *ngIf="subscription.logo" [src]="'/api/images/' + subscription.logo" [alt]="subscription.storeName" />
-        <span *ngIf="!subscription.logo">Welcome to {{ subscription.storeName }}</span>
-    </h1>
-    <h2>{{ subscription.strapline }}</h2>
-</div>
+<venzra-title align="center">
+    <h2 *ngIf="!subscription.logo" class="mat-display-1">{{ subscription.storeName }}</h2>
+
+    <div *ngIf="subscription.logo">
+        <img [src]="'/api/images/' + subscription.logo" [alt]="subscription.storeName" />
+    </div>
+
+    <p>{{ subscription.strapline }}</p>
+</venzra-title>
 
 <venzra-centered>
+
     <div fxLayout="row wrap" fxLayoutGap="20px grid">
-        <venzra-product *ngFor="let product of products.list" [product]="product" fxFlex="50%" fxFlex.md="33.33%" fxFlex.gt-md="25%"></venzra-product>
+        <venzra-product *ngFor="let product of products.list" [product]="product" fxLayout="column" fxFlex="50%" fxFlex.md="33.33%" fxFlex.gt-md="25%"></venzra-product>
     </div>
 </venzra-centered>

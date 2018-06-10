@@ -1,7 +1,9 @@
-<mat-card [venzraNavCard]="['/products', product.slug]">
+<mat-card [venzraNavCard]="['/products', product.slug]" fxLayout="column" fxFlex>
     <img matCardImage [src]="'/api/images/' + product.promotionalImage" />
-    <mat-card-content>
+    <mat-card-content fxFlex>
         <h2>{{ product.displayName }}</h2>
+    </mat-card-content>
+    <mat-card-content>
         <div fxLayout="row" fxLayoutGap="10px">
             <span *ngIf="product.previousPrice" class="strike">{{ product.previousPrice | price }}</span>
             <strong>{{ product.currentPrice | price }}</strong>
