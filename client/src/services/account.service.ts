@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 
 import { Account } from '../models/account';
@@ -68,7 +68,7 @@ export class AccountService {
     }
 
     isAuthenticated(): Observable<boolean> {
-        const subject = new BehaviorSubject<boolean>(true);
+        const subject = new ReplaySubject<boolean>();
         const account = this.account.getValue();
 
         if (account.identity !== null) {

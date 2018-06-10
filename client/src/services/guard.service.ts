@@ -31,7 +31,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
 
     private checkLogin(url: string): Observable<boolean> {
         const authenticated = this.accountService.isAuthenticated();
-        const subject = new ReplaySubject<boolean>(1);
+        const subject = new ReplaySubject<boolean>();
 
         authenticated.subscribe((res) => {
             if (!res) {
