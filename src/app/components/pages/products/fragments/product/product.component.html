@@ -1,0 +1,40 @@
+<venzra-title [hasBackButton]="true">
+    <h2 class="mat-display-1">{{ product.displayName }}</h2>
+
+    <button mat-raised-button mat-icon-button (click)="purchase(product)" color="primary" matTooltip="Add to cart" matTooltipPosition="before"><mat-icon>add_shopping_cart</mat-icon></button>
+</venzra-title>
+
+<venzra-centered class="product-detail">
+    <mat-card>
+        <mat-card-title>Product description</mat-card-title>
+        <mat-card-subtitle>{{ product.code }}</mat-card-subtitle>
+
+        <mat-card-content fxLayout="column">
+            <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="20px">
+                <div fxFlex="initial" fxFlex.gt-xs="50%">
+                    <img [venzraImage]="product.promotionalImage" [alt]="product.displayName" />
+                </div>
+                <div fxLayout="column" fxFlex="initial" fxFlex.gt-xs="50%" fxLayoutGap="20px">
+                    <div [venzraMarkdown]="product.description" fxFlex></div>
+                    <mat-list>
+                        <mat-list-item>
+                            <h3 matLine>Price</h3>
+                            <h4 class="pricing" matLine>{{ product.currentPrice | price }}</h4>
+                        </mat-list-item>
+
+                        <mat-list-item *ngIf="product.previousPrice && product.previousPrice !== product.currentPrice">
+                            <h3 matLine>Savings</h3>
+                            <div matLine><span>{{ 1 - product.currentPrice / product.previousPrice | percent }}</span> <span class="strike">(was {{ product.previousPrice | price }})</span></div>
+                        </mat-list-item>
+                    </mat-list>
+
+                    <div fxLayout="row" fxLayoutAlign="end end">
+                        <button mat-raised-button color="primary" (click)="purchase(product)">
+                            <mat-icon>add_shopping_cart</mat-icon> Add to cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</venzra-centered>

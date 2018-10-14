@@ -1,0 +1,35 @@
+<venzra-title align="start" size="wide">
+    <h2 class="mat-display-1" *ngIf="!category.parent">{{ category.name }}</h2>
+    <h2 class="mat-display-1" *ngIf="category.parent"><a [routerLink]="['/browse', category.parent.slug]">{{ category.parent.name }}</a> / {{ category.name }}</h2>
+</venzra-title>
+
+<venzra-aligned size="wide">
+    <div fxLayout="column" fxLayout.gt-sm="row-reverse" fxLayoutGap="20px">
+        <div *ngIf="category.featureImage" fxFlex="grow" fxFlex.gt-sm="240px">
+            <img [venzraImage]="category.featureImage" [alt]="category.name" [style.width.%]="100" />
+        </div>
+        <div [venzraMarkdown]="category.description" fxFlex="initial" fxFlex.gt-sm="grow"></div>
+    </div>
+
+    <ng-container *ngIf="category.children.length">
+        <h3>View by category</h3>
+
+        <div fxLayout="row wrap" fxLayoutGap="20px grid">
+            <div *ngFor="let child of category.children" fxFlex="100%" fxFlex.sm="50%" fxFlex.gt-sm="33.33%" fxFlex.gt-lg="25%">
+                <mat-card [venzraNavCard]="['/browse', child.slug]">
+                    <img *ngIf="child.featureImage" matCardImage [venzraImage]="child.featureImage" [alt]="child.name">
+                    <mat-card-content>{{ child.name }}</mat-card-content>
+                    <mat-card-actions align="end">
+                        <mat-icon>chevron_right</mat-icon>
+                    </mat-card-actions>
+                </mat-card>
+            </div>
+        </div>
+    </ng-container>
+
+    <h3>Available products</h3>
+
+    <div fxLayout="row wrap" fxLayoutGap="20px grid">
+        <venzra-product *ngFor="let product of products.list" [product]="product" fxFlex="50%" fxFlex.md="33.33%" fxFlex.gt-md="25%"></venzra-product>
+    </div>
+</venzra-aligned>

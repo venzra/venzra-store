@@ -1,0 +1,46 @@
+@import '../node_modules/@angular/material/theming';
+
+@import 'app/components/layout/theme';
+@import 'app/components/layout/content/theme';
+
+@import 'app/components/pages/products/theme';
+@import 'app/components/pages/checkout/theme';
+@import 'app/components/pages/shop-front/theme';
+
+@mixin venzra-store-theme($theme) {
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $warn: map-get($theme, warn);
+
+    body {
+        background-color: mat-color($accent, 50);
+    }
+
+    .venzra-nav-card {
+        &:hover {
+            .mat-card-actions {
+                color: mat-color($primary);
+            }
+        }
+    }
+
+    .venzra-primary {
+        padding: 5px 0 5px 10px;
+        color: mat-color($primary);
+        border-left: 2px mat-color($primary) solid;
+    }
+
+    .venzra-warn {
+        padding: 5px 0 5px 10px;
+        color: mat-color($warn);
+        border-left: 2px mat-color($warn) solid;
+    }
+
+
+    @include layout-theme($theme);
+    @include content-theme($theme);
+
+    @include product-theme($theme);
+    @include checkout-theme($theme);
+    @include shop-front-theme($theme);
+}

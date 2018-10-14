@@ -1,0 +1,22 @@
+<venzra-title>
+    <h2 class="mat-display-1">Our locations</h2>
+</venzra-title>
+
+<venzra-centered>
+    <div [venzraMarkdown]="page.content" [headers]="'full'"></div>
+
+    <div *ngIf="locations.total" fxLayout="column">
+        <section *ngFor="let location of locations.list">
+            <mat-divider></mat-divider>
+            <h2>{{ location.displayName }}</h2>
+            <p>{{ location.address | address }}</p>
+
+            <div fxLayout="column" fxLayout.gt-xs="row-reverse" fxLayoutGap="20px">
+                <div *ngIf="location.featureImage" fxFlex="grow" fxFlex.sm="200px" fxFlex.gt-sm="280px">
+                    <img [venzraImage]="location.featureImage" [alt]="location.displayName" [style.width.%]="100" />
+                </div>
+                <div [venzraMarkdown]="location.description" fxFlex="initial" fxFlex.gt-xs="grow"></div>
+            </div>
+        </section>
+    </div>
+</venzra-centered>

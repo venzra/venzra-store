@@ -1,12 +1,12 @@
 #!/bin/bash
 
-DEST_PATH=client/assets/themes
-INPUT_PATH=client/src/themes/
+DEST_PATH=src/assets/themes
+INPUT_PATH=src/themes/
 
 echo Building custom theme scss files.
 
 # Get the files
-FILES=$(find client/src/themes -name "*.scss")
+FILES=$(find src/themes -name "*.scss")
 
 for FILE in $FILES
 do

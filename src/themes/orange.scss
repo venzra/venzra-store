@@ -1,0 +1,10 @@
+@import '../themes';
+
+$primary: mat-palette($mat-orange);
+$accent:  mat-palette($mat-orange, 100);
+$warn:    mat-palette($mat-red);
+
+$theme:   mat-light-theme($primary, $accent, $warn);
+
+@include angular-material-theme($theme);
+@include venzra-store-theme($theme);
