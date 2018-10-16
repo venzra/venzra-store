@@ -9,3 +9,4 @@ export * from './navigation-section';
 export * from './product';
 export * from './shipping';
 export * from './subscription';
+export * from './venzra-image';
