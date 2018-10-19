@@ -1,7 +1,5 @@
 @import '~@angular/material/theming';
 
-@include mat-core();
-
 .mat-toolbar {
     position: fixed;
     z-index: 2;
