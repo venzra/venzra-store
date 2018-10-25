@@ -23,7 +23,7 @@ export class VenzraImageDirective implements OnChanges {
     }
 
     ngOnChanges(): void {
-        this.element.nativeElement.src = `${this.cdnUrl}/${this.subscription._id}/${this.venzraImage.usage}/${this.venzraImage._id}`;
+        this.element.nativeElement.src = `${this.cdnUrl}/${this.venzraImage.path}`;
         this.element.nativeElement.alt = this.venzraImage.name;
     }
 
