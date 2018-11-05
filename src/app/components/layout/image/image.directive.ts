@@ -3,15 +3,12 @@ import { Directive, ElementRef, Input, OnChanges } from '@angular/core';
 import { Subscription, VenzraImage } from '@venzra/models';
 import { SubscriptionService } from '@venzra/services';
 
-import { environment } from '../../../../environments/environment';
-
 @Directive({
     selector: '[venzraImage]'
 })
 export class VenzraImageDirective implements OnChanges {
 
     private subscription: Subscription;
-    private cdnUrl = environment.cdnUri;
 
     @Input() public venzraImage: VenzraImage;
 
@@ -23,8 +20,7 @@ export class VenzraImageDirective implements OnChanges {
     }
 
     ngOnChanges(): void {
-        this.element.nativeElement.src = `${this.cdnUrl}/${this.venzraImage.path}`;
-        this.element.nativeElement.alt = this.venzraImage.name;
+        this.element.nativeElement.src = this.venzraImage;
     }
 
 }

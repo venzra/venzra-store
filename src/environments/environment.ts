@@ -5,6 +5,5 @@
 
 export const environment = {
     production: false,
-    apiUri: 'http://localhost:3000',
-    cdnUri: 'https://s3-eu-west-1.amazonaws.com/images.venzra-test.com'
+    apiUri: 'http://localhost:3000'
 };
