@@ -17,15 +17,15 @@ const routes: Routes = [
     },
     {
         path: 'basket',
-        component: BasketComponent,
-        resolve: {
-            shippingData: ShippingListResolve
-        }
+        component: BasketComponent
     },
     {
         path: 'payment',
         component: PaymentComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
+        resolve: {
+            shippingData: ShippingListResolve
+        }
     }
 ];
 

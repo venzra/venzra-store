@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatRadioChange, MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 
-import { Cart, List } from '@venzra/models';
+import { Cart } from '@venzra/models';
 import { CartService, LayoutService } from '@venzra/services';
-
-import { Shipping } from '../../models/shipping';
 
 @Component({
     templateUrl: './basket.component.html',
@@ -14,7 +12,6 @@ import { Shipping } from '../../models/shipping';
 export class BasketComponent implements OnInit {
 
     public cart: Cart;
-    public shippingData: List<Shipping>;
 
     constructor(
         private route: ActivatedRoute,
@@ -26,8 +23,6 @@ export class BasketComponent implements OnInit {
 
     ngOnInit(): void {
         this.layout.title = 'Shopping basket';
-
-        this.shippingData = this.route.snapshot.data.shippingData;
         this.cartService.getCart().subscribe((cart) => this.cart = cart);
     }
 
@@ -37,31 +32,6 @@ export class BasketComponent implements OnInit {
 
     decrement(item) {
         this.cartService.removeProduct(item.product);
-    }
-
-    checkShipping(shipping: Shipping) {
-        let available = true;
-
-        if (shipping.cartMinimum !== 0 && shipping.cartMinimum > this.cart.value) {
-            available = false;
-        }
-
-        if (shipping.cartMaximum !== 0 && this.cart.value > shipping.cartMaximum) {
-            available = false;
-        }
-
-        return available;
-    }
-
-    selectedShipping(shipping: Shipping) {
-        if (this.cart.shipping) {
-            return this.cart.shipping.reference === shipping._id;
-        }
-        return false;
-    }
-
-    updateShipping(event: MatRadioChange) {
-        this.cartService.allocateShipping(event.value).subscribe(null, () => this.snackbar.open(`Failed to allocate shipping option`, null, { duration: 2000 }));
     }
 
     checkout(): void {

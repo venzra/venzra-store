@@ -10,8 +10,8 @@
 <venzra-centered>
     <mat-card>
         <mat-vertical-stepper linear #stepper>
-            <mat-step [editable]="!completed" [stepControl]="shippingForm" label="Shipping address">
-                <form fxLayout="column" fxLayoutGap="20px" [formGroup]="shippingForm">
+            <mat-step [editable]="!completed" [stepControl]="destinationForm" label="Delivery address">
+                <form fxLayout="column" fxLayoutGap="20px" [formGroup]="destinationForm">
                     <div>
                         <div class="mat-headline">Select or add your delivery address</div>
                         <mat-hint>You can manage addresses via your account management page.</mat-hint>
@@ -19,7 +19,7 @@
 
                     <mat-radio-group formControlName="address">
                         <mat-nav-list>
-                            <mat-list-item *ngFor="let address of addresses" [ngClass]="{ 'active': shippingForm.get('address').value._id === address._id }" (click)="selectAddress(address)">
+                            <mat-list-item *ngFor="let address of addresses" [ngClass]="{ 'active': destinationForm.get('address').value._id === address._id }" (click)="selectAddress(address)">
                                 <mat-icon matListIcon>home</mat-icon>
                                 <h3 matLine>{{ address.addressee }}</h3>
                                 <p matLine>{{ address | address: 'full' }}</p>
@@ -33,11 +33,34 @@
                     </mat-radio-group>
 
                     <div fxLayoutGap="20px" fxLayoutAlign="end center">
-                        <button mat-raised-button matStepperNext [disabled]="shippingForm.invalid" color="primary">Continue</button>
+                        <button mat-raised-button matStepperNext [disabled]="destinationForm.invalid" color="primary">Continue</button>
                     </div>
                 </form>
             </mat-step>
 
+            <mat-step [editable]="!completed" [stepControl]="shippingForm" label="Shipping method">
+                <form fxLayout="column" fxLayoutGap="20px" [formGroup]="shippingForm">
+                    <div>
+                        <div class="mat-headline">Choose your preferred method of shipping</div>
+                        <mat-hint>Note that delivery times are indicative of a typical order fulfilment</mat-hint>
+                    </div>
+
+                    <mat-radio-group formControlName="shipping">
+                        <mat-nav-list>
+                            <mat-list-item *ngFor="let shipping of shippingData.list" [ngClass]="{ 'active': shippingForm.get('shipping').value === shipping._id }" (click)="selectShipping(shipping)">
+                                <mat-icon matListIcon>local_shipping</mat-icon>
+                                <h3 matLine>{{ shipping.displayName }}</h3>
+                                <p matLine>{{ shipping.currentPrice | price }}</p>
+                                <mat-radio-button [value]="shipping._id" color="primary"></mat-radio-button>
+                            </mat-list-item>
+                        </mat-nav-list>
+                    </mat-radio-group>
+
+                    <div fxLayoutGap="20px" fxLayoutAlign="end center">
+                        <button mat-raised-button matStepperNext [disabled]="shippingForm.invalid" color="primary">Continue</button>
+                    </div>
+                </form>
+            </mat-step>
 
             <mat-step [editable]="!completed" [stepControl]="paymentForm" label="Payment details">
                 <form fxLayout="column" fxLayoutGap="20px" [formGroup]="paymentForm">

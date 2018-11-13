@@ -3,11 +3,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog, MatSnackBar } from '@angular/material';
 
-import { Account, Address, Cart, Subscription } from '@venzra//models';
+import { Account, Address, Cart, List, Subscription } from '@venzra/models';
 import { AccountService, CartService, LayoutService, SubscriptionService } from '@venzra/services';
 import { AddressCreateDialogComponent } from '@venzra/components/layout/addresses/create-dialog.component';
 
 import { Order } from '../../models/order';
+import { Shipping } from '../../models/shipping';
 import { Payment } from '../../models/payment';
 import { CalendarService } from '../../services/calendar.service';
 import { PaymentService } from '../../services/payment.service';
@@ -20,11 +21,13 @@ export class PaymentComponent implements OnInit {
 
     public subscription: Subscription;
     public addresses: Array<Address>;
+    public shippingData: List<Shipping>;
     public order: Order = { reference: '' };
     public cart: Cart;
 
     public saving = false;
     public completed = false;
+    public destinationForm: FormGroup;
     public shippingForm: FormGroup;
     public paymentForm: FormGroup;
     public months = [];
@@ -54,9 +57,14 @@ export class PaymentComponent implements OnInit {
         const account = this.accountService.getAccount().getValue();
         const selectedAddress = account.addresses.find((address) => address._id === account.primaryAddress);
         this.addresses = account.addresses;
+        this.shippingData = this.route.snapshot.data.shippingData;
+
+        this.destinationForm = this.forms.group({
+            address: [selectedAddress, [Validators.required]]
+        });
 
         this.shippingForm = this.forms.group({
-            address: [selectedAddress, [Validators.required]]
+            shipping: [null, [Validators.required]]
         });
 
         this.paymentForm = this.forms.group({
@@ -86,8 +94,12 @@ export class PaymentComponent implements OnInit {
     }
 
     selectAddress(address: Address) {
-        this.shippingForm.get('address').setValue(address);
+        this.destinationForm.get('address').setValue(address);
         this.paymentForm.get('address').setValue(address);
+    }
+
+    selectShipping(shipping: Shipping) {
+        this.shippingForm.get('shipping').setValue(shipping._id);
     }
 
     selectBilling(address: Address) {
@@ -112,10 +124,10 @@ export class PaymentComponent implements OnInit {
     performCheckout(stepper) {
         this.saving = true;
 
-        const cart = this.cart._id;
-        const destination = this.shippingForm.get('address').value._id;
+        const shipping = this.shippingForm.get('shipping').value;
+        const destination = this.destinationForm.get('address').value._id;
 
-        const payment: Payment = { cart, destination };
+        const payment: Payment = { shipping, destination };
 
         this.paymentService
             .checkout(this.cardToken, payment)

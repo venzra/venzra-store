@@ -48,10 +48,7 @@ export class PaymentService {
     }
 
     checkout(token: string, paymentData: Payment): Observable<Order> {
-        const cart = paymentData.cart;
-        const destination = paymentData.destination;
-
-        return this.http.post<Order>('/store/orders', { token, cart, destination });
+        return this.http.post<Order>('/store/orders', { token, ...paymentData });
     }
 
 }

@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
 
-import { BehaviorSubject, Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
 
 import { Cart, Product } from '@venzra/models';
 
@@ -31,11 +30,6 @@ export class CartService {
                 this.cart.next(cart);
                 this.snackbar.open(`${product.displayName} removed from cart`, null, { duration: 2000 });
             });
-    }
-
-    allocateShipping(shippingId): Observable<Cart> {
-        return this.http.patch<Cart>('/store/cart', [{ op: 'replace', path: 'shipping', value: shippingId }])
-            .pipe(tap((cart) => this.cart.next(cart)));
     }
 
     getCart(): BehaviorSubject<Cart> {
